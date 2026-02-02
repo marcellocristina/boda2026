@@ -208,23 +208,25 @@
         </div>
     </nav>
 
-    <!-- HERO -->
+    <!-- HERO (SIN EFECTO SEPIA) -->
     <section class="relative h-[60vh] md:h-[90vh] flex items-center justify-center overflow-hidden border-b-8 border-black">
         <div class="absolute inset-0 z-0">
-            <img src="fotos/hero.jpg" alt="Marcello y Cristina" class="w-full h-full object-cover object-center grayscale brightness-75">
-            <div class="absolute inset-0 bg-yellow-400/20 mix-blend-multiply"></div>
+            <!-- Eliminados los filtros grayscale y el overlay amarillo -->
+            <img src="fotos/hero.jpg" alt="Marcello y Cristina" class="w-full h-full object-cover object-center">
+            <!-- Overlay sutil oscuro para legibilidad del texto sin alterar colores base significativamente -->
+            <div class="absolute inset-0 bg-black/10"></div>
         </div>
         
         <div class="relative z-10 text-center px-4">
             <div class="onomatopeya mb-6 bg-white px-6 py-2 border-4 border-black animate-bounce">¡BOOM!</div>
-            <h1 class="text-6xl md:text-9xl text-white mb-4 drop-shadow-[0_10px_10px_rgba(0,0,0,0.8)]">MARCELLO & CRISTINA</h1>
+            <h1 class="text-6xl md:text-9xl text-white mb-4 drop-shadow-[0_10px_10px_rgba(0,0,0,0.9)]">MARCELLO & CRISTINA</h1>
             <div class="bg-black text-white inline-block px-8 py-3 transform -skew-x-12 border-2 border-yellow-400">
                 <p class="text-2xl md:text-5xl font-bold uppercase" id="hero-date">10 JUNIO 2026</p>
             </div>
         </div>
     </section>
 
-    <!-- CUENTA ATRÁS (AJUSTADA PARA MÓVIL) -->
+    <!-- CUENTA ATRÁS -->
     <div class="container mx-auto -mt-12 relative z-20 px-4">
         <div class="comic-panel p-4 md:p-8 bg-yellow-400 flex flex-nowrap md:flex-wrap justify-center gap-2 md:gap-16 items-center overflow-x-auto">
             <div class="text-center">
@@ -335,7 +337,7 @@
         </div>
     </section>
 
-    <!-- RSVP (FORMULARIO FUNCIONAL INTEGRADO) -->
+    <!-- RSVP -->
     <section id="confirmar" class="py-24 bg-red-600 border-t-8 border-black">
         <div class="container mx-auto px-4">
             <div class="max-w-3xl mx-auto text-center mb-12">
@@ -374,7 +376,6 @@
                         <textarea name="Comentarios" rows="3" class="w-full p-4 comic-input bg-red-50" placeholder="..." id="placeholder-message"></textarea>
                     </div>
 
-                    <!-- Protección Anti-Bot -->
                     <input type="text" name="_gotcha" style="display:none">
                     
                     <div class="pt-4">
@@ -492,7 +493,7 @@
                 labelMessage: "Messaggio per il Quartier Generale",
                 placeholderMessage: "Allergie, richieste musicali o un messaggio di supporto...",
                 btnSubmit: "Invia Segnale!",
-                rsvpDeadline: "* Scadenza risposta: 1 Maggio, 2026",
+                rsvpDeadline: "* Scadenza respuesta: 1 Maggio, 2026",
                 footerCont: "CONTINUA...",
                 copied: "COPIATO!"
             },
