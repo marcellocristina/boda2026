@@ -78,11 +78,6 @@
             color: var(--comic-yellow);
         }
 
-        .nav-link:nth-child(even):hover {
-            transform: scale(1.5) rotate(-15deg);
-        }
-
-        /* Estilo para el botón RSVP solicitado: Azul al pasar el ratón */
         .nav-link-rsvp {
             background-color: var(--comic-yellow);
             color: black;
@@ -214,10 +209,10 @@
     </nav>
 
     <!-- HERO -->
-    <section class="relative h-[90vh] flex items-center justify-center overflow-hidden border-b-8 border-black">
+    <section class="relative h-[60vh] md:h-[90vh] flex items-center justify-center overflow-hidden border-b-8 border-black">
         <div class="absolute inset-0 z-0">
-            <img src="fotos/hero.jpg" alt="Marcello y Cristina" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-yellow-400/10 mix-blend-multiply"></div>
+            <img src="fotos/hero.jpg" alt="Marcello y Cristina" class="w-full h-full object-cover object-center grayscale brightness-75">
+            <div class="absolute inset-0 bg-yellow-400/20 mix-blend-multiply"></div>
         </div>
         
         <div class="relative z-10 text-center px-4">
@@ -229,24 +224,24 @@
         </div>
     </section>
 
-    <!-- CUENTA ATRÁS -->
+    <!-- CUENTA ATRÁS (AJUSTADA PARA MÓVIL) -->
     <div class="container mx-auto -mt-12 relative z-20 px-4">
-        <div class="comic-panel p-8 bg-yellow-400 flex flex-wrap justify-center gap-6 md:gap-16">
+        <div class="comic-panel p-4 md:p-8 bg-yellow-400 flex flex-nowrap md:flex-wrap justify-center gap-2 md:gap-16 items-center overflow-x-auto">
             <div class="text-center">
-                <span id="days" class="block text-6xl font-bold text-black leading-none">00</span>
-                <span class="comic-title text-2xl" id="label-days">DÍAS</span>
+                <span id="days" class="block text-3xl md:text-6xl font-bold text-black leading-none">00</span>
+                <span class="comic-title text-xs md:text-2xl" id="label-days">DÍAS</span>
             </div>
             <div class="text-center">
-                <span id="hours" class="block text-6xl font-bold text-black leading-none">00</span>
-                <span class="comic-title text-2xl" id="label-hours">HORAS</span>
+                <span id="hours" class="block text-3xl md:text-6xl font-bold text-black leading-none">00</span>
+                <span class="comic-title text-xs md:text-2xl" id="label-hours">HORAS</span>
             </div>
             <div class="text-center">
-                <span id="minutes" class="block text-6xl font-bold text-black leading-none">00</span>
-                <span class="comic-title text-2xl" id="label-min">MIN</span>
+                <span id="minutes" class="block text-3xl md:text-6xl font-bold text-black leading-none">00</span>
+                <span class="comic-title text-xs md:text-2xl" id="label-min">MIN</span>
             </div>
-            <div class="text-center border-l-4 border-black pl-6">
-                <span id="seconds" class="block text-6xl font-bold text-red-600 leading-none">00</span>
-                <span class="comic-title text-2xl" id="label-sec">SEG</span>
+            <div class="text-center border-l-2 md:border-l-4 border-black pl-2 md:pl-6">
+                <span id="seconds" class="block text-3xl md:text-6xl font-bold text-red-600 leading-none">00</span>
+                <span class="comic-title text-xs md:text-2xl" id="label-sec">SEG</span>
             </div>
         </div>
     </div>
@@ -340,44 +335,58 @@
         </div>
     </section>
 
-    <!-- RSVP -->
+    <!-- RSVP (FORMULARIO FUNCIONAL INTEGRADO) -->
     <section id="confirmar" class="py-24 bg-red-600 border-t-8 border-black">
         <div class="container mx-auto px-4">
             <div class="max-w-3xl mx-auto text-center mb-12">
                 <div class="onomatopeya text-6xl mb-6 text-yellow-400" id="rsvp-boom">¡ÚNETE AL EQUIPO!</div>
                 <h2 class="text-4xl md:text-6xl text-white uppercase drop-shadow-md" id="rsvp-title">Confirmar Asistencia</h2>
+                <p class="text-white text-2xl mt-4 font-bold" id="rsvp-subtitle">¿Serás nuestro próximo aliado en el gran día?</p>
             </div>
 
             <div class="max-w-2xl mx-auto comic-panel p-8 md:p-12 bg-white transform -rotate-1">
-                <form class="space-y-6">
+                <form action="https://formspree.io/f/xgozkeba" method="POST" class="space-y-6">
                     <div>
                         <label class="comic-label" id="label-name">Identidad Civil (Nombre Completo)</label>
-                        <input type="text" class="w-full p-4 comic-input bg-blue-50" placeholder="...">
+                        <input type="text" name="Nombre" required class="w-full p-4 comic-input bg-blue-50" placeholder="..." id="placeholder-name">
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label class="comic-label" id="label-join">¿Te unes a la misión?</label>
-                            <select class="w-full p-4 comic-input bg-yellow-50">
+                            <select name="Asistencia" class="w-full p-4 comic-input bg-yellow-50 cursor-pointer">
                                 <option value="SI" id="opt-yes">¡SÍ, ALLÍ ESTARÉ!</option>
                                 <option value="NO" id="opt-no">NO PODRÉ ASISTIR</option>
                             </select>
                         </div>
                         <div>
                             <label class="comic-label" id="label-allies">Número de Aliados</label>
-                            <select class="w-full p-4 comic-input bg-yellow-50">
+                            <select name="Total_Invitados" class="w-full p-4 comic-input bg-yellow-50 cursor-pointer">
                                 <option value="1" id="opt-1">SOLO YO (1)</option>
                                 <option value="2" id="opt-2">SOMOS PAREJA (2)</option>
+                                <option value="3" id="opt-3">EQUIPO DE 3</option>
                             </select>
                         </div>
                     </div>
 
+                    <div>
+                        <label class="comic-label" id="label-message">Mensaje para el Cuartel General</label>
+                        <textarea name="Comentarios" rows="3" class="w-full p-4 comic-input bg-red-50" placeholder="..." id="placeholder-message"></textarea>
+                    </div>
+
+                    <!-- Protección Anti-Bot -->
+                    <input type="text" name="_gotcha" style="display:none">
+                    
                     <div class="pt-4">
-                        <button type="button" class="w-full bg-black text-yellow-400 text-3xl font-bold py-6 comic-panel hover:bg-blue-600 hover:text-white transition-all transform hover:-translate-y-2 uppercase" id="btn-submit">
+                        <button type="submit" class="w-full bg-black text-yellow-400 text-3xl font-bold py-6 comic-panel hover:bg-blue-600 hover:text-white transition-all transform hover:-translate-y-2 uppercase" id="btn-submit">
                             ¡Enviar Señal!
                         </button>
                     </div>
                 </form>
+                
+                <p class="text-center mt-8 text-gray-500 font-bold italic" id="rsvp-deadline">
+                    * Fecha límite de respuesta: 1 de Mayo, 2026
+                </p>
             </div>
         </div>
     </section>
@@ -423,14 +432,20 @@
                 btnCopy: "Copiar IBAN",
                 rsvpBoom: "¡ÚNETE AL EQUIPO!",
                 rsvpTitle: "Confirmar Asistencia",
+                rsvpSubtitle: "¿Serás nuestro próximo aliado en el gran día?",
                 labelName: "Identidad Civil (Nombre Completo)",
+                placeholderName: "Escribe tu nombre de héroe/heroína",
                 labelJoin: "¿Te unes a la misión?",
                 optYes: "¡SÍ, ALLÍ ESTARÉ!",
                 optNo: "NO PODRÉ ASISTIR",
                 labelAllies: "Número de Aliados",
                 opt1: "SOLO YO (1)",
                 opt2: "SOMOS PAREJA (2)",
+                opt3: "EQUIPO DE 3",
+                labelMessage: "Mensaje para el Cuartel General",
+                placeholderMessage: "Alergias, peticiones musicales o un mensaje de apoyo...",
                 btnSubmit: "¡Enviar Señal!",
+                rsvpDeadline: "* Fecha límite de respuesta: 1 de Mayo, 2026",
                 footerCont: "CONTINUARÁ...",
                 copied: "¡COPIADO!"
             },
@@ -464,14 +479,20 @@
                 btnCopy: "Copia IBAN",
                 rsvpBoom: "UNISCITI AL TEAM!",
                 rsvpTitle: "Conferma Presenza",
+                rsvpSubtitle: "Sarai il nostro prossimo alleato nel grande giorno?",
                 labelName: "Identità Civile (Nome Completo)",
+                placeholderName: "Scrivi il tuo nome da eroe/eroina",
                 labelJoin: "Ti unisci alla missione?",
                 optYes: "SÌ, CI SARÒ!",
                 optNo: "NON POTRÒ ESSERCI",
                 labelAllies: "Numero di Alleati",
                 opt1: "SOLO IO (1)",
                 opt2: "SIAMO UNA COPPIA (2)",
+                opt3: "TEAM DI 3",
+                labelMessage: "Messaggio per il Quartier Generale",
+                placeholderMessage: "Allergie, richieste musicali o un messaggio di supporto...",
                 btnSubmit: "Invia Segnale!",
+                rsvpDeadline: "* Scadenza risposta: 1 Maggio, 2026",
                 footerCont: "CONTINUA...",
                 copied: "COPIATO!"
             },
@@ -505,14 +526,20 @@
                 btnCopy: "Copy IBAN",
                 rsvpBoom: "JOIN THE TEAM!",
                 rsvpTitle: "Confirm Attendance",
+                rsvpSubtitle: "Will you be our next ally on the big day?",
                 labelName: "Civil Identity (Full Name)",
+                placeholderName: "Write your hero/heroine name",
                 labelJoin: "Joining the mission?",
                 optYes: "YES, I'LL BE THERE!",
                 optNo: "CAN'T MAKE IT",
                 labelAllies: "Number of Allies",
                 opt1: "JUST ME (1)",
                 opt2: "WE'RE A DUO (2)",
+                opt3: "TEAM OF 3",
+                labelMessage: "Message for Headquarters",
+                placeholderMessage: "Allergies, song requests or a message of support...",
                 btnSubmit: "Send Signal!",
+                rsvpDeadline: "* RSVP Deadline: May 1st, 2026",
                 footerCont: "TO BE CONTINUED...",
                 copied: "COPIED!"
             }
@@ -521,30 +548,21 @@
         function setLanguage(lang) {
             const t = translations[lang];
             
-            // Navegación
             document.getElementById('nav-title').textContent = t.navTitle;
             document.getElementById('nav-history').textContent = t.navHistory;
             document.getElementById('nav-gallery').textContent = t.navGallery;
             document.getElementById('nav-location').textContent = t.navLocation;
             document.getElementById('nav-rsvp').textContent = t.navRsvp;
-
-            // Hero y Contador
             document.getElementById('hero-date').textContent = t.heroDate;
             document.getElementById('label-days').textContent = t.labelDays;
             document.getElementById('label-hours').textContent = t.labelHours;
             document.getElementById('label-min').textContent = t.labelMin;
             document.getElementById('label-sec').textContent = t.labelSec;
-
-            // Historia
             document.getElementById('badge-history').textContent = t.badgeHistory;
             document.getElementById('history-title').textContent = t.historyTitle;
             document.getElementById('history-p1').textContent = t.historyP1;
             document.getElementById('history-p2').textContent = t.historyP2;
-
-            // Galeria
             document.getElementById('gallery-title').textContent = t.galleryTitle;
-
-            // Ubicación
             document.getElementById('location-title').textContent = t.locationTitle;
             document.getElementById('church-title').textContent = t.churchTitle;
             document.getElementById('church-name').textContent = t.churchName;
@@ -554,28 +572,27 @@
             document.getElementById('party-name').textContent = t.partyName;
             document.getElementById('party-time').textContent = t.partyTime;
             document.getElementById('btn-map2').textContent = t.btnParty;
-
-            // Regalos
             document.getElementById('gift-title').textContent = t.giftTitle;
             document.getElementById('gift-p').textContent = t.giftP;
             document.getElementById('btn-copy').textContent = t.btnCopy;
-
-            // RSVP
             document.getElementById('rsvp-boom').textContent = t.rsvpBoom;
             document.getElementById('rsvp-title').textContent = t.rsvpTitle;
+            document.getElementById('rsvp-subtitle').textContent = t.rsvpSubtitle;
             document.getElementById('label-name').textContent = t.labelName;
+            document.getElementById('placeholder-name').placeholder = t.placeholderName;
             document.getElementById('label-join').textContent = t.labelJoin;
             document.getElementById('opt-yes').textContent = t.optYes;
             document.getElementById('opt-no').textContent = t.optNo;
             document.getElementById('label-allies').textContent = t.labelAllies;
             document.getElementById('opt-1').textContent = t.opt1;
             document.getElementById('opt-2').textContent = t.opt2;
+            document.getElementById('opt-3').textContent = t.opt3;
+            document.getElementById('label-message').textContent = t.labelMessage;
+            document.getElementById('placeholder-message').placeholder = t.placeholderMessage;
             document.getElementById('btn-submit').textContent = t.btnSubmit;
-
-            // Footer
+            document.getElementById('rsvp-deadline').textContent = t.rsvpDeadline;
             document.getElementById('footer-cont').textContent = t.footerCont;
 
-            // Actualizar botones activos
             document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(`btn-${lang}`).classList.add('active');
             document.getElementById(`m-btn-${lang}`).classList.add('active');
