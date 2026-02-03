@@ -79,27 +79,26 @@
             100% { transform: scale(1) rotate(12deg); }
         }
 
+        /* Married: Ahora totalmente opaco */
         .married-badge {
             animation: comic-pulse-left 5s ease-in-out infinite;
             filter: drop-shadow(8px 8px 0px rgba(0,0,0,0.4));
             width: 55vw; 
             max-width: 700px;
             min-width: 280px;
+            opacity: 1 !important;
         }
 
-        /* Boom: Más a la derecha, escalado central y totalmente opaco */
+        /* Boom: Más pequeño, escalado central y opaco */
         .boom-badge {
             animation: comic-pulse-center 4.5s ease-in-out infinite;
             filter: drop-shadow(-10px 10px 0px rgba(0,0,0,0.4));
-            width: 75vw; 
-            max-width: 950px;
-            min-width: 320px;
-            /* Escalado desde el centro del elemento */
+            width: 60vw; 
+            max-width: 700px; /* Tamaño reducido de 950 a 700 */
+            min-width: 250px;
             transform-origin: center center;
-            /* Posicionamiento extremo */
-            margin-right: -10%;
-            margin-top: -5%;
-            /* Opacidad total */
+            margin-right: -8%;
+            margin-top: -3%;
             opacity: 1 !important;
         }
 
@@ -295,12 +294,12 @@
             <div class="absolute inset-0 bg-black/10"></div>
         </div>
 
-        <!-- MARRIED BADGE (IZQUIERDA) -->
+        <!-- MARRIED BADGE (IZQUIERDA) - AHORA OPACO -->
         <div class="absolute inset-0 z-10 pointer-events-none flex items-start justify-start p-2">
-            <img src="fotos/married.png" alt="Married" class="married-badge opacity-95">
+            <img src="fotos/married.png" alt="Married" class="married-badge">
         </div>
 
-        <!-- BOOM BADGE (DERECHA Y ARRIBA - AJUSTE EXTREMO Y TOTALMENTE OPACO) -->
+        <!-- BOOM BADGE (DERECHA Y ARRIBA) - MÁS PEQUEÑO Y OPACO -->
         <div class="absolute inset-0 z-10 pointer-events-none flex items-start justify-end overflow-visible">
             <img src="fotos/boom.png" alt="Boom" class="boom-badge">
         </div>
@@ -319,7 +318,6 @@
         </div>
     </section>
 
-    <!-- Resto del contenido igual -->
     <!-- CUENTA ATRÁS -->
     <div class="container mx-auto -mt-12 relative z-30 px-4">
         <div class="comic-panel p-4 md:p-8 bg-yellow-400 flex flex-nowrap md:flex-wrap justify-center gap-2 md:gap-16 items-center overflow-x-auto">
@@ -499,7 +497,6 @@
     </div>
 
     <script>
-        // Scripts iguales que el archivo anterior
         const translations = {
             es: {
                 navTitle: "M&C: EDICIÓN ESPECIAL",
