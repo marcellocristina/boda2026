@@ -31,16 +31,14 @@
             paint-order: stroke fill;
         }
 
-        /* Ajustes de Título Responsivo Optimizados */
+        /* Ajustes de Título Responsivo */
         .hero-title {
-            /* Fuente más grande en móviles (12vw) con límite superior */
             font-size: clamp(3.5rem, 12vw, 7.5rem);
             width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            /* Interlineado muy reducido para que las 3 líneas queden compactas */
             line-height: 0.9;
             text-align: center;
             word-break: break-word;
@@ -51,17 +49,14 @@
         }
 
         .hero-title .ampersand {
-            /* Símbolo significativamente más pequeño que los nombres */
             font-size: 0.6em; 
-            margin: -0.1rem 0; /* Margen negativo ligero para acercar las líneas */
+            margin: -0.1rem 0;
         }
 
-        /* Ajuste para pantallas medianas/grandes */
         @media (min-width: 768px) {
             .hero-title {
                 flex-direction: row;
                 gap: 1.5rem;
-                /* Interlineado normal para cuando están en una sola fila */
                 line-height: 1.1;
                 font-size: clamp(4rem, 9vw, 8rem);
             }
@@ -69,6 +64,43 @@
                 margin: 0;
                 font-size: 0.7em;
             }
+        }
+
+        /* Animaciones */
+        @keyframes comic-pulse-left {
+            0% { transform: scale(1) rotate(-12deg); }
+            50% { transform: scale(1.1) rotate(-10deg); }
+            100% { transform: scale(1) rotate(-12deg); }
+        }
+
+        @keyframes comic-pulse-center {
+            0% { transform: scale(1) rotate(12deg); }
+            50% { transform: scale(1.15) rotate(14deg); }
+            100% { transform: scale(1) rotate(12deg); }
+        }
+
+        .married-badge {
+            animation: comic-pulse-left 5s ease-in-out infinite;
+            filter: drop-shadow(8px 8px 0px rgba(0,0,0,0.4));
+            width: 55vw; 
+            max-width: 700px;
+            min-width: 280px;
+        }
+
+        /* Boom: Más a la derecha, escalado central y totalmente opaco */
+        .boom-badge {
+            animation: comic-pulse-center 4.5s ease-in-out infinite;
+            filter: drop-shadow(-10px 10px 0px rgba(0,0,0,0.4));
+            width: 75vw; 
+            max-width: 950px;
+            min-width: 320px;
+            /* Escalado desde el centro del elemento */
+            transform-origin: center center;
+            /* Posicionamiento extremo */
+            margin-right: -10%;
+            margin-top: -5%;
+            /* Opacidad total */
+            opacity: 1 !important;
         }
 
         .comic-panel {
@@ -225,7 +257,7 @@
 </head>
 <body class="text-gray-900">
 
-    <!-- BARRA DE NAVEGACIÓN -->
+    <!-- NAV -->
     <nav class="bg-black text-white p-4 sticky top-0 z-50 border-b-4 border-yellow-400">
         <div class="container mx-auto">
             <div class="flex justify-between items-center">
@@ -260,11 +292,20 @@
     <section class="relative h-[65vh] md:h-[90vh] flex items-center justify-center overflow-hidden border-b-8 border-black">
         <div class="absolute inset-0 z-0">
             <img src="fotos/hero1.jpg" alt="Marcello y Cristina" class="w-full h-full object-cover object-center">
-            <div class="absolute inset-0 bg-black/15"></div>
+            <div class="absolute inset-0 bg-black/10"></div>
+        </div>
+
+        <!-- MARRIED BADGE (IZQUIERDA) -->
+        <div class="absolute inset-0 z-10 pointer-events-none flex items-start justify-start p-2">
+            <img src="fotos/married.png" alt="Married" class="married-badge opacity-95">
+        </div>
+
+        <!-- BOOM BADGE (DERECHA Y ARRIBA - AJUSTE EXTREMO Y TOTALMENTE OPACO) -->
+        <div class="absolute inset-0 z-10 pointer-events-none flex items-start justify-end overflow-visible">
+            <img src="fotos/boom.png" alt="Boom" class="boom-badge">
         </div>
         
-        <div class="relative z-10 text-center px-4 w-full flex flex-col items-center justify-center">
-            <div class="onomatopeya mb-4 bg-white px-6 py-2 border-4 border-black animate-bounce">¡BOOM!</div>
+        <div class="relative z-20 text-center px-4 w-full flex flex-col items-center justify-center">
             <div class="w-full max-w-full flex justify-center">
                 <h1 class="hero-title text-white mb-6 drop-shadow-[0_10px_10px_rgba(0,0,0,0.9)] uppercase">
                     <span>MARCELLO</span>
@@ -278,8 +319,9 @@
         </div>
     </section>
 
+    <!-- Resto del contenido igual -->
     <!-- CUENTA ATRÁS -->
-    <div class="container mx-auto -mt-12 relative z-20 px-4">
+    <div class="container mx-auto -mt-12 relative z-30 px-4">
         <div class="comic-panel p-4 md:p-8 bg-yellow-400 flex flex-nowrap md:flex-wrap justify-center gap-2 md:gap-16 items-center overflow-x-auto">
             <div class="text-center">
                 <span id="days" class="block text-3xl md:text-6xl font-bold text-black leading-none">00</span>
@@ -393,7 +435,6 @@
     <section id="confirmar" class="py-24 bg-red-600 border-t-8 border-black">
         <div class="container mx-auto px-4">
             <div class="max-w-3xl mx-auto text-center mb-12">
-                <div class="onomatopeya text-6xl mb-6 text-yellow-400" id="rsvp-boom">¡ÚNETE AL EQUIPO!</div>
                 <h2 class="text-4xl md:text-6xl text-white uppercase drop-shadow-md" id="rsvp-title">Confirmar Asistencia</h2>
                 <p class="text-white text-2xl mt-4 font-bold" id="rsvp-subtitle">¿Serás nuestro próximo aliado en el gran día?</p>
             </div>
@@ -458,6 +499,7 @@
     </div>
 
     <script>
+        // Scripts iguales que el archivo anterior
         const translations = {
             es: {
                 navTitle: "M&C: EDICIÓN ESPECIAL",
@@ -487,7 +529,6 @@
                 giftTitle: "MESA DE REGALOS",
                 giftP: "Vuestra presencia es nuestro mejor regalo, pero si deseáis tener un detalle adicional:",
                 btnCopy: "Copiar IBAN",
-                rsvpBoom: "¡ÚNETE AL EQUIPO!",
                 rsvpTitle: "Confirmar Asistencia",
                 rsvpSubtitle: "¿Serás nuestro próximo aliado en el gran día?",
                 labelName: "Identidad Civil (Nombre Completo)",
@@ -536,7 +577,6 @@
                 giftTitle: "LISTA NOZZE",
                 giftP: "La vostra presenza è il nostro regalo più grande, ma se desiderate fare un pensiero in più:",
                 btnCopy: "Copia IBAN",
-                rsvpBoom: "UNISCITI AL TEAM!",
                 rsvpTitle: "Conferma Presenza",
                 rsvpSubtitle: "Sarai il nostro prossimo alleato nel grande giorno?",
                 labelName: "Identità Civile (Nome Completo)",
@@ -585,7 +625,6 @@
                 giftTitle: "GIFT REGISTRY",
                 giftP: "Your presence is our best gift, but if you wish to give something extra:",
                 btnCopy: "Copy IBAN",
-                rsvpBoom: "JOIN THE TEAM!",
                 rsvpTitle: "Confirm Attendance",
                 rsvpSubtitle: "Will you be our next ally on the big day?",
                 labelName: "Civil Identity (Full Name)",
@@ -641,7 +680,6 @@
             document.getElementById('gift-title').textContent = t.giftTitle;
             document.getElementById('gift-p').textContent = t.giftP;
             document.getElementById('btn-copy').textContent = t.btnCopy;
-            document.getElementById('rsvp-boom').textContent = t.rsvpBoom;
             document.getElementById('rsvp-title').textContent = t.rsvpTitle;
             document.getElementById('rsvp-subtitle').textContent = t.rsvpSubtitle;
             document.getElementById('label-name').textContent = t.labelName;
