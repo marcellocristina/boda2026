@@ -1,23 +1,35 @@
-const SPREADSHEET_ID = "1bHStbxLFlwikvGYwmA75XGRjcea_woDwBVjgwPC7v4A";
-const SHEET_NAME = "Hoja 1"; // con espacio
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Test Google Sheets</title>
+</head>
+<body>
 
-function doPost(e) {
-  const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
-  const sheet = ss.getSheetByName(SHEET_NAME);
+<h2>Test envío directo</h2>
 
-  if (!sheet) {
-    return ContentService.createTextOutput(
-      "ERROR: No existe la hoja '" + SHEET_NAME + "'"
-    );
-  }
+<form
+  action="PEGA_AQUI_TU_URL_EXEC"
+  method="POST"
+  target="_blank">
 
-  sheet.appendRow([
-    new Date(),
-    (e && e.parameter && e.parameter["Nombre"]) || "",
-    (e && e.parameter && e.parameter["Asistencia"]) || "",
-    (e && e.parameter && e.parameter["Total_Invitados"]) || "",
-    (e && e.parameter && e.parameter["Comentarios"]) || ""
-  ]);
+  <input name="Nombre" placeholder="Nombre" required><br><br>
 
-  return ContentService.createTextOutput("OK");
-}
+  <select name="Asistencia">
+    <option value="SI">SI</option>
+    <option value="NO">NO</option>
+  </select><br><br>
+
+  <select name="Total_Invitados">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+  </select><br><br>
+
+  <textarea name="Comentarios" placeholder="Comentarios"></textarea><br><br>
+
+  <button type="submit">Enviar</button>
+</form>
+
+</body>
+</html>
