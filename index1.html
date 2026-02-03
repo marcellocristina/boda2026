@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marcello & Cristina - ¡EL GRAN EVENTO!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Luckiest+Guy&family=Kalam:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        :root { --comic-yellow:#FFD700; --comic-red:#FF4500; --comic-blue:#0080FF; --comic-green:#2ecc71; }
+        body { background-color:#f0f0f0; background-image:radial-gradient(#ccc 1px,transparent 1px); background-size:20px 20px; font-family:'Kalam',cursive; scroll-behavior:smooth; }
+        h1,h2,h3,.comic-title{ font-family:'Luckiest Guy',cursive; letter-spacing:2px; -webkit-text-stroke:1.5px black; paint-order:stroke fill; }
+        .hero-title{ font-size:clamp(3.5rem,12vw,7.5rem); width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; line-height:0.9; text-align:center; word-break:break-word; }
+        .hero-title span{ display:block; }
+        .hero-title .ampersand{ font-size:0.6em; margin:-0.1rem 0; }
+        @media (min-width:768px){
+            .hero-title{ flex-direction:row; gap:1.5rem; line-height:1.1; font-size:clamp(4rem,9vw,8rem); }
+            .hero-title .ampersand{ margin:0; font-size:0.7em; }
+        }
+        @keyframes comic-pulse-left{ 0%{transform:scale(1) rotate(-12deg);} 50%{transform:scale(1.1) rotate(-10deg);} 100%{transform:scale(1) rotate(-12deg);} }
+        @keyframes comic-pulse-center{ 0%{transform:scale(1) rotate(12deg);} 50%{transform:scale(1.15) rotate(14deg);} 100%{transform:scale(1) rotate(12deg);} }
+        .married-badge{ animation:comic-pulse-left 5s ease-in-out infinite; filter:drop-shadow(8px 8px 0px rgba(0,0,0,0.4)); width:55vw; max-width:700px; min-width:280px; opacity:1!important; }
+        .boom-badge{ animation:comic-pulse-center 4.5s ease-in-out infinite; filter:drop-shadow(-10px 10px 0px rgba(0,0,0,0.4)); width:60vw; max-width:700px; min-width:250px; transform-origin:center center; margin-right:-8%; margin-top:-3%; opacity:1!important; }
+        .comic-panel{ background:white; border:4px solid black; box-shadow:10px 10px 0px black; transition:all 0.3s ease; position:relative; overflow:hidden; }
+        .comic-panel:hover{ transform:scale(1.01) rotate(-0.2deg); }
+        #mobile-menu{ max-height:0; overflow:hidden; transition:max-height 0.5s ease-in-out, opacity 0.3s ease; opacity:0; display:flex; flex-direction:column; width:100%; }
+        #mobile-menu.open{ max-height:700px; opacity:1; padding-bottom:1.5rem; }
+        .nav-link{ font-family:'Bangers',cursive; font-size:1.5rem; letter-spacing:1px; padding:12px 24px; width:auto; text-align:center; transition:all 0.3s cubic-bezier(0.68,-0.55,0.265,1.55); border-radius:4px; cursor:pointer; display:inline-block; }
+        .nav-link:hover{ transform:scale(1.2) rotate(5deg); color:var(--comic-yellow); }
+        .nav-link-rsvp{ background-color:var(--comic-yellow); color:black; margin-top:1rem; border:3px solid black; box-shadow:6px 6px 0px black; }
+        .lang-btn{ font-family:'Bangers',cursive; padding:4px 8px; border:2px solid white; transition:0.3s; }
+        .lang-btn.active{ background:var(--comic-yellow); color:black; border-color:black; }
+        .comic-input{ border:3px solid black; box-shadow:4px 4px 0px black; font-family:'Kalam',cursive; font-weight:bold; }
+        .comic-label{ font-family:'Luckiest Guy',cursive; text-transform:uppercase; color:black; margin-bottom:0.5rem; display:block; }
+        .speech-bubble{ position:relative; background:white; border:3px solid black; border-radius:20px; padding:25px; box-shadow:5px 5px 0px rgba(0,0,0,0.1); }
+        .speech-bubble::after{ content:''; position:absolute; bottom:-20px; left:50px; border-width:20px 20px 0; border-style:solid; border-color:black transparent; display:block; width:0; }
+        .onomatopeya{ font-family:'Bangers',cursive; font-size:3rem; color:var(--comic-red); text-shadow:4px 4px 0px black; transform:rotate(-8deg); display:inline-block; }
+        #lightbox{ display:none; position:fixed; z-index:1000; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; }
+        .reveal{ opacity:0; transform:translateY(30px); transition:all 0.8s ease-out; }
+        .reveal.active{ opacity:1; transform:translateY(0); }
+        .response-box{ border:3px solid #27ae60; background-color:#f1fcf6; color:#27ae60; padding:1.5rem; border-radius:12px; font-family:'Kalam',cursive; font-weight:bold; font-size:1.25rem; margin-bottom:2rem; display:none; box-shadow:4px 4px 0px #27ae60; }
+    </style>
+</head>
+
+<body class="text-gray-900">
+
+    <!-- NAV -->
+    <nav class="bg-black text-white p-4 sticky top-0 z-50 border-b-4 border-yellow-400">
+        <div class="container mx-auto">
+            <div class="flex justify-between items-center">
+                <h1 class="text-2xl text-yellow-400" id="nav-title">M&C: EDICIÓN ESPECIAL</h1>
+
+                <div class="hidden md:flex space-x-2">
+                    <button onclick="setLanguage('it')" class="lang-btn" id="btn-it">IT</button>
+                    <button onclick="setLanguage('es')" class="lang-btn active" id="btn-es">ES</button>
+                    <button onclick="setLanguage('en')" class="lang-btn" id="btn-en">EN</button>
+                </div>
+
+                <button onclick="toggleMenu()" class="text-3xl text-yellow-400 hover:scale-125 transition-transform focus:outline-none">
+                    <i class="fas fa-bars" id="menu-icon"></i>
+                </button>
+            </div>
+
+            <div id="mobile-menu" class="flex flex-col items-center mt-2">
+                <div class="flex space-x-4 mb-4 md:hidden">
+                    <button onclick="setLanguage('it')" class="lang-btn" id="m-btn-it">IT</button>
+                    <button onclick="setLanguage('es')" class="lang-btn active" id="m-btn-es">ES</button>
+                    <button onclick="setLanguage('en')" class="lang-btn" id="m-btn-en">EN</button>
+                </div>
+                <a href="#historia" onclick="toggleMenu()" class="nav-link" id="nav-history">HISTORIA</a>
+                <a href="#galeria" onclick="toggleMenu()" class="nav-link" id="nav-gallery">GALERÍA</a>
+                <a href="#donde" onclick="toggleMenu()" class="nav-link" id="nav-location">UBICACIÓN</a>
+                <a href="#confirmar" onclick="toggleMenu()" class="nav-link nav-link-rsvp" id="nav-rsvp">CONFIRMAR</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ... (todo tu contenido igual, lo he omitido aquí por brevedad) ... -->
+
+    <!-- RSVP -->
+    <section id="confirmar" class="py-24 bg-red-600 border-t-8 border-black">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center mb-12">
+                <h2 class="text-4xl md:text-6xl text-white uppercase drop-shadow-md" id="rsvp-title">Confirmar Asistencia</h2>
+                <p class="text-white text-2xl mt-4 font-bold" id="rsvp-subtitle">¿Serás nuestro próximo aliado en el gran día?</p>
+            </div>
+
+            <div class="max-w-2xl mx-auto comic-panel p-8 md:p-12 bg-white transform -rotate-0.5">
+                <div id="response-success" class="response-box">
+                    <span id="response-text">¡Señal recibida! Gracias 😄</span>
+                </div>
+
+                <!-- ✅ CAMBIO: action ahora apunta a Google Apps Script -->
+                <form id="rsvp-form"
+                      action="https://script.google.com/macros/s/AKfycbz4oQIj7zkgid2KwV-d1LvI7dQSxSFTiWxlv-6z31258Q160c891_ep8r9e9zVsAS-I/exec"
+                      method="POST"
+                      class="space-y-6">
+
+                    <div>
+                        <label class="comic-label" id="label-name">Identidad Civil (Nombre Completo)</label>
+                        <input type="text" name="Nombre" required class="w-full p-4 comic-input bg-blue-50" placeholder="..." id="placeholder-name">
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="comic-label" id="label-join">¿Te unes a la misión?</label>
+                            <select name="Asistencia" class="w-full p-4 comic-input bg-yellow-50 cursor-pointer">
+                                <option value="SI" id="opt-yes">¡SÍ, ALLÍ ESTARÉ!</option>
+                                <option value="NO" id="opt-no">NO PODRÉ ASISTIR</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="comic-label" id="label-allies">Número de Aliados</label>
+                            <select name="Total_Invitados" class="w-full p-4 comic-input bg-yellow-50 cursor-pointer">
+                                <option value="1" id="opt-1">SOLO YO (1)</option>
+                                <option value="2" id="opt-2">SOMOS PAREJA (2)</option>
+                                <option value="3" id="opt-3">EQUIPO DE 3</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="comic-label" id="label-message">Mensaje para el Cuartel General</label>
+                        <textarea name="Comentarios" rows="3" class="w-full p-4 comic-input bg-red-50" placeholder="..." id="placeholder-message"></textarea>
+                    </div>
+
+                    <input type="text" name="_gotcha" style="display:none">
+
+                    <div class="pt-4">
+                        <button type="submit" id="btn-submit" class="w-full bg-black text-yellow-400 text-3xl font-bold py-6 comic-panel hover:bg-blue-600 hover:text-white transition-all transform hover:-translate-y-2 uppercase">
+                            ¡Enviar Señal!
+                        </button>
+                    </div>
+                </form>
+
+                <p class="text-center mt-8 text-gray-500 font-bold italic" id="rsvp-deadline">
+                    * Fecha límite de respuesta: 1 de Mayo, 2026
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ... resto igual ... -->
+
+    <script>
+        // ✅ URL del Apps Script (por si quieres reutilizarla)
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz4oQIj7zkgid2KwV-d1LvI7dQSxSFTiWxlv-6z31258Q160c891_ep8r9e9zVsAS-I/exec";
+
+        const translations = { /* ... tu objeto translations completo ... */ };
+
+        let currentLang = 'es';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            const t = translations[lang];
+
+            // ... tu setLanguage igual ...
+        }
+
+        const rsvpForm = document.getElementById('rsvp-form');
+        const responseBox = document.getElementById('response-success');
+        const submitBtn = document.getElementById('btn-submit');
+
+        // ✅ CAMBIO: envío compatible con Apps Script (respuesta "OK")
+        rsvpForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const originalBtnText = submitBtn.textContent;
+            submitBtn.textContent = translations[currentLang].sendingMsg;
+            submitBtn.disabled = true;
+
+            const formData = new FormData(this);
+
+            try {
+                const response = await fetch(this.action, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const txt = await response.text();
+                if (!response.ok || txt.trim() !== "OK") {
+                    throw new Error("Respuesta inesperada: " + txt);
+                }
+
+                responseBox.style.display = 'block';
+                rsvpForm.style.display = 'none';
+                responseBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            } catch (error) {
+                alert('Ocurrió un error al enviar. Por favor, inténtalo de nuevo.');
+                submitBtn.textContent = originalBtnText;
+                submitBtn.disabled = false;
+            }
+        });
+
+        function toggleMenu() { /* ... igual ... */ }
+        // ... resto de tu JS igual (contador, copyToClipboard, lightbox, reveal) ...
+    </script>
+</body>
+</html>
