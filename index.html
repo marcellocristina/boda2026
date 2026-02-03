@@ -31,7 +31,6 @@
             paint-order: stroke fill;
         }
 
-        /* Ajustes de Título Responsivo */
         .hero-title {
             font-size: clamp(3.5rem, 12vw, 7.5rem);
             width: 100%;
@@ -44,29 +43,14 @@
             word-break: break-word;
         }
 
-        .hero-title span {
-            display: block;
-        }
-
-        .hero-title .ampersand {
-            font-size: 0.6em; 
-            margin: -0.1rem 0;
-        }
+        .hero-title span { display: block; }
+        .hero-title .ampersand { font-size: 0.6em; margin: -0.1rem 0; }
 
         @media (min-width: 768px) {
-            .hero-title {
-                flex-direction: row;
-                gap: 1.5rem;
-                line-height: 1.1;
-                font-size: clamp(4rem, 9vw, 8rem);
-            }
-            .hero-title .ampersand {
-                margin: 0;
-                font-size: 0.7em;
-            }
+            .hero-title { flex-direction: row; gap: 1.5rem; line-height: 1.1; font-size: clamp(4rem, 9vw, 8rem); }
+            .hero-title .ampersand { margin: 0; font-size: 0.7em; }
         }
 
-        /* Animaciones */
         @keyframes comic-pulse-left {
             0% { transform: scale(1) rotate(-12deg); }
             50% { transform: scale(1.1) rotate(-10deg); }
@@ -79,200 +63,92 @@
             100% { transform: scale(1) rotate(12deg); }
         }
 
-        /* Married: Ahora totalmente opaco */
         .married-badge {
             animation: comic-pulse-left 5s ease-in-out infinite;
             filter: drop-shadow(8px 8px 0px rgba(0,0,0,0.4));
-            width: 55vw; 
-            max-width: 700px;
-            min-width: 280px;
-            opacity: 1 !important;
+            width: 55vw; max-width: 700px; min-width: 280px; opacity: 1 !important;
         }
 
-        /* Boom: Más pequeño, escalado central y opaco */
         .boom-badge {
             animation: comic-pulse-center 4.5s ease-in-out infinite;
             filter: drop-shadow(-10px 10px 0px rgba(0,0,0,0.4));
-            width: 60vw; 
-            max-width: 700px; /* Tamaño reducido de 950 a 700 */
-            min-width: 250px;
-            transform-origin: center center;
-            margin-right: -8%;
-            margin-top: -3%;
-            opacity: 1 !important;
+            width: 60vw; max-width: 700px; min-width: 250px;
+            transform-origin: center center; margin-right: -8%; margin-top: -3%; opacity: 1 !important;
         }
 
         .comic-panel {
-            background: white;
-            border: 4px solid black;
-            box-shadow: 10px 10px 0px black;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            background: white; border: 4px solid black; box-shadow: 10px 10px 0px black;
+            transition: all 0.3s ease; position: relative; overflow: hidden;
         }
 
-        .comic-panel:hover {
-            transform: scale(1.01) rotate(-0.2deg);
-        }
+        .comic-panel:hover { transform: scale(1.01) rotate(-0.2deg); }
 
         #mobile-menu {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease-in-out, opacity 0.3s ease;
-            opacity: 0;
-            display: flex;
-            flex-direction: column;
-            width: 100%;
+            max-height: 0; overflow: hidden; transition: max-height 0.5s ease-in-out, opacity 0.3s ease;
+            opacity: 0; display: flex; flex-direction: column; width: 100%;
         }
 
-        #mobile-menu.open {
-            max-height: 700px;
-            opacity: 1;
-            padding-bottom: 1.5rem;
-        }
+        #mobile-menu.open { max-height: 700px; opacity: 1; padding-bottom: 1.5rem; }
 
         .nav-link {
-            font-family: 'Bangers', cursive;
-            font-size: 1.5rem;
-            letter-spacing: 1px;
-            padding: 12px 24px;
-            width: auto;
-            text-align: center;
-            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            border-radius: 4px;
-            cursor: pointer;
-            display: inline-block;
+            font-family: 'Bangers', cursive; font-size: 1.5rem; letter-spacing: 1px;
+            padding: 12px 24px; width: auto; text-align: center;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); border-radius: 4px;
+            cursor: pointer; display: inline-block;
         }
 
-        .nav-link:hover {
-            transform: scale(1.2) rotate(5deg);
-            color: var(--comic-yellow);
-        }
+        .nav-link:hover { transform: scale(1.2) rotate(5deg); color: var(--comic-yellow); }
+        .nav-link-rsvp { background-color: var(--comic-yellow); color: black; margin-top: 1rem; border: 3px solid black; box-shadow: 6px 6px 0px black; }
 
-        .nav-link-rsvp {
-            background-color: var(--comic-yellow);
-            color: black;
-            margin-top: 1rem;
-            border: 3px solid black;
-            box-shadow: 6px 6px 0px black;
-        }
+        .lang-btn { font-family: 'Bangers', cursive; padding: 4px 8px; border: 2px solid white; transition: 0.3s; }
+        .lang-btn.active { background: var(--comic-yellow); color: black; border-color: black; }
 
-        .lang-btn {
-            font-family: 'Bangers', cursive;
-            padding: 4px 8px;
-            border: 2px solid white;
-            transition: 0.3s;
-        }
-
-        .lang-btn.active {
-            background: var(--comic-yellow);
-            color: black;
-            border-color: black;
-        }
-
-        .comic-input {
-            border: 3px solid black;
-            box-shadow: 4px 4px 0px black;
-            font-family: 'Kalam', cursive;
-            font-weight: bold;
-        }
-
-        .comic-label {
-            font-family: 'Luckiest Guy', cursive;
-            text-transform: uppercase;
-            color: black;
-            margin-bottom: 0.5rem;
-            display: block;
-        }
+        .comic-input { border: 3px solid black; box-shadow: 4px 4px 0px black; font-family: 'Kalam', cursive; font-weight: bold; }
+        .comic-label { font-family: 'Luckiest Guy', cursive; text-transform: uppercase; color: black; margin-bottom: 0.5rem; display: block; }
 
         .speech-bubble {
-            position: relative;
-            background: white;
-            border: 3px solid black;
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 5px 5px 0px rgba(0,0,0,0.1);
+            position: relative; background: white; border: 3px solid black; border-radius: 20px;
+            padding: 25px; box-shadow: 5px 5px 0px rgba(0,0,0,0.1);
         }
 
         .speech-bubble::after {
-            content: '';
-            position: absolute;
-            bottom: -20px;
-            left: 50px;
-            border-width: 20px 20px 0;
-            border-style: solid;
-            border-color: black transparent;
-            display: block;
-            width: 0;
+            content: ''; position: absolute; bottom: -20px; left: 50px;
+            border-width: 20px 20px 0; border-style: solid; border-color: black transparent;
+            display: block; width: 0;
         }
 
         .onomatopeya {
-            font-family: 'Bangers', cursive;
-            font-size: 3rem;
-            color: var(--comic-red);
-            text-shadow: 4px 4px 0px black;
-            transform: rotate(-8deg);
-            display: inline-block;
+            font-family: 'Bangers', cursive; font-size: 3rem; color: var(--comic-red);
+            text-shadow: 4px 4px 0px black; transform: rotate(-8deg); display: inline-block;
         }
 
         #lightbox {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.9);
-            justify-content: center;
-            align-items: center;
+            display: none; position: fixed; z-index: 1000; top: 0; left: 0;
+            width: 100%; height: 100%; background: rgba(0,0,0,0.9);
+            justify-content: center; align-items: center;
         }
 
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
-        }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
 
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .response-box {
-            border: 3px solid #27ae60;
-            background-color: #f1fcf6;
-            color: #27ae60;
-            padding: 1.5rem;
-            border-radius: 12px;
-            font-family: 'Kalam', cursive;
-            font-weight: bold;
-            font-size: 1.25rem;
-            margin-bottom: 2rem;
-            display: none;
-            box-shadow: 4px 4px 0px #27ae60;
-        }
+        #estado { margin-top: 1.5rem; text-align: center; font-weight: bold; font-size: 1.25rem; }
     </style>
 </head>
 <body class="text-gray-900">
 
-    <!-- NAV -->
     <nav class="bg-black text-white p-4 sticky top-0 z-50 border-b-4 border-yellow-400">
         <div class="container mx-auto">
             <div class="flex justify-between items-center">
                 <h1 class="text-2xl text-yellow-400" id="nav-title">M&C: EDICIÓN ESPECIAL</h1>
-                
                 <div class="hidden md:flex space-x-2">
                     <button onclick="setLanguage('it')" class="lang-btn" id="btn-it">IT</button>
                     <button onclick="setLanguage('es')" class="lang-btn active" id="btn-es">ES</button>
                     <button onclick="setLanguage('en')" class="lang-btn" id="btn-en">EN</button>
                 </div>
-
                 <button onclick="toggleMenu()" class="text-3xl text-yellow-400 hover:scale-125 transition-transform focus:outline-none">
                     <i class="fas fa-bars" id="menu-icon"></i>
                 </button>
             </div>
-            
             <div id="mobile-menu" class="flex flex-col items-center mt-2">
                 <div class="flex space-x-4 mb-4 md:hidden">
                     <button onclick="setLanguage('it')" class="lang-btn" id="m-btn-it">IT</button>
@@ -287,23 +163,17 @@
         </div>
     </nav>
 
-    <!-- HERO -->
     <section class="relative h-[65vh] md:h-[90vh] flex items-center justify-center overflow-hidden border-b-8 border-black">
         <div class="absolute inset-0 z-0">
             <img src="fotos/hero1.jpg" alt="Marcello y Cristina" class="w-full h-full object-cover object-center">
             <div class="absolute inset-0 bg-black/10"></div>
         </div>
-
-        <!-- MARRIED BADGE (IZQUIERDA) - AHORA OPACO -->
         <div class="absolute inset-0 z-10 pointer-events-none flex items-start justify-start p-2">
             <img src="fotos/married.png" alt="Married" class="married-badge">
         </div>
-
-        <!-- BOOM BADGE (DERECHA Y ARRIBA) - MÁS PEQUEÑO Y OPACO -->
         <div class="absolute inset-0 z-10 pointer-events-none flex items-start justify-end overflow-visible">
             <img src="fotos/boom.png" alt="Boom" class="boom-badge">
         </div>
-        
         <div class="relative z-20 text-center px-4 w-full flex flex-col items-center justify-center">
             <div class="w-full max-w-full flex justify-center">
                 <h1 class="hero-title text-white mb-6 drop-shadow-[0_10px_10px_rgba(0,0,0,0.9)] uppercase">
@@ -318,7 +188,6 @@
         </div>
     </section>
 
-    <!-- CUENTA ATRÁS -->
     <div class="container mx-auto -mt-12 relative z-30 px-4">
         <div class="comic-panel p-4 md:p-8 bg-yellow-400 flex flex-nowrap md:flex-wrap justify-center gap-2 md:gap-16 items-center overflow-x-auto">
             <div class="text-center">
@@ -340,96 +209,67 @@
         </div>
     </div>
 
-    <!-- HISTORIA -->
     <section id="historia" class="py-24 container mx-auto px-4 reveal">
         <div class="grid md:grid-cols-2 gap-16 items-center">
             <div class="comic-panel group">
                 <img src="fotos/historia.jpg" alt="Nuestra Historia" class="w-full h-[500px] object-cover">
-                <div class="absolute top-4 left-4 bg-red-600 text-white px-4 py-1 comic-title transform -rotate-1 border-2 border-black" id="badge-history">
-                    ORIGIN STORY
-                </div>
+                <div class="absolute top-4 left-4 bg-red-600 text-white px-4 py-1 comic-title transform -rotate-1 border-2 border-black" id="badge-history">ORIGIN STORY</div>
             </div>
             <div class="speech-bubble md:rotate-1">
                 <h2 class="text-5xl mb-6 text-blue-600 uppercase" id="history-title">CAPÍTULO 1: EL ENCUENTRO</h2>
-                <p class="text-2xl leading-relaxed mb-6 font-bold" id="history-p1">
-                    Como en los mejores cómics, no fue el azar, fue el destino. Marcello y Cristina unieron fuerzas para crear el equipo más poderoso del mundo.
-                </p>
-                <p class="text-xl italic text-gray-700" id="history-p2">
-                    "Después de mil batallas y aventuras, hemos decidido firmar el contrato más importante de nuestras vidas."
-                </p>
-                <div class="mt-8 text-right">
-                    <div class="onomatopeya text-4xl">¡ZAP!</div>
-                </div>
+                <p class="text-2xl leading-relaxed mb-6 font-bold" id="history-p1">Como en los mejores cómics, no fue el azar, fue el destino. Marcello y Cristina unieron fuerzas para crear el equipo más poderoso del mundo.</p>
+                <p class="text-xl italic text-gray-700" id="history-p2">"Después de mil batallas y aventuras, hemos decidido firmar el contrato más importante de nuestras vidas."</p>
+                <div class="mt-8 text-right"><div class="onomatopeya text-4xl">¡ZAP!</div></div>
             </div>
         </div>
     </section>
 
-    <!-- GALERÍA -->
     <section id="galeria" class="py-24 bg-blue-600 border-y-8 border-black">
         <div class="container mx-auto px-4">
             <h2 class="text-center text-6xl text-white mb-16 uppercase drop-shadow-md" id="gallery-title">ÁLBUM DE AVENTURAS</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="comic-panel cursor-pointer" onclick="openLightbox('fotos/galeria1.jpg')">
-                    <img src="fotos/galeria1.jpg" class="w-full h-72 object-cover">
-                </div>
-                <div class="comic-panel transform rotate-1 cursor-pointer" onclick="openLightbox('fotos/galeria2.jpg')">
-                    <img src="fotos/galeria2.jpg" class="w-full h-72 object-cover">
-                </div>
-                <div class="comic-panel transform -rotate-1 cursor-pointer" onclick="openLightbox('fotos/galeria3.jpg')">
-                    <img src="fotos/galeria3.jpg" class="w-full h-72 object-cover">
-                </div>
-                <div class="comic-panel cursor-pointer" onclick="openLightbox('fotos/galeria4.jpg')">
-                    <img src="fotos/galeria4.jpg" class="w-full h-72 object-cover">
-                </div>
+                <div class="comic-panel cursor-pointer" onclick="openLightbox('fotos/galeria1.jpg')"><img src="fotos/galeria1.jpg" class="w-full h-72 object-cover"></div>
+                <div class="comic-panel transform rotate-1 cursor-pointer" onclick="openLightbox('fotos/galeria2.jpg')"><img src="fotos/galeria2.jpg" class="w-full h-72 object-cover"></div>
+                <div class="comic-panel transform -rotate-1 cursor-pointer" onclick="openLightbox('fotos/galeria3.jpg')"><img src="fotos/galeria3.jpg" class="w-full h-72 object-cover"></div>
+                <div class="comic-panel cursor-pointer" onclick="openLightbox('fotos/galeria4.jpg')"><img src="fotos/galeria4.jpg" class="w-full h-72 object-cover"></div>
             </div>
         </div>
     </section>
 
-    <!-- UBICACIÓN -->
     <section id="donde" class="py-24 container mx-auto px-4">
         <h2 class="text-center text-6xl mb-16 uppercase" id="location-title">COORDENADAS SECRETAS</h2>
         <div class="grid md:grid-cols-2 gap-12">
             <div class="comic-panel p-10 bg-red-500 text-white transform -rotate-0.5">
-                <div class="bg-black w-20 h-20 rounded-full flex items-center justify-center mb-6 border-4 border-white">
-                    <i class="fas fa-church text-4xl"></i>
-                </div>
+                <div class="bg-black w-20 h-20 rounded-full flex items-center justify-center mb-6 border-4 border-white"><i class="fas fa-church text-4xl"></i></div>
                 <h3 class="comic-title text-4xl mb-4" id="church-title">EL COMPROMISO</h3>
                 <p class="text-2xl font-bold mb-2 text-white" id="church-name">Catedral de Santa María</p>
                 <p class="text-xl mb-8" id="church-time">12:00 PM • ¡Operación Boda en marcha!</p>
-                <a href="https://maps.app.goo.gl/gx9kBWrqabxMW7QR7" target="_blank" class="inline-block bg-white text-black px-8 py-3 border-4 border-black uppercase font-bold hover:bg-yellow-400 transition transform hover:translate-x-1 hover:-translate-y-1" id="btn-map1">Abrir Mapa</a>
+                <a href="http://maps.google.com" target="_blank" class="inline-block bg-white text-black px-8 py-3 border-4 border-black uppercase font-bold hover:bg-yellow-400 transition transform hover:translate-x-1 hover:-translate-y-1" id="btn-map1">Abrir Mapa</a>
             </div>
-            
             <div class="comic-panel p-10 bg-yellow-400 transform rotate-0.5">
-                <div class="bg-black w-20 h-20 rounded-full flex items-center justify-center mb-6 border-4 border-white">
-                    <i class="fas fa-glass-cheers text-4xl text-yellow-400"></i>
-                </div>
+                <div class="bg-black w-20 h-20 rounded-full flex items-center justify-center mb-6 border-4 border-white"><i class="fas fa-glass-cheers text-4xl text-yellow-400"></i></div>
                 <h3 class="comic-title text-4xl mb-4 text-black" id="party-title">EL BANQUETE</h3>
                 <p class="text-2xl font-bold text-black mb-2" id="party-name">Finca "El Paraíso"</p>
                 <p class="text-xl text-black mb-8" id="party-time">08:00 PM • Fiesta nivel Superhéroe</p>
-                <a href="https://maps.app.goo.gl/gx9kBWrqabxMW7QR7" target="_blank" class="inline-block bg-black text-white px-8 py-3 border-4 border-black uppercase font-bold hover:bg-red-600 transition transform hover:translate-x-1 hover:-translate-y-1" id="btn-map2">Cómo llegar</a>
+                <a href="http://maps.google.com" target="_blank" class="inline-block bg-black text-white px-8 py-3 border-4 border-black uppercase font-bold hover:bg-red-600 transition transform hover:translate-x-1 hover:-translate-y-1" id="btn-map2">Cómo llegar</a>
             </div>
         </div>
     </section>
 
-    <!-- REGALOS -->
     <section id="regalos" class="py-24 bg-gray-200 border-t-8 border-black">
         <div class="container mx-auto px-4 text-center reveal">
             <div class="max-w-3xl mx-auto comic-panel p-12 bg-white relative">
                 <div class="absolute -top-10 -left-10 onomatopeya text-5xl bg-yellow-400 px-4 py-2 border-4 border-black">¡THWIP!</div>
                 <h2 class="text-5xl mb-8 uppercase text-blue-700" id="gift-title">MESA DE REGALOS</h2>
                 <p class="text-2xl mb-10" id="gift-p">Vuestra presencia es nuestro mejor regalo, pero si deseáis tener un detalle adicional:</p>
-                
                 <div class="bg-blue-50 border-4 border-dashed border-black p-6 rounded-xl flex flex-col md:flex-row items-center justify-between gap-4">
                     <span class="font-mono text-2xl font-bold tracking-widest text-black uppercase">ES12 3456 7890 1234 5678</span>
-                    <button onclick="copyToClipboard('ES12 3456 7890 1234 5678', this)" class="w-full md:w-auto bg-black text-white px-8 py-4 text-lg uppercase font-bold hover:bg-blue-600 transition shadow-lg active:scale-95" id="btn-copy">
-                        Copiar IBAN
-                    </button>
+                    <button onclick="copyToClipboard('ES12 3456 7890 1234 5678', this)" class="w-full md:w-auto bg-black text-white px-8 py-4 text-lg uppercase font-bold hover:bg-blue-600 transition shadow-lg active:scale-95" id="btn-copy">Copiar IBAN</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- RSVP -->
     <section id="confirmar" class="py-24 bg-red-600 border-t-8 border-black">
         <div class="container mx-auto px-4">
             <div class="max-w-3xl mx-auto text-center mb-12">
@@ -438,51 +278,29 @@
             </div>
 
             <div class="max-w-2xl mx-auto comic-panel p-8 md:p-12 bg-white transform -rotate-0.5">
-                <div id="response-success" class="response-box">
-                    <span id="response-text">¡Señal recibida! Gracias 😄</span>
-                </div>
-
-                <form id="rsvp-form" action="https://formspree.io/f/xgozkeba" method="POST" class="space-y-6">
+                <form id="registroForm" class="space-y-6">
                     <div>
-                        <label class="comic-label" id="label-name">Identidad Civil (Nombre Completo)</label>
-                        <input type="text" name="Nombre" required class="w-full p-4 comic-input bg-blue-50" placeholder="..." id="placeholder-name">
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="comic-label" id="label-join">¿Te unes a la misión?</label>
-                            <select name="Asistencia" class="w-full p-4 comic-input bg-yellow-50 cursor-pointer">
-                                <option value="SI" id="opt-yes">¡SÍ, ALLÍ ESTARÉ!</option>
-                                <option value="NO" id="opt-no">NO PODRÉ ASISTIR</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="comic-label" id="label-allies">Número de Aliados</label>
-                            <select name="Total_Invitados" class="w-full p-4 comic-input bg-yellow-50 cursor-pointer">
-                                <option value="1" id="opt-1">SOLO YO (1)</option>
-                                <option value="2" id="opt-2">SOMOS PAREJA (2)</option>
-                                <option value="3" id="opt-3">EQUIPO DE 3</option>
-                            </select>
-                        </div>
+                        <label class="comic-label" id="label-name" for="nombre">Nombre Completo y apellidos:</label>
+                        <input type="text" id="nombre" name="nombre" required class="w-full p-4 comic-input bg-blue-50" placeholder="Escribe tu nombre">
                     </div>
 
                     <div>
-                        <label class="comic-label" id="label-message">Mensaje para el Cuartel General</label>
-                        <textarea name="Comentarios" rows="3" class="w-full p-4 comic-input bg-red-50" placeholder="..." id="placeholder-message"></textarea>
+                        <label class="comic-label" id="label-join" for="asistencia">¿Asistirás?</label>
+                        <select id="asistencia" name="asistencia" class="w-full p-4 comic-input bg-yellow-50 cursor-pointer">
+                            <option value="Sí" id="opt-yes">Sí, asistiré</option>
+                            <option value="No" id="opt-no">No podré asistir</option>
+                        </select>
                     </div>
 
-                    <input type="text" name="_gotcha" style="display:none">
-                    
                     <div class="pt-4">
-                        <button type="submit" id="btn-submit" class="w-full bg-black text-yellow-400 text-3xl font-bold py-6 comic-panel hover:bg-blue-600 hover:text-white transition-all transform hover:-translate-y-2 uppercase">
-                            ¡Enviar Señal!
+                        <button type="submit" id="btnEnviar" class="w-full bg-black text-yellow-400 text-3xl font-bold py-6 comic-panel hover:bg-blue-600 hover:text-white transition-all transform hover:-translate-y-2 uppercase">
+                            Enviar Datos
                         </button>
                     </div>
                 </form>
                 
-                <p class="text-center mt-8 text-gray-500 font-bold italic" id="rsvp-deadline">
-                    * Fecha límite de respuesta: 1 de Mayo, 2026
-                </p>
+                <div id="estado"></div>
+                <p class="text-center mt-8 text-gray-500 font-bold italic" id="rsvp-deadline">* Fecha límite: 1 de Mayo, 2026</p>
             </div>
         </div>
     </section>
@@ -492,164 +310,59 @@
         <p class="opacity-50 text-lg">© 2026 Marcello & Cristina Studios.</p>
     </footer>
 
-    <div id="lightbox" onclick="closeLightbox()">
-        <img id="lightbox-img" src="" alt="Zoom" class="max-w-[90%] max-h-[80%] border-8 border-white outline outline-4 outline-black">
-    </div>
+    <div id="lightbox" onclick="closeLightbox()"><img id="lightbox-img" src="" class="max-w-[90%] max-h-[80%] border-8 border-white outline outline-4 outline-black"></div>
 
     <script>
         const translations = {
             es: {
-                navTitle: "M&C: EDICIÓN ESPECIAL",
-                navHistory: "HISTORIA",
-                navGallery: "GALERÍA",
-                navLocation: "UBICACIÓN",
-                navRsvp: "CONFIRMAR",
-                heroDate: "10 JUNIO 2026",
-                labelDays: "DÍAS",
-                labelHours: "HORAS",
-                labelMin: "MIN",
-                labelSec: "SEG",
-                badgeHistory: "ORIGIN STORY",
-                historyTitle: "CAPÍTULO 1: EL ENCUENTRO",
-                historyP1: "Como en los mejores cómics, no fue el azar, fue el destino. Marcello y Cristina unieron fuerzas para crear el equipo más poderoso del mundo.",
-                historyP2: '"Después de mil batallas y aventuras, hemos decidido firmar el contrato más importante de nuestras vidas."',
-                galleryTitle: "ÁLBUM DE AVENTURAS",
-                locationTitle: "COORDENADAS SECRETAS",
-                churchTitle: "EL COMPROMISO",
-                churchName: "Catedral de Santa María",
-                churchTime: "12:00 PM • ¡Operación Boda en marcha!",
-                btnMap: "Abrir Mapa",
-                partyTitle: "EL BANQUETE",
-                partyName: 'Finca "El Paraíso"',
-                partyTime: "08:00 PM • Fiesta nivel Superhéroe",
-                btnParty: "Cómo llegar",
-                giftTitle: "MESA DE REGALOS",
-                giftP: "Vuestra presencia es nuestro mejor regalo, pero si deseáis tener un detalle adicional:",
-                btnCopy: "Copiar IBAN",
-                rsvpTitle: "Confirmar Asistencia",
-                rsvpSubtitle: "¿Serás nuestro próximo aliado en el gran día?",
-                labelName: "Identidad Civil (Nombre Completo)",
-                placeholderName: "Escribe tu nombre de héroe/heroína",
-                labelJoin: "¿Te unes a la misión?",
-                optYes: "¡SÍ, ALLÍ ESTARÉ!",
-                optNo: "NO PODRÉ ASISTIR",
-                labelAllies: "Número de Aliados",
-                opt1: "SOLO YO (1)",
-                opt2: "SOMOS PAREJA (2)",
-                opt3: "EQUIPO DE 3",
-                labelMessage: "Mensaje para el Cuartel General",
-                placeholderMessage: "Alergias, peticiones musicales o un mensaje de apoyo...",
-                btnSubmit: "¡Enviar Señal!",
-                rsvpDeadline: "* Fecha límite de respuesta: 1 de Mayo, 2026",
-                footerCont: "CONTINUARÁ...",
-                copied: "¡COPIADO!",
-                successMsg: "¡Señal recibida! Gracias 😄",
-                sendingMsg: "ENVIANDO..."
+                navTitle: "M&C: EDICIÓN ESPECIAL", navHistory: "HISTORIA", navGallery: "GALERÍA", navLocation: "UBICACIÓN", navRsvp: "CONFIRMAR",
+                heroDate: "10 JUNIO 2026", labelDays: "DÍAS", labelHours: "HORAS", labelMin: "MIN", labelSec: "SEG",
+                badgeHistory: "LA HISTORIA", historyTitle: "CAPÍTULO 1: EL ENCUENTRO", historyP1: "Como en los mejores cómics, no fue el azar, fue el destino...", 
+                historyP2: '"Después de mil batallas, hemos decidido firmar el contrato más importante."', galleryTitle: "ÁLBUM DE AVENTURAS",
+                locationTitle: "COORDENADAS SECRETAS", churchTitle: "EL COMPROMISO", churchName: "Catedral de Santa María", churchTime: "12:00 PM • ¡Boda en marcha!",
+                btnMap: "Abrir Mapa", partyTitle: "EL BANQUETE", partyName: 'Finca "El Paraíso"', partyTime: "08:00 PM • Fiesta Superhéroe",
+                btnParty: "Cómo llegar", giftTitle: "MESA DE REGALOS", giftP: "Vuestra presencia es el regalo, pero si deseáis algo más:",
+                btnCopy: "Copiar IBAN", rsvpTitle: "Confirmar Asistencia", rsvpSubtitle: "¿Serás aliado en el gran día?", labelName: "Nombre Completo:",
+                placeholderName: "Escribe tu nombre", labelJoin: "¿Asistirás?", optYes: "Sí, asistiré", optNo: "No podré asistir",
+                btnSubmit: "Enviar Datos", rsvpDeadline: "* Fecha límite: 1 de Mayo, 2026", footerCont: "CONTINUARÁ...", copied: "¡COPIADO!", 
+                sendingMsg: "Enviando...", successMsg: "¡Datos guardados con éxito!", errorMsg: "Hubo un error al enviar."
             },
             it: {
-                navTitle: "M&C: EDIZIONE SPECIALE",
-                navHistory: "STORIA",
-                navGallery: "GALLERIA",
-                navLocation: "POSIZIONE",
-                navRsvp: "CONFERMA",
-                heroDate: "10 GIUGNO 2026",
-                labelDays: "GIORNI",
-                labelHours: "ORE",
-                labelMin: "MIN",
-                labelSec: "SEC",
-                badgeHistory: "STORIA ORIGINALE",
-                historyTitle: "CAPITOLO 1: L'INCONTRO",
-                historyP1: "Come nei migliori fumetti, non è stato il caso, è stato il destino. Marcello e Cristina hanno unito le forze para creare la squadra più potente del mondo.",
-                historyP2: '"Dopo mille battaglie e avventure, abbiamo deciso di firmare il contratto più importante della nostra vita."',
-                galleryTitle: "ALBUM DELLE AVVENTURE",
-                locationTitle: "COORDINATE SEGRETE",
-                churchTitle: "IL COMPROMESSO",
-                churchName: "Cattedrale di Santa Maria",
-                churchTime: "12:00 PM • Operazione Matrimonio in corso!",
-                btnMap: "Apri Mappa",
-                partyTitle: "IL BANCHETTO",
-                partyName: 'Finca "Il Paradiso"',
-                partyTime: "08:00 PM • Festa livello Supereroe",
-                btnParty: "Come arrivare",
-                giftTitle: "LISTA NOZZE",
-                giftP: "La vostra presenza è il nostro regalo più grande, ma se desiderate fare un pensiero in più:",
-                btnCopy: "Copia IBAN",
-                rsvpTitle: "Conferma Presenza",
-                rsvpSubtitle: "Sarai il nostro prossimo alleato nel grande giorno?",
-                labelName: "Identità Civile (Nome Completo)",
-                placeholderName: "Scrivi il tuo nome da eroe/eroina",
-                labelJoin: "Ti unisci alla missione?",
-                optYes: "SÌ, CI SARÒ!",
-                optNo: "NON POTRÒ ESSERCI",
-                labelAllies: "Numero di Alleati",
-                opt1: "SOLO IO (1)",
-                opt2: "SIAMO UNA COPPIA (2)",
-                opt3: "TEAM DI 3",
-                labelMessage: "Messaggio per il Quartier Generale",
-                placeholderMessage: "Allergie, richieste musicali o un mensaje di supporto...",
-                btnSubmit: "Invia Segnale!",
-                rsvpDeadline: "* Scadenza respuesta: 1 Maggio, 2026",
-                footerCont: "CONTINUA...",
-                copied: "COPIATO!",
-                successMsg: "Segnale ricevuto! Grazie 😄",
-                sendingMsg: "INVIANDO..."
+                navTitle: "M&C: EDIZIONE SPECIALE", navHistory: "STORIA", navGallery: "GALLERIA", navLocation: "POSIZIONE", navRsvp: "CONFERMA",
+                heroDate: "10 GIUGNO 2026", labelDays: "GIORNI", labelHours: "ORE", labelMin: "MIN", labelSec: "SEC",
+                badgeHistory: "STORIA ORIGINALE", historyTitle: "CAPITOLO 1: L'INCONTRO", historyP1: "Come nei migliori fumetti, non è stato il caso, è stato il destino...",
+                historyP2: '"Dopo mille avventure, abbiamo deciso di firmare il contratto più importante."', galleryTitle: "ALBUM DELLE AVVENTURE",
+                locationTitle: "COORDINATE SEGRETE", churchTitle: "IL COMPROMESSO", churchName: "Cattedrale di Santa Maria", churchTime: "12:00 PM • Operazione Matrimonio!",
+                btnMap: "Apri Mappa", partyTitle: "IL BANCHETTO", partyName: 'Finca "Il Paradiso"', partyTime: "08:00 PM • Festa Supereroe",
+                btnParty: "Come arrivare", giftTitle: "LISTA NOZZE", giftP: "La vostra presenza è il regalo, ma se desiderate fare un pensiero:",
+                btnCopy: "Copia IBAN", rsvpTitle: "Conferma Presenza", rsvpSubtitle: "Sarai alleato nel grande giorno?", labelName: "Nome e cognome:",
+                placeholderName: "Scrivi il tuo nome", labelJoin: "Parteciperai?", optYes: "Sì, ci sarò", optNo: "No, non potrò",
+                btnSubmit: "Invia Dati", rsvpDeadline: "* Scadenza: 1 Maggio, 2026", footerCont: "CONTINUA...", copied: "COPIATO!", 
+                sendingMsg: "Inviando...", successMsg: "Dati salvati con successo!", errorMsg: "Errore durante l'invio."
             },
             en: {
-                navTitle: "M&C: SPECIAL EDITION",
-                navHistory: "STORY",
-                navGallery: "GALLERY",
-                navLocation: "LOCATION",
-                navRsvp: "RSVP",
-                heroDate: "JUNE 10 2026",
-                labelDays: "DAYS",
-                labelHours: "HOURS",
-                labelMin: "MIN",
-                labelSec: "SEC",
-                badgeHistory: "ORIGIN STORY",
-                historyTitle: "CHAPTER 1: THE MEETING",
-                historyP1: "Just like in the best comics, it wasn't chance, it was destiny. Marcello and Cristina joined forces to create the world's most powerful team.",
-                historyP2: '"After a thousand battles and adventures, we have decided to sign the most important contract of our lives."',
-                galleryTitle: "ADVENTURE ALBUM",
-                locationTitle: "SECRET COORDINATES",
-                churchTitle: "THE VOWS",
-                churchName: "St. Mary's Cathedral",
-                churchTime: "12:00 PM • Operation Wedding is go!",
-                btnMap: "Open Map",
-                partyTitle: "THE BANQUET",
-                partyName: '"Paradise" Estate',
-                partyTime: "08:00 PM • Superhero Level Party",
-                btnParty: "Get Directions",
-                giftTitle: "GIFT REGISTRY",
-                giftP: "Your presence is our best gift, but if you wish to give something extra:",
-                btnCopy: "Copy IBAN",
-                rsvpTitle: "Confirm Attendance",
-                rsvpSubtitle: "Will you be our next ally on the big day?",
-                labelName: "Civil Identity (Full Name)",
-                placeholderName: "Write your hero/heroine name",
-                labelJoin: "Joining the mission?",
-                optYes: "YES, I'LL BE THERE!",
-                optNo: "CAN'T MAKE IT",
-                labelAllies: "Number of Allies",
-                opt1: "JUST ME (1)",
-                opt2: "WE'RE A DUO (2)",
-                opt3: "TEAM OF 3",
-                labelMessage: "Message for Headquarters",
-                placeholderMessage: "Allergies, song requests or a message of support...",
-                btnSubmit: "Send Signal!",
-                rsvpDeadline: "* RSVP Deadline: May 1st, 2026",
-                footerCont: "TO BE CONTINUED...",
-                copied: "COPIED!",
-                successMsg: "Signal received! Thanks 😄",
-                sendingMsg: "SENDING..."
+                navTitle: "M&C: SPECIAL EDITION", navHistory: "STORY", navGallery: "GALLERY", navLocation: "LOCATION", navRsvp: "RSVP",
+                heroDate: "JUNE 10 2026", labelDays: "DAYS", labelHours: "HOURS", labelMin: "MIN", labelSec: "SEC",
+                badgeHistory: "ORIGIN STORY", historyTitle: "CHAPTER 1: THE MEETING", historyP1: "Just like in the best comics, it wasn't chance, it was destiny...",
+                historyP2: '"After a thousand battles, we have decided to sign the most important contract."', galleryTitle: "ADVENTURE ALBUM",
+                locationTitle: "SECRET COORDINATES", churchTitle: "THE VOWS", churchName: "St. Mary's Cathedral", churchTime: "12:00 PM • Operation Wedding!",
+                btnMap: "Open Map", partyTitle: "THE BANQUET", partyName: '"Paradise" Estate', partyTime: "08:00 PM • Superhero Party",
+                btnParty: "Get Directions", giftTitle: "GIFT REGISTRY", giftP: "Your presence is the best gift, but if you wish to give extra:",
+                btnCopy: "Copy IBAN", rsvpTitle: "Confirm Attendance", rsvpSubtitle: "Will you be our ally?", labelName: "name and surname:",
+                placeholderName: "Write your name", labelJoin: "Will you attend?", optYes: "Yes, I'll be there", optNo: "No, I can't make it",
+                btnSubmit: "Send Data", rsvpDeadline: "* RSVP Deadline: May 1st, 2026", footerCont: "TO BE CONTINUED...", copied: "COPIED!", 
+                sendingMsg: "Sending...", successMsg: "Data saved successfully!", errorMsg: "Error sending data."
             }
         };
 
         let currentLang = 'es';
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwaON4cTPF10VsaNDNPFynFBGJujTm_8NhLGd5I__2KKn2P5rt7avB_WYqhJqUg4m29/exec';
+        const form = document.getElementById('registroForm');
+        const btnEnviar = document.getElementById('btnEnviar');
+        const estado = document.getElementById('estado');
 
         function setLanguage(lang) {
-            currentLang = lang;
-            const t = translations[lang];
-            
+            currentLang = lang; const t = translations[lang];
             document.getElementById('nav-title').textContent = t.navTitle;
             document.getElementById('nav-history').textContent = t.navHistory;
             document.getElementById('nav-gallery').textContent = t.navGallery;
@@ -680,61 +393,52 @@
             document.getElementById('rsvp-title').textContent = t.rsvpTitle;
             document.getElementById('rsvp-subtitle').textContent = t.rsvpSubtitle;
             document.getElementById('label-name').textContent = t.labelName;
-            document.getElementById('placeholder-name').placeholder = t.placeholderName;
+            document.getElementById('nombre').placeholder = t.placeholderName;
             document.getElementById('label-join').textContent = t.labelJoin;
             document.getElementById('opt-yes').textContent = t.optYes;
             document.getElementById('opt-no').textContent = t.optNo;
-            document.getElementById('label-allies').textContent = t.labelAllies;
-            document.getElementById('opt-1').textContent = t.opt1;
-            document.getElementById('opt-2').textContent = t.opt2;
-            document.getElementById('opt-3').textContent = t.opt3;
-            document.getElementById('label-message').textContent = t.labelMessage;
-            document.getElementById('placeholder-message').placeholder = t.placeholderMessage;
-            document.getElementById('btn-submit').textContent = t.btnSubmit;
+            document.getElementById('btnEnviar').textContent = t.btnSubmit;
             document.getElementById('rsvp-deadline').textContent = t.rsvpDeadline;
             document.getElementById('footer-cont').textContent = t.footerCont;
-            document.getElementById('response-text').textContent = t.successMsg;
-
             document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(`btn-${lang}`).classList.add('active');
             document.getElementById(`m-btn-${lang}`).classList.add('active');
         }
 
-        const rsvpForm = document.getElementById('rsvp-form');
-        const responseBox = document.getElementById('response-success');
-        const submitBtn = document.getElementById('btn-submit');
-
-        rsvpForm.addEventListener('submit', async function(e) {
+        // LÓGICA DE ENVÍO DEL INDEX1 INTEGRADA
+        form.addEventListener('submit', e => {
             e.preventDefault();
-            const originalBtnText = submitBtn.textContent;
-            submitBtn.textContent = translations[currentLang].sendingMsg;
-            submitBtn.disabled = true;
+            
+            btnEnviar.disabled = true;
+            estado.innerText = translations[currentLang].sendingMsg;
+            estado.style.color = "orange";
 
-            const formData = new FormData(this);
+            const datos = {
+                nombre: document.getElementById('nombre').value,
+                asistencia: document.getElementById('asistencia').value
+            };
 
-            try {
-                const response = await fetch(this.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                });
-
-                if (response.ok) {
-                    responseBox.style.display = 'block';
-                    rsvpForm.style.display = 'none';
-                    responseBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                } else {
-                    throw new Error('Error en el envío');
-                }
-            } catch (error) {
-                alert('Ocurrió un error al enviar. Por favor, inténtalo de nuevo.');
-                submitBtn.textContent = originalBtnText;
-                submitBtn.disabled = false;
-            }
+            fetch(scriptURL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(datos)
+            })
+            .then(() => {
+                estado.innerText = translations[currentLang].successMsg;
+                estado.style.color = "green";
+                form.reset();
+                btnEnviar.disabled = false;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                estado.innerText = translations[currentLang].errorMsg;
+                estado.style.color = "red";
+                btnEnviar.disabled = false;
+            });
         });
 
+        // Resto de funciones visuales (menú, countdown, etc.)
         function toggleMenu() {
             const menu = document.getElementById('mobile-menu');
             const icon = document.getElementById('menu-icon');
@@ -745,8 +449,7 @@
 
         const weddingDate = new Date("Jun 10, 2026 12:00:00").getTime();
         setInterval(function() {
-            const now = new Date().getTime();
-            const distance = weddingDate - now;
+            const now = new Date().getTime(); const distance = weddingDate - now;
             if (distance < 0) return;
             document.getElementById("days").innerHTML = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
             document.getElementById("hours").innerHTML = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
@@ -755,46 +458,25 @@
         }, 1000);
 
         function copyToClipboard(text, el) {
-            const tempInput = document.createElement("input");
-            tempInput.value = text;
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            document.execCommand("copy");
-            document.body.removeChild(tempInput);
-
-            const activeLang = document.querySelector('.lang-btn.active').id.split('-')[1];
-            const old = el.innerHTML;
-            el.innerHTML = translations[activeLang].copied;
+            const tempInput = document.createElement("input"); tempInput.value = text;
+            document.body.appendChild(tempInput); tempInput.select();
+            document.execCommand("copy"); document.body.removeChild(tempInput);
+            const activeLang = currentLang;
+            const old = el.innerHTML; el.innerHTML = translations[activeLang].copied;
             el.classList.replace('bg-black', 'bg-green-500');
-            setTimeout(() => {
-                el.innerHTML = old;
-                el.classList.replace('bg-green-500', 'bg-black');
-            }, 2000);
+            setTimeout(() => { el.innerHTML = old; el.classList.replace('bg-green-500', 'bg-black'); }, 2000);
         }
 
-        function openLightbox(src) {
-            const lb = document.getElementById('lightbox');
-            const img = document.getElementById('lightbox-img');
-            img.src = src;
-            lb.style.display = 'flex';
-        }
-
-        function closeLightbox() {
-            document.getElementById('lightbox').style.display = 'none';
-        }
-
+        function openLightbox(src) { document.getElementById('lightbox-img').src = src; document.getElementById('lightbox').style.display = 'flex'; }
+        function closeLightbox() { document.getElementById('lightbox').style.display = 'none'; }
+        
         function reveal() {
             const reveals = document.querySelectorAll(".reveal");
             for (let i = 0; i < reveals.length; i++) {
-                const windowHeight = window.innerHeight;
-                const elementTop = reveals[i].getBoundingClientRect().top;
-                if (elementTop < windowHeight - 150) {
-                    reveals[i].classList.add("active");
-                }
+                if (reveals[i].getBoundingClientRect().top < window.innerHeight - 150) reveals[i].classList.add("active");
             }
         }
-        window.addEventListener("scroll", reveal);
-        reveal();
+        window.addEventListener("scroll", reveal); reveal();
     </script>
 </body>
 </html>
