@@ -13,6 +13,7 @@
             --comic-yellow: #FFD700;
             --comic-red: #FF4500;
             --comic-blue: #0080FF;
+            --comic-green: #2ecc71;
         }
 
         body {
@@ -40,8 +41,7 @@
         }
 
         .comic-panel:hover {
-            transform: scale(1.03) rotate(-1deg);
-            box-shadow: 15px 15px 0px var(--comic-yellow);
+            transform: scale(1.01) rotate(-0.5deg);
         }
 
         #mobile-menu {
@@ -173,6 +173,21 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Estilos específicos para la respuesta del formulario */
+        .response-box {
+            border: 3px solid #27ae60;
+            background-color: #f1fcf6;
+            color: #27ae60;
+            padding: 1.5rem;
+            border-radius: 12px;
+            font-family: 'Kalam', cursive;
+            font-weight: bold;
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            display: none; /* Se activa con JS */
+            box-shadow: 4px 4px 0px #27ae60;
+        }
     </style>
 </head>
 <body class="text-gray-900">
@@ -303,7 +318,6 @@
                 <h3 class="comic-title text-4xl mb-4" id="church-title">EL COMPROMISO</h3>
                 <p class="text-2xl font-bold mb-2 text-white" id="church-name">Catedral de Santa María</p>
                 <p class="text-xl mb-8" id="church-time">12:00 PM • ¡Operación Boda en marcha!</p>
-                <!-- Dirección actualizada -->
                 <a href="https://maps.app.goo.gl/gx9kBWrqabxMW7QR7" target="_blank" class="inline-block bg-white text-black px-8 py-3 border-4 border-black uppercase font-bold hover:bg-yellow-400 transition transform hover:translate-x-1 hover:-translate-y-1" id="btn-map1">Abrir Mapa</a>
             </div>
             
@@ -315,7 +329,6 @@
                 <h3 class="comic-title text-4xl mb-4 text-black" id="party-title">EL BANQUETE</h3>
                 <p class="text-2xl font-bold text-black mb-2" id="party-name">Finca "El Paraíso"</p>
                 <p class="text-xl text-black mb-8" id="party-time">08:00 PM • Fiesta nivel Superhéroe</p>
-                <!-- Dirección actualizada -->
                 <a href="https://maps.app.goo.gl/gx9kBWrqabxMW7QR7" target="_blank" class="inline-block bg-black text-white px-8 py-3 border-4 border-black uppercase font-bold hover:bg-red-600 transition transform hover:translate-x-1 hover:-translate-y-1" id="btn-map2">Cómo llegar</a>
             </div>
         </div>
@@ -349,7 +362,13 @@
             </div>
 
             <div class="max-w-2xl mx-auto comic-panel p-8 md:p-12 bg-white transform -rotate-1">
-                <form action="https://formspree.io/f/xgozkeba" method="POST" class="space-y-6">
+                
+                <!-- CAJA DE RESPUESTA INTEGRADA (VISIBLE TRAS ENVIAR) -->
+                <div id="response-success" class="response-box">
+                    <span id="response-text">¡Señal recibida! Gracias 😄</span>
+                </div>
+
+                <form id="rsvp-form" action="https://formspree.io/f/xgozkeba" method="POST" class="space-y-6">
                     <div>
                         <label class="comic-label" id="label-name">Identidad Civil (Nombre Completo)</label>
                         <input type="text" name="Nombre" required class="w-full p-4 comic-input bg-blue-50" placeholder="..." id="placeholder-name">
@@ -381,7 +400,7 @@
                     <input type="text" name="_gotcha" style="display:none">
                     
                     <div class="pt-4">
-                        <button type="submit" class="w-full bg-black text-yellow-400 text-3xl font-bold py-6 comic-panel hover:bg-blue-600 hover:text-white transition-all transform hover:-translate-y-2 uppercase" id="btn-submit">
+                        <button type="submit" id="btn-submit" class="w-full bg-black text-yellow-400 text-3xl font-bold py-6 comic-panel hover:bg-blue-600 hover:text-white transition-all transform hover:-translate-y-2 uppercase">
                             ¡Enviar Señal!
                         </button>
                     </div>
@@ -450,7 +469,9 @@
                 btnSubmit: "¡Enviar Señal!",
                 rsvpDeadline: "* Fecha límite de respuesta: 1 de Mayo, 2026",
                 footerCont: "CONTINUARÁ...",
-                copied: "¡COPIADO!"
+                copied: "¡COPIADO!",
+                successMsg: "¡Señal recibida! Gracias 😄",
+                sendingMsg: "ENVIANDO..."
             },
             it: {
                 navTitle: "M&C: EDIZIONE SPECIALE",
@@ -497,7 +518,9 @@
                 btnSubmit: "Invia Segnale!",
                 rsvpDeadline: "* Scadenza respuesta: 1 Maggio, 2026",
                 footerCont: "CONTINUA...",
-                copied: "COPIATO!"
+                copied: "COPIATO!",
+                successMsg: "Segnale ricevuto! Grazie 😄",
+                sendingMsg: "INVIANDO..."
             },
             en: {
                 navTitle: "M&C: SPECIAL EDITION",
@@ -544,11 +567,16 @@
                 btnSubmit: "Send Signal!",
                 rsvpDeadline: "* RSVP Deadline: May 1st, 2026",
                 footerCont: "TO BE CONTINUED...",
-                copied: "COPIED!"
+                copied: "COPIED!",
+                successMsg: "Signal received! Thanks 😄",
+                sendingMsg: "SENDING..."
             }
         };
 
+        let currentLang = 'es';
+
         function setLanguage(lang) {
+            currentLang = lang;
             const t = translations[lang];
             
             document.getElementById('nav-title').textContent = t.navTitle;
@@ -595,11 +623,51 @@
             document.getElementById('btn-submit').textContent = t.btnSubmit;
             document.getElementById('rsvp-deadline').textContent = t.rsvpDeadline;
             document.getElementById('footer-cont').textContent = t.footerCont;
+            document.getElementById('response-text').textContent = t.successMsg;
 
             document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(`btn-${lang}`).classList.add('active');
             document.getElementById(`m-btn-${lang}`).classList.add('active');
         }
+
+        // Manejo del formulario vía AJAX
+        const rsvpForm = document.getElementById('rsvp-form');
+        const responseBox = document.getElementById('response-success');
+        const submitBtn = document.getElementById('btn-submit');
+
+        rsvpForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Estado de carga
+            const originalBtnText = submitBtn.textContent;
+            submitBtn.textContent = translations[currentLang].sendingMsg;
+            submitBtn.disabled = true;
+
+            const formData = new FormData(this);
+
+            try {
+                const response = await fetch(this.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    // Éxito: Mostrar caja de respuesta y ocultar formulario
+                    responseBox.style.display = 'block';
+                    rsvpForm.style.display = 'none';
+                    responseBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else {
+                    throw new Error('Error en el envío');
+                }
+            } catch (error) {
+                alert('Ocurrió un error al enviar. Por favor, inténtalo de nuevo.');
+                submitBtn.textContent = originalBtnText;
+                submitBtn.disabled = false;
+            }
+        });
 
         function toggleMenu() {
             const menu = document.getElementById('mobile-menu');
