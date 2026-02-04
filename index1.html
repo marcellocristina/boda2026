@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Comic Tennis Vertical!</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
@@ -16,6 +16,8 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            /* Previene gestos del navegador como deslizar para refrescar */
+            touch-action: none;
         }
 
         #game-container {
@@ -25,11 +27,14 @@
             background-color: #fff;
             background-image: radial-gradient(#ccc 1px, transparent 1px);
             background-size: 15px 15px;
+            max-width: 95vw;
         }
 
         canvas {
             display: block;
             cursor: crosshair;
+            max-width: 100%;
+            height: auto;
         }
 
         .onomatopoeia {
@@ -118,7 +123,7 @@
     <div id="screen-overlay">
         <div id="start-content">
             <h1 class="text-5xl mb-4 text-black">VERTICAL SMASH!</h1>
-            <p class="text-lg mb-6 text-black">El primero en llegar a 5 puntos desvela el secreto...</p>
+            <p class="text-lg mb-6 text-black">Usa el ratón o desliza el dedo lateralmente.<br>Llega a 5 puntos para el secreto.</p>
             <button class="btn-comic" onclick="startGame()">¡EMPEZAR!</button>
         </div>
         
@@ -164,7 +169,7 @@
     const cpu = { x: canvas.width / 2 - paddleWidth / 2, y: 25 };
 
     const INITIAL_SPEED_Y = 5;
-    const MIN_SPEED_Y = 3.5; // Mínima velocidad vertical garantizada
+    const MIN_SPEED_Y = 3.5; 
     const MIN_SPEED_X = 2;
     
     let ball = {
@@ -176,13 +181,32 @@
         color: '#bef264'
     };
 
-    canvas.addEventListener('mousemove', (e) => {
+    // Función común para mover la raqueta
+    function handleMove(clientX) {
         const rect = canvas.getBoundingClientRect();
-        const mouseX = e.clientX - rect.left;
+        const scaleX = canvas.width / rect.width;
+        const mouseX = (clientX - rect.left) * scaleX;
         player.x = mouseX - paddleWidth / 2;
+        
         if(player.x < 0) player.x = 0;
         if(player.x > canvas.width - paddleWidth) player.x = canvas.width - paddleWidth;
+    }
+
+    // Eventos de ratón
+    canvas.addEventListener('mousemove', (e) => {
+        handleMove(e.clientX);
     });
+
+    // Eventos táctiles
+    canvas.addEventListener('touchstart', (e) => {
+        handleMove(e.touches[0].clientX);
+        e.preventDefault();
+    }, {passive: false});
+
+    canvas.addEventListener('touchmove', (e) => {
+        handleMove(e.touches[0].clientX);
+        e.preventDefault();
+    }, {passive: false});
 
     function spawnOnomatopoeia(x, y, text) {
         const el = document.createElement('div');
@@ -273,55 +297,37 @@
             ball.x += ball.speedX;
             ball.y += ball.speedY;
 
-            // IA CPU (Mejorada ligeramente para evitar que se quede pegada)
             const cpuSpeed = 5;
             const cpuCenter = cpu.x + paddleWidth / 2;
             if (cpuCenter < ball.x - 10) cpu.x += cpuSpeed;
             else if (cpuCenter > ball.x + 10) cpu.x -= cpuSpeed;
 
-            // Rebote paredes - Anti "línea recta lateral"
             if (ball.x - ball.radius < 0 || ball.x + ball.radius > canvas.width) {
                 ball.speedX = -ball.speedX;
-                
-                // Si la pelota va muy horizontal, le damos un empuje vertical
                 if (Math.abs(ball.speedY) < MIN_SPEED_Y) {
                     ball.speedY = ball.speedY < 0 ? -MIN_SPEED_Y : MIN_SPEED_Y;
                 }
-
                 spawnOnomatopoeia(ball.x > canvas.width/2 ? ball.x-60 : ball.x+10, ball.y, '¡BOING!');
             }
 
-            // Colisión Jugador (Abajo)
             if (ball.y + ball.radius > player.y && ball.y < player.y + paddleHeight &&
                 ball.x > player.x && ball.x < player.x + paddleWidth) {
-                
-                // Forzamos rebote hacia arriba
                 ball.speedY = -Math.max(Math.abs(ball.speedY), MIN_SPEED_Y);
-                
                 const deltaX = ball.x - (player.x + paddleWidth / 2);
                 ball.speedX = deltaX * 0.25;
-                
                 if (Math.abs(ball.speedX) < MIN_SPEED_X) ball.speedX = ball.speedX < 0 ? -MIN_SPEED_X : MIN_SPEED_X;
-                
                 spawnOnomatopoeia(ball.x - 20, ball.y - 50, '¡ZAS!');
             }
 
-            // Colisión CPU (Arriba)
             if (ball.y - ball.radius < cpu.y + paddleHeight && ball.y > cpu.y &&
                 ball.x > cpu.x && ball.x < cpu.x + paddleWidth) {
-                
-                // Forzamos rebote hacia abajo
                 ball.speedY = Math.max(Math.abs(ball.speedY), MIN_SPEED_Y);
-                
                 const deltaX = ball.x - (cpu.x + paddleWidth / 2);
                 ball.speedX = deltaX * 0.25;
-                
                 if (Math.abs(ball.speedX) < MIN_SPEED_X) ball.speedX = ball.speedX < 0 ? -MIN_SPEED_X : MIN_SPEED_X;
-                
                 spawnOnomatopoeia(ball.x - 20, ball.y + 20, '¡POW!');
             }
 
-            // Puntos
             if (ball.y < 0) {
                 p1Score++;
                 updateScoreDisplay();
