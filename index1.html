@@ -2,389 +2,347 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Desafío: El Secreto de la Canasta</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comic Tennis Vertical!</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
     <style>
         body {
-            margin: 0;
+            background-color: #fde047;
+            font-family: 'Bangers', cursive;
             overflow: hidden;
-            background: #0f172a;
-            font-family: 'system-ui', sans-serif;
-            touch-action: none;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
+
+        #game-container {
+            position: relative;
+            border: 8px solid #000;
+            box-shadow: 12px 12px 0px #000;
+            background-color: #fff;
+            background-image: radial-gradient(#ccc 1px, transparent 1px);
+            background-size: 15px 15px;
+        }
+
         canvas {
             display: block;
+            cursor: crosshair;
         }
-        #ui {
+
+        .onomatopoeia {
             position: absolute;
-            top: 20px;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            padding: 0 30px;
-            color: white;
             pointer-events: none;
+            text-transform: uppercase;
+            font-size: 2.5rem;
+            color: #ef4444;
+            text-shadow: 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+            animation: popOut 0.4s ease-out forwards;
             z-index: 10;
         }
-        .message {
-            position: absolute;
-            top: 40%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 3rem;
-            font-weight: bold;
-            color: #fbbf24;
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            text-align: center;
+
+        @keyframes popOut {
+            0% { transform: scale(0) rotate(-20deg); opacity: 0; }
+            50% { transform: scale(1.3) rotate(10deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); opacity: 0; }
         }
-        #overlay {
+
+        #ui-overlay {
+            position: absolute;
+            top: -60px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none;
+        }
+
+        .score-bubble {
+            background: #fff;
+            border: 4px solid #000;
+            padding: 2px 15px;
+            font-size: 1.8rem;
+            transform: skew(-5deg);
+        }
+
+        #screen-overlay {
             position: absolute;
             inset: 0;
-            background: rgba(15, 23, 42, 0.95);
+            background: rgba(255, 255, 255, 0.95);
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
-            color: white;
-            z-index: 50;
+            align-items: center;
+            z-index: 20;
             text-align: center;
             padding: 20px;
         }
-        #secret-box {
-            display: none;
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle, #1e293b 0%, #020617 100%);
-            z-index: 100;
-            color: #fbbf24;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
+
+        .btn-comic {
+            background: #ef4444;
+            border: 4px solid #000;
+            padding: 10px 25px;
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+            box-shadow: 5px 5px 0 #000;
+            transition: transform 0.1s;
         }
-        .animate-bounce-slow {
-            animation: bounce 2s infinite;
+
+        .btn-comic:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 #000;
         }
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+
+        .secret-content {
+            background: #000;
+            color: #bef264;
+            padding: 20px;
+            border: 4px dashed #fff;
+            transform: rotate(-2deg);
+            margin-bottom: 20px;
         }
+
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
-    <!-- Pantalla de inicio -->
-    <div id="overlay">
-        <h2 class="text-4xl font-black mb-4 text-orange-500 tracking-tighter uppercase">Misión: 3 Canastas</h2>
-        <p class="text-xl mb-6 max-w-md">Acumula <span class="text-yellow-400 font-bold text-2xl">3 canastas</span> para ganar. ¡No te preocupes si fallas, tus puntos se guardan!</p>
-        <button onclick="startGame()" class="bg-orange-600 hover:bg-orange-500 text-white px-10 py-4 rounded-full font-bold text-lg transition-transform active:scale-95 pointer-events-auto shadow-lg shadow-orange-900/20 text-white">ACEPTAR RETO</button>
+<div id="game-container">
+    <div id="ui-overlay">
+        <div class="score-bubble" id="p1-score">TÚ: 0</div>
+        <div class="score-bubble" id="p2-score">CPU: 0</div>
     </div>
 
-    <!-- Pantalla de victoria -->
-    <div id="secret-box">
-        <div class="animate-bounce-slow px-6">
-            <h2 class="text-6xl font-black mb-4">🏆 ¡LO LOGRASTE! 🏆</h2>
-            <p class="text-2xl text-white opacity-80 mb-8">El secreto ha sido revelado:</p>
-            <div class="bg-white/5 p-8 rounded-3xl backdrop-blur-xl border border-yellow-500/20 max-w-2xl mx-auto shadow-2xl">
-                <p class="text-3xl italic font-light leading-relaxed">"La verdadera victoria no está en el resultado, sino en la calma que mantienes mientras ajustas tu puntería ante la adversidad."</p>
+    <div id="screen-overlay">
+        <div id="start-content">
+            <h1 class="text-5xl mb-4 text-black">VERTICAL SMASH!</h1>
+            <p class="text-lg mb-6 text-black">El primero en llegar a 5 puntos desvela el secreto...</p>
+            <button class="btn-comic" onclick="startGame()">¡EMPEZAR!</button>
+        </div>
+        
+        <div id="win-content" class="hidden">
+            <h1 class="text-6xl mb-4 text-red-600">¡VICTORIA!</h1>
+            <div class="secret-content">
+                <p class="text-2xl italic">"El verdadero secreto es que no hay secreto... ¡has sido un héroe del tenis todo este tiempo!"</p>
+                <p class="mt-4 text-white text-sm">CÓDIGO SECRETO: 80s-RETRO-STRIKE</p>
             </div>
-            <button onclick="location.reload()" class="mt-12 bg-white/10 hover:bg-white/20 px-8 py-3 rounded-full text-orange-400 font-bold pointer-events-auto transition-colors">Volver a jugar</button>
+            <button class="btn-comic" onclick="resetGame()">REINTENTAR</button>
+        </div>
+
+        <div id="lose-content" class="hidden">
+            <h1 class="text-6xl mb-4 text-black">¡DERROTA!</h1>
+            <p class="text-xl mb-6">La CPU ha guardado el secreto para sí misma.</p>
+            <button class="btn-comic" onclick="resetGame()">REINTENTAR</button>
         </div>
     </div>
 
-    <!-- Interfaz de puntuación -->
-    <div id="ui">
-        <div class="text-center">
-            <p class="text-xs uppercase tracking-[0.3em] opacity-50 mb-1">Total encestadas</p>
-            <h1 id="score" class="text-7xl font-black tracking-tighter">0 <span class="text-2xl opacity-30">/ 3</span></h1>
-        </div>
-    </div>
+    <canvas id="tennisCanvas"></canvas>
+</div>
 
-    <div id="msg" class="message">¡CANASTA!</div>
+<script>
+    const canvas = document.getElementById('tennisCanvas');
+    const ctx = canvas.getContext('2d');
+    const container = document.getElementById('game-container');
+    const screenOverlay = document.getElementById('screen-overlay');
+    const startContent = document.getElementById('start-content');
+    const winContent = document.getElementById('win-content');
+    const loseContent = document.getElementById('lose-content');
+    
+    canvas.width = 400;
+    canvas.height = 600;
 
-    <canvas id="gameCanvas"></canvas>
+    let gameRunning = false;
+    let p1Score = 0;
+    let p2Score = 0;
+    const WINNING_SCORE = 5;
 
-    <script>
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        const scoreEl = document.getElementById('score');
-        const msgEl = document.getElementById('msg');
-        const overlay = document.getElementById('overlay');
-        const secretBox = document.getElementById('secret-box');
+    const paddleWidth = 90;
+    const paddleHeight = 15;
+    const player = { x: canvas.width / 2 - paddleWidth / 2, y: canvas.height - 40 };
+    const cpu = { x: canvas.width / 2 - paddleWidth / 2, y: 25 };
 
-        // Estado del juego
-        let gameActive = false;
-        let score = 0;
-        let isCharging = false;
-        let chargePower = 0;
-        let targetAngle = -Math.PI / 4;
-        let hasScoredThisShot = false; 
-        
-        const gravity = 0.38;
-        const bounciness = 0.6; 
-        
-        const ball = {
-            x: 120,
-            y: 0,
-            radius: 18,
-            vx: 0,
-            vy: 0,
-            isMoving: false,
-            trail: [],
-            rotation: 0
-        };
+    const INITIAL_SPEED_Y = 5;
+    const MIN_SPEED_Y = 3.5; // Mínima velocidad vertical garantizada
+    const MIN_SPEED_X = 2;
+    
+    let ball = {
+        x: canvas.width / 2,
+        y: canvas.height / 2,
+        radius: 10,
+        speedX: 3,
+        speedY: INITIAL_SPEED_Y,
+        color: '#bef264'
+    };
 
-        const hoop = {
-            x: 0,
-            y: 0,
-            width: 95,
-            height: 10,
-            backboardX: 0,
-            backboardY: 0,
-            backboardW: 15,
-            backboardH: 140
-        };
+    canvas.addEventListener('mousemove', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        player.x = mouseX - paddleWidth / 2;
+        if(player.x < 0) player.x = 0;
+        if(player.x > canvas.width - paddleWidth) player.x = canvas.width - paddleWidth;
+    });
 
-        function startGame() {
-            overlay.style.display = 'none';
-            score = 0;
-            updateScoreUI();
-            gameActive = true;
+    function spawnOnomatopoeia(x, y, text) {
+        const el = document.createElement('div');
+        el.className = 'onomatopoeia';
+        el.innerText = text;
+        el.style.left = x + 'px';
+        el.style.top = y + 'px';
+        container.appendChild(el);
+        setTimeout(() => el.remove(), 400);
+    }
+
+    function resetBall(winner) {
+        ball.x = canvas.width / 2;
+        ball.y = canvas.height / 2;
+        ball.speedY = winner === 'player' ? -INITIAL_SPEED_Y : INITIAL_SPEED_Y;
+        ball.speedX = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 3 + MIN_SPEED_X);
+    }
+
+    function startGame() {
+        p1Score = 0;
+        p2Score = 0;
+        updateScoreDisplay();
+        screenOverlay.classList.add('hidden');
+        resetBall('player');
+        gameRunning = true;
+    }
+
+    function updateScoreDisplay() {
+        document.getElementById('p1-score').innerText = `TÚ: ${p1Score}`;
+        document.getElementById('p2-score').innerText = `CPU: ${p2Score}`;
+    }
+
+    function checkGameOver() {
+        if (p1Score >= WINNING_SCORE) {
+            gameRunning = false;
+            screenOverlay.classList.remove('hidden');
+            startContent.classList.add('hidden');
+            winContent.classList.remove('hidden');
+            loseContent.classList.add('hidden');
+        } else if (p2Score >= WINNING_SCORE) {
+            gameRunning = false;
+            screenOverlay.classList.remove('hidden');
+            startContent.classList.add('hidden');
+            winContent.classList.add('hidden');
+            loseContent.classList.remove('hidden');
         }
+    }
 
-        function updateScoreUI() {
-            scoreEl.innerHTML = `${score} <span class="text-2xl opacity-30">/ 3</span>`;
-        }
+    function resetGame() {
+        winContent.classList.add('hidden');
+        loseContent.classList.add('hidden');
+        startContent.classList.remove('hidden');
+        startGame();
+    }
 
-        function revealSecret() {
-            gameActive = false;
-            secretBox.style.display = 'flex';
-        }
+    function draw() {
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        function resetHoop() {
-            hoop.x = window.innerWidth * 0.55 + (Math.random() * (window.innerWidth * 0.25));
-            hoop.y = window.innerHeight * 0.25 + (Math.random() * (window.innerHeight * 0.3));
-            hoop.backboardX = hoop.x + hoop.width;
-            hoop.backboardY = hoop.y - 100;
-        }
+        ctx.setLineDash([10, 10]);
+        ctx.strokeStyle = '#000';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(0, canvas.height / 2);
+        ctx.lineTo(canvas.width, canvas.height / 2);
+        ctx.stroke();
+        ctx.setLineDash([]);
 
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            ball.y = canvas.height - 120;
-            ball.x = 120;
-            resetHoop();
-        }
+        ctx.fillStyle = '#3b82f6';
+        ctx.fillRect(player.x, player.y, paddleWidth, paddleHeight);
+        ctx.strokeRect(player.x, player.y, paddleWidth, paddleHeight);
 
-        window.addEventListener('resize', resize);
-        resize();
+        ctx.fillStyle = '#ef4444';
+        ctx.fillRect(cpu.x, cpu.y, paddleWidth, paddleHeight);
+        ctx.strokeRect(cpu.x, cpu.y, paddleWidth, paddleHeight);
 
-        function getMousePos(e) {
-            const x = e.clientX || (e.touches && e.touches[0].clientX);
-            const y = e.clientY || (e.touches && e.touches[0].clientY);
-            return { x, y };
-        }
+        ctx.beginPath();
+        ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+        ctx.fillStyle = ball.color;
+        ctx.fill();
+        ctx.strokeStyle = '#000';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+    }
 
-        function handleStart(e) {
-            if (!gameActive || ball.isMoving) return;
-            isCharging = true;
-            chargePower = 0;
-            hasScoredThisShot = false; 
-        }
+    function gameLoop() {
+        if (gameRunning) {
+            ball.x += ball.speedX;
+            ball.y += ball.speedY;
 
-        function handleMove(e) {
-            if (!gameActive) return;
-            const pos = getMousePos(e);
-            if (isCharging) {
-                const dx = pos.x - ball.x;
-                const dy = pos.y - ball.y;
-                targetAngle = Math.atan2(dy, dx);
-            }
-        }
+            // IA CPU (Mejorada ligeramente para evitar que se quede pegada)
+            const cpuSpeed = 5;
+            const cpuCenter = cpu.x + paddleWidth / 2;
+            if (cpuCenter < ball.x - 10) cpu.x += cpuSpeed;
+            else if (cpuCenter > ball.x + 10) cpu.x -= cpuSpeed;
 
-        function handleEnd() {
-            if (!isCharging) return;
-            isCharging = false;
-            const strength = 10 + (chargePower * 22);
-            ball.vx = Math.cos(targetAngle) * strength;
-            ball.vy = Math.sin(targetAngle) * strength;
-            ball.isMoving = true;
-            ball.trail = [];
-        }
-
-        window.addEventListener('mousedown', handleStart);
-        window.addEventListener('mousemove', handleMove);
-        window.addEventListener('mouseup', handleEnd);
-        window.addEventListener('touchstart', (e) => { if(gameActive) e.preventDefault(); handleStart(e); }, {passive: false});
-        window.addEventListener('touchmove', (e) => { if(gameActive) e.preventDefault(); handleMove(e); }, {passive: false});
-        window.addEventListener('touchend', handleEnd);
-
-        function showMessage(text) {
-            msgEl.innerText = text;
-            msgEl.style.opacity = '1';
-            setTimeout(() => msgEl.style.opacity = '0', 800);
-        }
-
-        function checkCollisions() {
-            if (ball.x + ball.radius > hoop.backboardX && 
-                ball.x - ball.radius < hoop.backboardX + hoop.backboardW &&
-                ball.y > hoop.backboardY && ball.y < hoop.backboardY + hoop.backboardH) {
-                ball.vx = -Math.abs(ball.vx) * bounciness;
-                ball.x = hoop.backboardX - ball.radius - 2;
-            }
-
-            const hoopPoints = [{ x: hoop.x, y: hoop.y }, { x: hoop.x + hoop.width, y: hoop.y }];
-            hoopPoints.forEach(p => {
-                const dx = ball.x - p.x;
-                const dy = ball.y - p.y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < ball.radius) {
-                    const nx = dx / dist;
-                    const ny = dy / dist;
-                    const dot = ball.vx * nx + ball.vy * ny;
-                    ball.vx = (ball.vx - 2 * dot * nx) * bounciness;
-                    ball.vy = (ball.vy - 2 * dot * ny) * bounciness;
-                    ball.x = p.x + nx * ball.radius;
-                    ball.y = p.y + ny * ball.radius;
-                }
-            });
-
-            const margin = 10;
-            if (!hasScoredThisShot && ball.vy > 0 && 
-                ball.x > hoop.x + margin && ball.x < hoop.x + hoop.width - margin &&
-                ball.y > hoop.y && ball.y < hoop.y + 20) {
+            // Rebote paredes - Anti "línea recta lateral"
+            if (ball.x - ball.radius < 0 || ball.x + ball.radius > canvas.width) {
+                ball.speedX = -ball.speedX;
                 
-                hasScoredThisShot = true; 
-                score++;
-                updateScoreUI();
+                // Si la pelota va muy horizontal, le damos un empuje vertical
+                if (Math.abs(ball.speedY) < MIN_SPEED_Y) {
+                    ball.speedY = ball.speedY < 0 ? -MIN_SPEED_Y : MIN_SPEED_Y;
+                }
+
+                spawnOnomatopoeia(ball.x > canvas.width/2 ? ball.x-60 : ball.x+10, ball.y, '¡BOING!');
+            }
+
+            // Colisión Jugador (Abajo)
+            if (ball.y + ball.radius > player.y && ball.y < player.y + paddleHeight &&
+                ball.x > player.x && ball.x < player.x + paddleWidth) {
                 
-                if (score >= 3) {
-                    setTimeout(revealSecret, 400);
-                    return;
-                }
-
-                showMessage("¡OTRA MÁS!");
-                ball.vx *= 0.3; 
-                setTimeout(() => resetBall(true), 500);
-            }
-        }
-
-        function resetBall(success) {
-            if (!ball.isMoving && !success) return;
-            ball.isMoving = false;
-            ball.vx = 0;
-            ball.vy = 0;
-            ball.x = 120;
-            ball.y = canvas.height - 120;
-            ball.trail = [];
-            
-            if (!success) {
-                // YA NO REINICIAMOS EL SCORE A CERO
-                showMessage("¡CASI!");
-            }
-            resetHoop();
-        }
-
-        function update() {
-            if (!gameActive) return;
-
-            if (isCharging) {
-                chargePower = Math.min(chargePower + 0.015, 1);
-            }
-
-            if (ball.isMoving) {
-                ball.vy += gravity;
-                ball.x += ball.vx;
-                ball.y += ball.vy;
-                ball.rotation += ball.vx * 0.05;
-
-                ball.trail.push({x: ball.x, y: ball.y});
-                if (ball.trail.length > 15) ball.trail.shift();
-
-                checkCollisions();
-
-                if (ball.y - ball.radius > canvas.height || ball.x - ball.radius > canvas.width || ball.x + ball.radius < 0) {
-                    resetBall(false);
-                }
-            }
-        }
-
-        function draw() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            ctx.fillStyle = "#1e293b";
-            ctx.fillRect(hoop.backboardX, hoop.backboardY, hoop.backboardW, hoop.backboardH);
-            ctx.strokeStyle = "rgba(255,255,255,0.2)";
-            ctx.strokeRect(hoop.backboardX, hoop.backboardY, hoop.backboardW, hoop.backboardH);
-
-            ctx.beginPath();
-            ctx.strokeStyle = "rgba(255,255,255,0.2)";
-            for(let i=0; i<=6; i++) {
-                ctx.moveTo(hoop.x + (i * hoop.width/6), hoop.y);
-                ctx.lineTo(hoop.x + (hoop.width/5) + (i * hoop.width/10), hoop.y + 60);
-            }
-            ctx.stroke();
-
-            ctx.beginPath();
-            ctx.strokeStyle = "#ef4444";
-            ctx.lineWidth = 8;
-            ctx.lineCap = "round";
-            ctx.moveTo(hoop.x, hoop.y);
-            ctx.lineTo(hoop.x + hoop.width, hoop.y);
-            ctx.stroke();
-
-            ball.trail.forEach((p, i) => {
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, ball.radius * (i / ball.trail.length), 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(249, 115, 22, ${i / 30})`;
-                ctx.fill();
-            });
-
-            if (isCharging) {
-                ctx.beginPath();
-                ctx.setLineDash([4, 6]);
-                ctx.strokeStyle = "rgba(255, 255, 255, 0.2)";
-                let tx = ball.x;
-                let ty = ball.y;
-                let tvx = Math.cos(targetAngle) * (10 + (chargePower * 22));
-                let tvy = Math.sin(targetAngle) * (10 + (chargePower * 22));
-                for (let i = 0; i < 40; i++) {
-                    ctx.lineTo(tx, ty);
-                    tvy += gravity;
-                    tx += tvx;
-                    ty += tvy;
-                }
-                ctx.stroke();
-                ctx.setLineDash([]);
+                // Forzamos rebote hacia arriba
+                ball.speedY = -Math.max(Math.abs(ball.speedY), MIN_SPEED_Y);
                 
-                ctx.beginPath();
-                ctx.arc(ball.x, ball.y, ball.radius + 15, -Math.PI/2, (-Math.PI/2) + (Math.PI * 2 * chargePower));
-                ctx.strokeStyle = "#fbbf24";
-                ctx.lineWidth = 4;
-                ctx.stroke();
+                const deltaX = ball.x - (player.x + paddleWidth / 2);
+                ball.speedX = deltaX * 0.25;
+                
+                if (Math.abs(ball.speedX) < MIN_SPEED_X) ball.speedX = ball.speedX < 0 ? -MIN_SPEED_X : MIN_SPEED_X;
+                
+                spawnOnomatopoeia(ball.x - 20, ball.y - 50, '¡ZAS!');
             }
 
-            ctx.save();
-            ctx.translate(ball.x, ball.y);
-            ctx.rotate(ball.rotation);
-            ctx.beginPath();
-            ctx.arc(0, 0, ball.radius, 0, Math.PI * 2);
-            ctx.fillStyle = "#f97316";
-            ctx.fill();
-            ctx.strokeStyle = "rgba(0,0,0,0.4)";
-            ctx.lineWidth = 2;
-            ctx.stroke();
-            ctx.restore();
+            // Colisión CPU (Arriba)
+            if (ball.y - ball.radius < cpu.y + paddleHeight && ball.y > cpu.y &&
+                ball.x > cpu.x && ball.x < cpu.x + paddleWidth) {
+                
+                // Forzamos rebote hacia abajo
+                ball.speedY = Math.max(Math.abs(ball.speedY), MIN_SPEED_Y);
+                
+                const deltaX = ball.x - (cpu.x + paddleWidth / 2);
+                ball.speedX = deltaX * 0.25;
+                
+                if (Math.abs(ball.speedX) < MIN_SPEED_X) ball.speedX = ball.speedX < 0 ? -MIN_SPEED_X : MIN_SPEED_X;
+                
+                spawnOnomatopoeia(ball.x - 20, ball.y + 20, '¡POW!');
+            }
 
-            update();
-            requestAnimationFrame(draw);
+            // Puntos
+            if (ball.y < 0) {
+                p1Score++;
+                updateScoreDisplay();
+                spawnOnomatopoeia(canvas.width/2 - 40, canvas.height/2 - 40, '¡PUNTO!');
+                checkGameOver();
+                if(gameRunning) resetBall('player');
+            } else if (ball.y > canvas.height) {
+                p2Score++;
+                updateScoreDisplay();
+                spawnOnomatopoeia(canvas.width/2 - 40, canvas.height/2 + 20, '¡OUCH!');
+                checkGameOver();
+                if(gameRunning) resetBall('cpu');
+            }
         }
 
         draw();
-    </script>
+        requestAnimationFrame(gameLoop);
+    }
+
+    gameLoop();
+</script>
+
 </body>
 </html>
