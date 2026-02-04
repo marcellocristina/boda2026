@@ -67,6 +67,7 @@
             animation: comic-pulse-left 5s ease-in-out infinite;
             filter: drop-shadow(8px 8px 0px rgba(0,0,0,0.4));
             width: 55vw; max-width: 700px; min-width: 280px; opacity: 1 !important;
+            margin-left: -5%; /* Movido un poco más a la izquierda */
         }
 
         .boom-badge {
@@ -331,7 +332,7 @@
                 navTitle: "M&C: EDIZIONE SPECIALE", navHistory: "STORIA", navGallery: "GALLERIA", navLocation: "POSIZIONE", navRsvp: "CONFERMA",
                 heroDate: "10 GIUGNO 2026", labelDays: "GIORNI", labelHours: "ORE", labelMin: "MIN", labelSec: "SEC",
                 badgeHistory: "STORIA ORIGINALE", historyTitle: "CAPITOLO 1: L'INCONTRO", historyP1: "Come nei migliori fumetti, non è stato il caso, è stato il destino...",
-                historyP2: '"Dopo mille avventure, abbiamo deciso di firmare il contratto più importante."', galleryTitle: "ALBUM DELLE AVVENTURE",
+                historyP2: '"Dopo mille avventure, abbiamo deciso di firmare il contrato più importante."', galleryTitle: "ALBUM DELLE AVVENTURE",
                 locationTitle: "COORDINATE SEGRETE", churchTitle: "IL COMPROMESSO", churchName: "Cattedrale di Santa Maria", churchTime: "12:00 PM • Operazione Matrimonio!",
                 btnMap: "Apri Mappa", partyTitle: "IL BANCHETTO", partyName: 'Finca "Il Paradiso"', partyTime: "08:00 PM • Festa Supereroe",
                 btnParty: "Come arrivare", giftTitle: "LISTA NOZZE", giftP: "La vostra presenza è il regalo, ma se desiderate fare un pensiero:",
@@ -405,7 +406,6 @@
             document.getElementById(`m-btn-${lang}`).classList.add('active');
         }
 
-        // LÓGICA DE ENVÍO DEL INDEX1 INTEGRADA
         form.addEventListener('submit', e => {
             e.preventDefault();
             
@@ -438,7 +438,6 @@
             });
         });
 
-        // Resto de funciones visuales (menú, countdown, etc.)
         function toggleMenu() {
             const menu = document.getElementById('mobile-menu');
             const icon = document.getElementById('menu-icon');
