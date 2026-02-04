@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Desafío: El Secreto de la Canasta</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #0f172a;
+            font-family: 'system-ui', sans-serif;
+            touch-action: none;
+        }
+        canvas {
+            display: block;
+        }
+        #ui {
+            position: absolute;
+            top: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 0 30px;
+            color: white;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .message {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            font-weight: bold;
+            color: #fbbf24;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+        #overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            z-index: 50;
+            text-align: center;
+            padding: 20px;
+        }
+        #secret-box {
+            display: none;
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle, #1e293b 0%, #020617 100%);
+            z-index: 100;
+            color: #fbbf24;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .animate-bounce-slow {
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Pantalla de inicio -->
+    <div id="overlay">
+        <h2 class="text-4xl font-black mb-4 text-orange-500 tracking-tighter uppercase">Misión: 3 Canastas</h2>
+        <p class="text-xl mb-6 max-w-md">Acumula <span class="text-yellow-400 font-bold text-2xl">3 canastas</span> para ganar. ¡No te preocupes si fallas, tus puntos se guardan!</p>
+        <button onclick="startGame()" class="bg-orange-600 hover:bg-orange-500 text-white px-10 py-4 rounded-full font-bold text-lg transition-transform active:scale-95 pointer-events-auto shadow-lg shadow-orange-900/20 text-white">ACEPTAR RETO</button>
+    </div>
+
+    <!-- Pantalla de victoria -->
+    <div id="secret-box">
+        <div class="animate-bounce-slow px-6">
+            <h2 class="text-6xl font-black mb-4">🏆 ¡LO LOGRASTE! 🏆</h2>
+            <p class="text-2xl text-white opacity-80 mb-8">El secreto ha sido revelado:</p>
+            <div class="bg-white/5 p-8 rounded-3xl backdrop-blur-xl border border-yellow-500/20 max-w-2xl mx-auto shadow-2xl">
+                <p class="text-3xl italic font-light leading-relaxed">"La verdadera victoria no está en el resultado, sino en la calma que mantienes mientras ajustas tu puntería ante la adversidad."</p>
+            </div>
+            <button onclick="location.reload()" class="mt-12 bg-white/10 hover:bg-white/20 px-8 py-3 rounded-full text-orange-400 font-bold pointer-events-auto transition-colors">Volver a jugar</button>
+        </div>
+    </div>
+
+    <!-- Interfaz de puntuación -->
+    <div id="ui">
+        <div class="text-center">
+            <p class="text-xs uppercase tracking-[0.3em] opacity-50 mb-1">Total encestadas</p>
+            <h1 id="score" class="text-7xl font-black tracking-tighter">0 <span class="text-2xl opacity-30">/ 3</span></h1>
+        </div>
+    </div>
+
+    <div id="msg" class="message">¡CANASTA!</div>
+
+    <canvas id="gameCanvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreEl = document.getElementById('score');
+        const msgEl = document.getElementById('msg');
+        const overlay = document.getElementById('overlay');
+        const secretBox = document.getElementById('secret-box');
+
+        // Estado del juego
+        let gameActive = false;
+        let score = 0;
+        let isCharging = false;
+        let chargePower = 0;
+        let targetAngle = -Math.PI / 4;
+        let hasScoredThisShot = false; 
+        
+        const gravity = 0.38;
+        const bounciness = 0.6; 
+        
+        const ball = {
+            x: 120,
+            y: 0,
+            radius: 18,
+            vx: 0,
+            vy: 0,
+            isMoving: false,
+            trail: [],
+            rotation: 0
+        };
+
+        const hoop = {
+            x: 0,
+            y: 0,
+            width: 95,
+            height: 10,
+            backboardX: 0,
+            backboardY: 0,
+            backboardW: 15,
+            backboardH: 140
+        };
+
+        function startGame() {
+            overlay.style.display = 'none';
+            score = 0;
+            updateScoreUI();
+            gameActive = true;
+        }
+
+        function updateScoreUI() {
+            scoreEl.innerHTML = `${score} <span class="text-2xl opacity-30">/ 3</span>`;
+        }
+
+        function revealSecret() {
+            gameActive = false;
+            secretBox.style.display = 'flex';
+        }
+
+        function resetHoop() {
+            hoop.x = window.innerWidth * 0.55 + (Math.random() * (window.innerWidth * 0.25));
+            hoop.y = window.innerHeight * 0.25 + (Math.random() * (window.innerHeight * 0.3));
+            hoop.backboardX = hoop.x + hoop.width;
+            hoop.backboardY = hoop.y - 100;
+        }
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            ball.y = canvas.height - 120;
+            ball.x = 120;
+            resetHoop();
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        function getMousePos(e) {
+            const x = e.clientX || (e.touches && e.touches[0].clientX);
+            const y = e.clientY || (e.touches && e.touches[0].clientY);
+            return { x, y };
+        }
+
+        function handleStart(e) {
+            if (!gameActive || ball.isMoving) return;
+            isCharging = true;
+            chargePower = 0;
+            hasScoredThisShot = false; 
+        }
+
+        function handleMove(e) {
+            if (!gameActive) return;
+            const pos = getMousePos(e);
+            if (isCharging) {
+                const dx = pos.x - ball.x;
+                const dy = pos.y - ball.y;
+                targetAngle = Math.atan2(dy, dx);
+            }
+        }
+
+        function handleEnd() {
+            if (!isCharging) return;
+            isCharging = false;
+            const strength = 10 + (chargePower * 22);
+            ball.vx = Math.cos(targetAngle) * strength;
+            ball.vy = Math.sin(targetAngle) * strength;
+            ball.isMoving = true;
+            ball.trail = [];
+        }
+
+        window.addEventListener('mousedown', handleStart);
+        window.addEventListener('mousemove', handleMove);
+        window.addEventListener('mouseup', handleEnd);
+        window.addEventListener('touchstart', (e) => { if(gameActive) e.preventDefault(); handleStart(e); }, {passive: false});
+        window.addEventListener('touchmove', (e) => { if(gameActive) e.preventDefault(); handleMove(e); }, {passive: false});
+        window.addEventListener('touchend', handleEnd);
+
+        function showMessage(text) {
+            msgEl.innerText = text;
+            msgEl.style.opacity = '1';
+            setTimeout(() => msgEl.style.opacity = '0', 800);
+        }
+
+        function checkCollisions() {
+            if (ball.x + ball.radius > hoop.backboardX && 
+                ball.x - ball.radius < hoop.backboardX + hoop.backboardW &&
+                ball.y > hoop.backboardY && ball.y < hoop.backboardY + hoop.backboardH) {
+                ball.vx = -Math.abs(ball.vx) * bounciness;
+                ball.x = hoop.backboardX - ball.radius - 2;
+            }
+
+            const hoopPoints = [{ x: hoop.x, y: hoop.y }, { x: hoop.x + hoop.width, y: hoop.y }];
+            hoopPoints.forEach(p => {
+                const dx = ball.x - p.x;
+                const dy = ball.y - p.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < ball.radius) {
+                    const nx = dx / dist;
+                    const ny = dy / dist;
+                    const dot = ball.vx * nx + ball.vy * ny;
+                    ball.vx = (ball.vx - 2 * dot * nx) * bounciness;
+                    ball.vy = (ball.vy - 2 * dot * ny) * bounciness;
+                    ball.x = p.x + nx * ball.radius;
+                    ball.y = p.y + ny * ball.radius;
+                }
+            });
+
+            const margin = 10;
+            if (!hasScoredThisShot && ball.vy > 0 && 
+                ball.x > hoop.x + margin && ball.x < hoop.x + hoop.width - margin &&
+                ball.y > hoop.y && ball.y < hoop.y + 20) {
+                
+                hasScoredThisShot = true; 
+                score++;
+                updateScoreUI();
+                
+                if (score >= 3) {
+                    setTimeout(revealSecret, 400);
+                    return;
+                }
+
+                showMessage("¡OTRA MÁS!");
+                ball.vx *= 0.3; 
+                setTimeout(() => resetBall(true), 500);
+            }
+        }
+
+        function resetBall(success) {
+            if (!ball.isMoving && !success) return;
+            ball.isMoving = false;
+            ball.vx = 0;
+            ball.vy = 0;
+            ball.x = 120;
+            ball.y = canvas.height - 120;
+            ball.trail = [];
+            
+            if (!success) {
+                // YA NO REINICIAMOS EL SCORE A CERO
+                showMessage("¡CASI!");
+            }
+            resetHoop();
+        }
+
+        function update() {
+            if (!gameActive) return;
+
+            if (isCharging) {
+                chargePower = Math.min(chargePower + 0.015, 1);
+            }
+
+            if (ball.isMoving) {
+                ball.vy += gravity;
+                ball.x += ball.vx;
+                ball.y += ball.vy;
+                ball.rotation += ball.vx * 0.05;
+
+                ball.trail.push({x: ball.x, y: ball.y});
+                if (ball.trail.length > 15) ball.trail.shift();
+
+                checkCollisions();
+
+                if (ball.y - ball.radius > canvas.height || ball.x - ball.radius > canvas.width || ball.x + ball.radius < 0) {
+                    resetBall(false);
+                }
+            }
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = "#1e293b";
+            ctx.fillRect(hoop.backboardX, hoop.backboardY, hoop.backboardW, hoop.backboardH);
+            ctx.strokeStyle = "rgba(255,255,255,0.2)";
+            ctx.strokeRect(hoop.backboardX, hoop.backboardY, hoop.backboardW, hoop.backboardH);
+
+            ctx.beginPath();
+            ctx.strokeStyle = "rgba(255,255,255,0.2)";
+            for(let i=0; i<=6; i++) {
+                ctx.moveTo(hoop.x + (i * hoop.width/6), hoop.y);
+                ctx.lineTo(hoop.x + (hoop.width/5) + (i * hoop.width/10), hoop.y + 60);
+            }
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.strokeStyle = "#ef4444";
+            ctx.lineWidth = 8;
+            ctx.lineCap = "round";
+            ctx.moveTo(hoop.x, hoop.y);
+            ctx.lineTo(hoop.x + hoop.width, hoop.y);
+            ctx.stroke();
+
+            ball.trail.forEach((p, i) => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, ball.radius * (i / ball.trail.length), 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(249, 115, 22, ${i / 30})`;
+                ctx.fill();
+            });
+
+            if (isCharging) {
+                ctx.beginPath();
+                ctx.setLineDash([4, 6]);
+                ctx.strokeStyle = "rgba(255, 255, 255, 0.2)";
+                let tx = ball.x;
+                let ty = ball.y;
+                let tvx = Math.cos(targetAngle) * (10 + (chargePower * 22));
+                let tvy = Math.sin(targetAngle) * (10 + (chargePower * 22));
+                for (let i = 0; i < 40; i++) {
+                    ctx.lineTo(tx, ty);
+                    tvy += gravity;
+                    tx += tvx;
+                    ty += tvy;
+                }
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                ctx.beginPath();
+                ctx.arc(ball.x, ball.y, ball.radius + 15, -Math.PI/2, (-Math.PI/2) + (Math.PI * 2 * chargePower));
+                ctx.strokeStyle = "#fbbf24";
+                ctx.lineWidth = 4;
+                ctx.stroke();
+            }
+
+            ctx.save();
+            ctx.translate(ball.x, ball.y);
+            ctx.rotate(ball.rotation);
+            ctx.beginPath();
+            ctx.arc(0, 0, ball.radius, 0, Math.PI * 2);
+            ctx.fillStyle = "#f97316";
+            ctx.fill();
+            ctx.strokeStyle = "rgba(0,0,0,0.4)";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            ctx.restore();
+
+            update();
+            requestAnimationFrame(draw);
+        }
+
+        draw();
+    </script>
+</body>
+</html>
