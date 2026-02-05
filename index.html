@@ -171,6 +171,22 @@
         .reveal.active { opacity: 1; transform: translateY(0); }
 
         #estado { margin-top: 1.5rem; text-align: center; font-weight: bold; font-size: 1.25rem; }
+
+        /* Estilos Captcha */
+        .captcha-box {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: #fdf2f2;
+            padding: 1rem;
+            border: 2px dashed black;
+            border-radius: 8px;
+        }
+        .captcha-question {
+            font-family: 'Bangers', cursive;
+            font-size: 1.5rem;
+            color: var(--comic-red);
+        }
     </style>
 </head>
 <body class="text-gray-900">
@@ -328,7 +344,7 @@
             <div class="max-w-2xl mx-auto comic-panel p-8 md:p-12 bg-white transform -rotate-0.5">
                 <form id="registroForm" class="space-y-6">
                     <div>
-                        <label class="comic-label" id="label-name" for="nombre">Nombre Completo y apellidos:</label>
+                        <label class="comic-label" id="label-name" for="nombre">Nombre Completo:</label>
                         <input type="text" id="nombre" name="nombre" required class="w-full p-4 comic-input bg-blue-50" placeholder="Escribe tu nombre">
                     </div>
 
@@ -338,6 +354,15 @@
                             <option value="Sí" id="opt-yes">Sí, asistiré</option>
                             <option value="No" id="opt-no">No podré asistir</option>
                         </select>
+                    </div>
+
+                    <!-- Captcha Matemático -->
+                    <div class="space-y-4">
+                        <label class="comic-label" id="label-captcha">Misión Humana: Resuelve el acertijo</label>
+                        <div class="captcha-box">
+                            <span id="captcha-question" class="captcha-question">...</span>
+                            <input type="number" id="captcha-answer" required class="w-24 p-3 comic-input text-center text-xl" placeholder="?">
+                        </div>
                     </div>
 
                     <div class="pt-4">
@@ -377,7 +402,7 @@
                 placeholderName: "Escribe tu nombre", labelJoin: "¿Asistirás?", optYes: "Sí, asistiré", optNo: "No podré asistir",
                 btnSubmit: "Enviar Datos", rsvpDeadline: "* Fecha límite: 1 de Mayo, 2026", footerCont: "CONTINUARÁ...", copied: "¡COPIADO!", 
                 sendingMsg: "Enviando...", successMsg: "¡Datos guardados con éxito!", errorMsg: "Hubo un error al enviar.",
-                btnGame: "¡JUGUEMOS!"
+                btnGame: "¡JUGUEMOS!", labelCaptcha: "Misión Humana: Resuelve el acertijo", captchaError: "¡Error de cálculo! Inténtalo de nuevo."
             },
             it: {
                 navTitle: "M&C: EDIZIONE SPECIALE", navHistory: "STORIA", navGallery: "GALLERIA", navLocation: "POSIZIONE", navRsvp: "CONFERMA",
@@ -391,7 +416,7 @@
                 placeholderName: "Scrivi il tuo nome", labelJoin: "Parteciperai?", optYes: "Sì, ci sarò", optNo: "No, non potrò",
                 btnSubmit: "Invia Dati", rsvpDeadline: "* Scadenza: 1 Maggio, 2026", footerCont: "CONTINUA...", copied: "COPIATO!", 
                 sendingMsg: "Inviando...", successMsg: "Dati salvati con successo!", errorMsg: "Errore durante l'invio.",
-                btnGame: "GIOCHIAMO!"
+                btnGame: "GIOCHIAMO!", labelCaptcha: "Missione Umana: Risolvi l'enigma", captchaError: "Errore di calcolo! Riprova."
             },
             en: {
                 navTitle: "M&C: SPECIAL EDITION", navHistory: "STORY", navGallery: "GALLERY", navLocation: "LOCATION", navRsvp: "RSVP",
@@ -401,17 +426,28 @@
                 locationTitle: "SECRET COORDINATES", churchTitle: "THE VOWS", churchName: "St. Mary's Cathedral", churchTime: "12:00 PM • Operation Wedding!",
                 btnMap: "Open Map", partyTitle: "THE BANQUET", partyName: '"Paradise" Estate', partyTime: "08:00 PM • Superhero Party",
                 btnParty: "Get Directions", giftTitle: "GIFT REGISTRY", giftP: "Your presence is the best gift, but if you wish to give extra:",
-                btnCopy: "Copy IBAN", rsvpTitle: "Confirm Attendance", rsvpSubtitle: "Will you be our ally?", labelName: "name and surname:",
+                btnCopy: "Copy IBAN", rsvpTitle: "Confirm Attendance", rsvpSubtitle: "Will you be our ally?", labelName: "Name and surname:",
                 placeholderName: "Write your name", labelJoin: "Will you attend?", optYes: "Yes, I'll be there", optNo: "No, I can't make it",
                 btnSubmit: "Send Data", rsvpDeadline: "* RSVP Deadline: May 1st, 2026", footerCont: "TO BE CONTINUED...", copied: "COPIED!", 
                 sendingMsg: "Sending...", successMsg: "Data saved successfully!", errorMsg: "Error sending data.",
-                btnGame: "LET'S PLAY!"
+                btnGame: "LET'S PLAY!", labelCaptcha: "Human Mission: Solve the riddle", captchaError: "Math error! Try again."
             }
         };
 
         let currentLang = 'es';
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwaON4cTPF10VsaNDNPFynFBGJujTm_8NhLGd5I__2KKn2P5rt7avB_WYqhJqUg4m29/exec';
         
+        // Variables para el Captcha
+        let captchaResult = 0;
+
+        function generateCaptcha() {
+            const num1 = Math.floor(Math.random() * 9) + 1;
+            const num2 = Math.floor(Math.random() * 9) + 1;
+            captchaResult = num1 + num2;
+            document.getElementById('captcha-question').textContent = `${num1} + ${num2} = `;
+            document.getElementById('captcha-answer').value = '';
+        }
+
         function setLanguage(lang) {
             currentLang = lang;
             localStorage.setItem('selectedLanguage', lang);
@@ -455,6 +491,7 @@
             document.getElementById('rsvp-deadline').textContent = t.rsvpDeadline;
             document.getElementById('footer-cont').textContent = t.footerCont;
             document.getElementById('btn-game-link').textContent = t.btnGame;
+            document.getElementById('label-captcha').textContent = t.labelCaptcha;
 
             document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
             const btn = document.getElementById(`btn-${lang}`);
@@ -466,7 +503,7 @@
         window.onload = () => {
             const savedLang = localStorage.getItem('selectedLanguage');
             if (savedLang) setLanguage(savedLang);
-            // Ejecutar reveal al cargar para mostrar secciones ya visibles
+            generateCaptcha();
             reveal();
         };
 
@@ -476,13 +513,44 @@
 
         form.addEventListener('submit', e => {
             e.preventDefault();
+            
+            // Validar Captcha
+            const userAnswer = parseInt(document.getElementById('captcha-answer').value);
+            if (userAnswer !== captchaResult) {
+                estado.innerText = translations[currentLang].captchaError;
+                estado.style.color = "red";
+                generateCaptcha(); // Regenerar si falla
+                return;
+            }
+
             btnEnviar.disabled = true;
             estado.innerText = translations[currentLang].sendingMsg;
             estado.style.color = "orange";
-            const datos = { nombre: document.getElementById('nombre').value, asistencia: document.getElementById('asistencia').value };
-            fetch(scriptURL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(datos) })
-            .then(() => { estado.innerText = translations[currentLang].successMsg; estado.style.color = "green"; form.reset(); btnEnviar.disabled = false; })
-            .catch(error => { console.error('Error:', error); estado.innerText = translations[currentLang].errorMsg; estado.style.color = "red"; btnEnviar.disabled = false; });
+            
+            const datos = { 
+                nombre: document.getElementById('nombre').value, 
+                asistencia: document.getElementById('asistencia').value 
+            };
+            
+            fetch(scriptURL, { 
+                method: 'POST', 
+                mode: 'no-cors', 
+                headers: { 'Content-Type': 'application/json' }, 
+                body: JSON.stringify(datos) 
+            })
+            .then(() => { 
+                estado.innerText = translations[currentLang].successMsg; 
+                estado.style.color = "green"; 
+                form.reset(); 
+                btnEnviar.disabled = false; 
+                generateCaptcha();
+            })
+            .catch(error => { 
+                console.error('Error:', error); 
+                estado.innerText = translations[currentLang].errorMsg; 
+                estado.style.color = "red"; 
+                btnEnviar.disabled = false; 
+            });
         });
 
         function toggleMenu() {
@@ -519,7 +587,6 @@
         function reveal() {
             const reveals = document.querySelectorAll(".reveal");
             for (let i = 0; i < reveals.length; i++) {
-                // Ajustamos el trigger para que sea más permisivo al cargar (50px de margen)
                 const triggerPoint = window.innerHeight - 50;
                 if (reveals[i].getBoundingClientRect().top < triggerPoint) {
                     reveals[i].classList.add("active");
@@ -527,7 +594,6 @@
             }
         }
         window.addEventListener("scroll", reveal);
-        // También llamar a reveal al redimensionar la ventana
         window.addEventListener("resize", reveal);
     </script>
 </body>
