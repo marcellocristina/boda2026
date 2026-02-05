@@ -150,35 +150,34 @@
 <div id="game-container">
     <div id="ui-overlay">
         <div class="score-bubble" id="p1-score">TÚ: 0</div>
-        <!-- El botón ahora redirige a index.html -->
-        <button class="btn-exit" onclick="window.location.href='index.html'">SALIR</button>
+        <button class="btn-exit" id="btn-exit" onclick="window.location.href='index.html'">SALIR</button>
         <div class="score-bubble" id="p2-score">MARCELLO: 0</div>
     </div>
 
     <div id="screen-overlay">
         <div id="start-content">
-            <h1 class="text-5xl mb-4 text-black">VERTICAL SMASH!</h1>
+            <h1 class="text-5xl mb-4 text-black" id="game-title">VERTICAL SMASH!</h1>
             <div class="mb-6">
-                <p class="text-3xl text-red-600 bg-black text-white p-2 inline-block transform -rotate-2">¡GANA A MARCELLO!</p>
-                <p class="text-xl mt-2 text-black">Y DESBLOQUEA EL SECRETO</p>
+                <p class="text-3xl text-red-600 bg-black text-white p-2 inline-block transform -rotate-2" id="game-subtitle">¡GANA A MARCELLO!</p>
+                <p class="text-xl mt-2 text-black" id="game-unlock">Y DESBLOQUEA EL SECRETO</p>
             </div>
-            <p class="text-lg mb-6 text-gray-700">Usa el ratón o desliza el dedo lateralmente.<br>Ganas al llegar a 5 puntos.</p>
-            <button class="btn-comic" onclick="startGame()">¡EMPEZAR DESAFÍO!</button>
+            <p class="text-lg mb-6 text-gray-700" id="game-instr">Usa el ratón o desliza el dedo lateralmente.<br>Ganas al llegar a 5 puntos.</p>
+            <button class="btn-comic" id="btn-start" onclick="startGame()">¡EMPEZAR DESAFÍO!</button>
         </div>
         
         <div id="win-content" class="hidden">
-            <h1 class="text-6xl mb-4 text-red-600">¡VICTORIA!</h1>
+            <h1 class="text-6xl mb-4 text-red-600" id="win-title">¡VICTORIA!</h1>
             <div class="secret-content">
-                <p class="text-2xl italic">"Has vencido al gran Marcello. El secreto es la perseverancia... ¡y este código!"</p>
-                <p class="mt-4 text-white text-sm">CÓDIGO SECRETO: 80s-RETRO-STRIKE</p>
+                <p class="text-2xl italic" id="win-msg">"Has vencido al gran Marcello. El secreto es la perseverancia... ¡y este código!"</p>
+                <p class="mt-4 text-white text-sm" id="win-code">CÓDIGO SECRETO: 80s-RETRO-STRIKE</p>
             </div>
-            <button class="btn-comic" onclick="resetGame()">JUGAR DE NUEVO</button>
+            <button class="btn-comic" id="btn-restart-win" onclick="resetGame()">JUGAR DE NUEVO</button>
         </div>
 
         <div id="lose-content" class="hidden">
-            <h1 class="text-6xl mb-4 text-black">¡DERROTA!</h1>
-            <p class="text-xl mb-6">Marcello mantiene el secreto bajo llave.</p>
-            <button class="btn-comic" onclick="resetGame()">REINTENTAR</button>
+            <h1 class="text-6xl mb-4 text-black" id="lose-title">¡DERROTA!</h1>
+            <p class="text-xl mb-6" id="lose-msg">Marcello mantiene el secreto bajo llave.</p>
+            <button class="btn-comic" id="btn-restart-lose" onclick="resetGame()">REINTENTAR</button>
         </div>
     </div>
 
@@ -186,6 +185,59 @@
 </div>
 
 <script>
+    const translations = {
+        es: {
+            scoreP1: "TÚ", scoreP2: "MARCELLO", btnExit: "SALIR", gameTitle: "VERTICAL SMASH!",
+            gameSubtitle: "¡GANA A MARCELLO!", gameUnlock: "Y DESBLOQUEA EL SECRETO",
+            gameInstr: "Usa el ratón o desliza el dedo lateralmente.<br>Ganas al llegar a 5 puntos.",
+            btnStart: "¡EMPEZAR DESAFÍO!", winTitle: "¡VICTORIA!", 
+            winMsg: '"Has vencido al gran Marcello. El secreto es la perseverancia... ¡y este código!"',
+            winCode: "CÓDIGO SECRETO: 80s-RETRO-STRIKE", btnRestart: "JUGAR DE NUEVO",
+            loseTitle: "¡DERROTA!", loseMsg: "Marcello mantiene el secreto bajo llave.",
+            btnRetry: "REINTENTAR", introMsg: "¡GANAS CON 5!", point: "¡PUNTO!"
+        },
+        it: {
+            scoreP1: "TU", scoreP2: "MARCELLO", btnExit: "ESCI", gameTitle: "VERTICAL SMASH!",
+            gameSubtitle: "BATTI MARCELLO!", gameUnlock: "E SBLOCCA IL SEGRETO",
+            gameInstr: "Usa il mouse o scorri lateralmente.<br>Vinci arrivando a 5 punti.",
+            btnStart: "INIZIA LA SFIDA!", winTitle: "VITTORIA!", 
+            winMsg: '"Hai battuto il grande Marcello. Il segreto è la perseveranza... e questo codice!"',
+            winCode: "CODICE SEGRETO: 80s-RETRO-STRIKE", btnRestart: "GIOCA ANCORA",
+            loseTitle: "SCONFITTA!", loseMsg: "Marcello tiene il segreto sotto chiave.",
+            btnRetry: "RIPROVA", introMsg: "VINCI CON 5!", point: "PUNTO!"
+        },
+        en: {
+            scoreP1: "YOU", scoreP2: "MARCELLO", btnExit: "EXIT", gameTitle: "VERTICAL SMASH!",
+            gameSubtitle: "BEAT MARCELLO!", gameUnlock: "AND UNLOCK THE SECRET",
+            gameInstr: "Use the mouse or swipe laterally.<br>Win by reaching 5 points.",
+            btnStart: "START CHALLENGE!", winTitle: "VICTORY!", 
+            winMsg: '"You have defeated the great Marcello. The secret is perseverance... and this code!"',
+            winCode: "SECRET CODE: 80s-RETRO-STRIKE", btnRestart: "PLAY AGAIN",
+            loseTitle: "DEFEAT!", loseMsg: "Marcello keeps the secret under lock and key.",
+            btnRetry: "RETRY", introMsg: "WIN WITH 5!", point: "POINT!"
+        }
+    };
+
+    let currentLang = localStorage.getItem('selectedLanguage') || 'es';
+
+    function applyTranslations() {
+        const t = translations[currentLang];
+        document.getElementById('btn-exit').textContent = t.btnExit;
+        document.getElementById('game-title').textContent = t.gameTitle;
+        document.getElementById('game-subtitle').textContent = t.gameSubtitle;
+        document.getElementById('game-unlock').textContent = t.gameUnlock;
+        document.getElementById('game-instr').innerHTML = t.gameInstr;
+        document.getElementById('btn-start').textContent = t.btnStart;
+        document.getElementById('win-title').textContent = t.winTitle;
+        document.getElementById('win-msg').textContent = t.winMsg;
+        document.getElementById('win-code').textContent = t.winCode;
+        document.getElementById('btn-restart-win').textContent = t.btnRestart;
+        document.getElementById('lose-title').textContent = t.loseTitle;
+        document.getElementById('lose-msg').textContent = t.loseMsg;
+        document.getElementById('btn-restart-lose').textContent = t.btnRetry;
+        updateScoreDisplay();
+    }
+
     const canvas = document.getElementById('tennisCanvas');
     const ctx = canvas.getContext('2d');
     const container = document.getElementById('game-container');
@@ -252,7 +304,7 @@
     function showIntroMessage() {
         const el = document.createElement('div');
         el.className = 'intro-msg';
-        el.innerText = '¡GANAS CON 5!';
+        el.innerText = translations[currentLang].introMsg;
         container.appendChild(el);
         setTimeout(() => el.remove(), 1500);
     }
@@ -280,8 +332,8 @@
     }
 
     function updateScoreDisplay() {
-        document.getElementById('p1-score').innerText = `TÚ: ${p1Score}`;
-        document.getElementById('p2-score').innerText = `MARCELLO: ${p2Score}`;
+        document.getElementById('p1-score').innerText = `${translations[currentLang].scoreP1}: ${p1Score}`;
+        document.getElementById('p2-score').innerText = `${translations[currentLang].scoreP2}: ${p2Score}`;
     }
 
     function checkGameOver() {
@@ -376,7 +428,7 @@
             if (ball.y < 0) {
                 p1Score++;
                 updateScoreDisplay();
-                spawnOnomatopoeia(canvas.width/2 - 40, canvas.height/2 - 40, '¡PUNTO!');
+                spawnOnomatopoeia(canvas.width/2 - 40, canvas.height/2 - 40, translations[currentLang].point);
                 checkGameOver();
                 if(gameRunning) resetBall('player');
             } else if (ball.y > canvas.height) {
@@ -391,7 +443,10 @@
         requestAnimationFrame(gameLoop);
     }
 
-    window.onload = gameLoop;
+    window.onload = () => {
+        applyTranslations();
+        gameLoop();
+    };
 </script>
 </body>
 </html>

@@ -65,7 +65,7 @@
 
         @keyframes game-jiggle {
             0%, 100% { transform: rotate(-5deg) scale(1); }
-            50% { transform: rotate(5deg) scale(1.1); }
+            50% { transform: rotate(5deg) scale(1.05); }
         }
 
         .married-badge {
@@ -93,12 +93,12 @@
             display: inline-block;
             background: var(--comic-green);
             color: white;
-            padding: 1rem 2rem;
+            padding: 0.25rem 0.75rem;
             font-family: 'Luckiest Guy', cursive;
-            font-size: 2rem;
-            border: 4px solid black;
-            box-shadow: 6px 6px 0px black;
-            transform: rotate(-5deg);
+            font-size: 0.9rem;
+            border: 2px solid black;
+            box-shadow: 2px 2px 0px black;
+            transform: rotate(-3deg);
             transition: all 0.2s;
             animation: game-jiggle 3s infinite ease-in-out;
             cursor: pointer;
@@ -106,10 +106,10 @@
         }
 
         .btn-game:hover {
-            transform: rotate(0deg) scale(1.2);
+            transform: rotate(0deg) scale(1.1);
             background: var(--comic-yellow);
             color: black;
-            box-shadow: 0px 0px 0px black;
+            box-shadow: 1px 1px 0px black;
         }
 
         #mobile-menu {
@@ -334,16 +334,12 @@
         </div>
     </section>
 
-    <footer class="bg-black text-white py-16 text-center border-t-4 border-yellow-400">
-        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16">
-            <p class="comic-title text-5xl text-yellow-400" id="footer-cont">CONTINUARÁ...</p>
-            
-            <!-- NUEVO BOTÓN JUGUEMOS -->
-            <a href="juego.html" class="btn-game" id="btn-game-link">
-                ¡JUGUEMOS!
-            </a>
+    <footer class="bg-black text-white py-10 text-center border-t-4 border-yellow-400">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">
+            <p class="comic-title text-4xl text-yellow-400" id="footer-cont">CONTINUARÁ...</p>
+            <a href="juego.html" class="btn-game" id="btn-game-link">¡JUGUEMOS!</a>
         </div>
-        <p class="opacity-50 text-lg mt-12">© 2026 Marcello & Cristina Studios.</p>
+        <p class="opacity-50 text-sm mt-8">© 2026 Marcello & Cristina Studios.</p>
     </footer>
 
     <div id="lightbox" onclick="closeLightbox()"><img id="lightbox-img" src="" class="max-w-[90%] max-h-[80%] border-8 border-white outline outline-4 outline-black"></div>
@@ -371,7 +367,7 @@
                 historyP2: '"Dopo mille avventure, abbiamo deciso di firmare il contrato più importante."', galleryTitle: "ALBUM DELLE AVVENTURE",
                 locationTitle: "COORDINATE SEGRETE", churchTitle: "IL COMPROMESSO", churchName: "Cattedrale di Santa Maria", churchTime: "12:00 PM • Operazione Matrimonio!",
                 btnMap: "Apri Mappa", partyTitle: "IL BANCHETTO", partyName: 'Finca "Il Paradiso"', partyTime: "08:00 PM • Festa Supereroe",
-                btnParty: "Come arrivare", giftTitle: "LISTA NOZZE", giftP: "La vostra presenza è il regalo, ma se desiderate fare un pensiero:",
+                btnParty: "Come arrivare", giftTitle: "LISTA NOZZE", giftP: "La vostra presencia è il regalo, ma se desiderate fare un pensiero:",
                 btnCopy: "Copia IBAN", rsvpTitle: "Conferma Presenza", rsvpSubtitle: "Sarai alleato nel grande giorno?", labelName: "Nome e cognome:",
                 placeholderName: "Scrivi il tuo nome", labelJoin: "Parteciperai?", optYes: "Sì, ci sarò", optNo: "No, non potrò",
                 btnSubmit: "Invia Dati", rsvpDeadline: "* Scadenza: 1 Maggio, 2026", footerCont: "CONTINUA...", copied: "COPIATO!", 
@@ -396,12 +392,12 @@
 
         let currentLang = 'es';
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwaON4cTPF10VsaNDNPFynFBGJujTm_8NhLGd5I__2KKn2P5rt7avB_WYqhJqUg4m29/exec';
-        const form = document.getElementById('registroForm');
-        const btnEnviar = document.getElementById('btnEnviar');
-        const estado = document.getElementById('estado');
-
+        
         function setLanguage(lang) {
-            currentLang = lang; const t = translations[lang];
+            currentLang = lang;
+            localStorage.setItem('selectedLanguage', lang); // Guarda el idioma
+            const t = translations[lang];
+            
             document.getElementById('nav-title').textContent = t.navTitle;
             document.getElementById('nav-history').textContent = t.navHistory;
             document.getElementById('nav-gallery').textContent = t.navGallery;
@@ -442,40 +438,31 @@
             document.getElementById('btn-game-link').textContent = t.btnGame;
 
             document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(`btn-${lang}`).classList.add('active');
-            document.getElementById(`m-btn-${lang}`).classList.add('active');
+            const btn = document.getElementById(`btn-${lang}`);
+            const mBtn = document.getElementById(`m-btn-${lang}`);
+            if(btn) btn.classList.add('active');
+            if(mBtn) mBtn.classList.add('active');
         }
+
+        window.onload = () => {
+            const savedLang = localStorage.getItem('selectedLanguage'); // Recupera el idioma
+            if (savedLang) setLanguage(savedLang);
+            reveal();
+        };
+
+        const form = document.getElementById('registroForm');
+        const btnEnviar = document.getElementById('btnEnviar');
+        const estado = document.getElementById('estado');
 
         form.addEventListener('submit', e => {
             e.preventDefault();
-            
             btnEnviar.disabled = true;
             estado.innerText = translations[currentLang].sendingMsg;
             estado.style.color = "orange";
-
-            const datos = {
-                nombre: document.getElementById('nombre').value,
-                asistencia: document.getElementById('asistencia').value
-            };
-
-            fetch(scriptURL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(datos)
-            })
-            .then(() => {
-                estado.innerText = translations[currentLang].successMsg;
-                estado.style.color = "green";
-                form.reset();
-                btnEnviar.disabled = false;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                estado.innerText = translations[currentLang].errorMsg;
-                estado.style.color = "red";
-                btnEnviar.disabled = false;
-            });
+            const datos = { nombre: document.getElementById('nombre').value, asistencia: document.getElementById('asistencia').value };
+            fetch(scriptURL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(datos) })
+            .then(() => { estado.innerText = translations[currentLang].successMsg; estado.style.color = "green"; form.reset(); btnEnviar.disabled = false; })
+            .catch(error => { console.error('Error:', error); estado.innerText = translations[currentLang].errorMsg; estado.style.color = "red"; btnEnviar.disabled = false; });
         });
 
         function toggleMenu() {
@@ -515,7 +502,7 @@
                 if (reveals[i].getBoundingClientRect().top < window.innerHeight - 150) reveals[i].classList.add("active");
             }
         }
-        window.addEventListener("scroll", reveal); reveal();
+        window.addEventListener("scroll", reveal);
     </script>
 </body>
 </html>
