@@ -63,11 +63,16 @@
             100% { transform: scale(1) rotate(12deg); }
         }
 
+        @keyframes game-jiggle {
+            0%, 100% { transform: rotate(-5deg) scale(1); }
+            50% { transform: rotate(5deg) scale(1.1); }
+        }
+
         .married-badge {
             animation: comic-pulse-left 5s ease-in-out infinite;
             filter: drop-shadow(8px 8px 0px rgba(0,0,0,0.4));
             width: 55vw; max-width: 700px; min-width: 280px; opacity: 1 !important;
-            margin-left: -5%; /* Movido un poco más a la izquierda */
+            margin-left: -5%;
         }
 
         .boom-badge {
@@ -83,6 +88,29 @@
         }
 
         .comic-panel:hover { transform: scale(1.01) rotate(-0.2deg); }
+
+        .btn-game {
+            display: inline-block;
+            background: var(--comic-green);
+            color: white;
+            padding: 1rem 2rem;
+            font-family: 'Luckiest Guy', cursive;
+            font-size: 2rem;
+            border: 4px solid black;
+            box-shadow: 6px 6px 0px black;
+            transform: rotate(-5deg);
+            transition: all 0.2s;
+            animation: game-jiggle 3s infinite ease-in-out;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn-game:hover {
+            transform: rotate(0deg) scale(1.2);
+            background: var(--comic-yellow);
+            color: black;
+            box-shadow: 0px 0px 0px black;
+        }
 
         #mobile-menu {
             max-height: 0; overflow: hidden; transition: max-height 0.5s ease-in-out, opacity 0.3s ease;
@@ -307,8 +335,15 @@
     </section>
 
     <footer class="bg-black text-white py-16 text-center border-t-4 border-yellow-400">
-        <p class="comic-title text-4xl text-yellow-400 mb-6" id="footer-cont">CONTINUARÁ...</p>
-        <p class="opacity-50 text-lg">© 2026 Marcello & Cristina Studios.</p>
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16">
+            <p class="comic-title text-5xl text-yellow-400" id="footer-cont">CONTINUARÁ...</p>
+            
+            <!-- NUEVO BOTÓN JUGUEMOS -->
+            <a href="juego.html" class="btn-game" id="btn-game-link">
+                ¡JUGUEMOS!
+            </a>
+        </div>
+        <p class="opacity-50 text-lg mt-12">© 2026 Marcello & Cristina Studios.</p>
     </footer>
 
     <div id="lightbox" onclick="closeLightbox()"><img id="lightbox-img" src="" class="max-w-[90%] max-h-[80%] border-8 border-white outline outline-4 outline-black"></div>
@@ -326,7 +361,8 @@
                 btnCopy: "Copiar IBAN", rsvpTitle: "Confirmar Asistencia", rsvpSubtitle: "¿Serás aliado en el gran día?", labelName: "Nombre Completo:",
                 placeholderName: "Escribe tu nombre", labelJoin: "¿Asistirás?", optYes: "Sí, asistiré", optNo: "No podré asistir",
                 btnSubmit: "Enviar Datos", rsvpDeadline: "* Fecha límite: 1 de Mayo, 2026", footerCont: "CONTINUARÁ...", copied: "¡COPIADO!", 
-                sendingMsg: "Enviando...", successMsg: "¡Datos guardados con éxito!", errorMsg: "Hubo un error al enviar."
+                sendingMsg: "Enviando...", successMsg: "¡Datos guardados con éxito!", errorMsg: "Hubo un error al enviar.",
+                btnGame: "¡JUGUEMOS!"
             },
             it: {
                 navTitle: "M&C: EDIZIONE SPECIALE", navHistory: "STORIA", navGallery: "GALLERIA", navLocation: "POSIZIONE", navRsvp: "CONFERMA",
@@ -339,7 +375,8 @@
                 btnCopy: "Copia IBAN", rsvpTitle: "Conferma Presenza", rsvpSubtitle: "Sarai alleato nel grande giorno?", labelName: "Nome e cognome:",
                 placeholderName: "Scrivi il tuo nome", labelJoin: "Parteciperai?", optYes: "Sì, ci sarò", optNo: "No, non potrò",
                 btnSubmit: "Invia Dati", rsvpDeadline: "* Scadenza: 1 Maggio, 2026", footerCont: "CONTINUA...", copied: "COPIATO!", 
-                sendingMsg: "Inviando...", successMsg: "Dati salvati con successo!", errorMsg: "Errore durante l'invio."
+                sendingMsg: "Inviando...", successMsg: "Dati salvati con successo!", errorMsg: "Errore durante l'invio.",
+                btnGame: "GIOCHIAMO!"
             },
             en: {
                 navTitle: "M&C: SPECIAL EDITION", navHistory: "STORY", navGallery: "GALLERY", navLocation: "LOCATION", navRsvp: "RSVP",
@@ -352,7 +389,8 @@
                 btnCopy: "Copy IBAN", rsvpTitle: "Confirm Attendance", rsvpSubtitle: "Will you be our ally?", labelName: "name and surname:",
                 placeholderName: "Write your name", labelJoin: "Will you attend?", optYes: "Yes, I'll be there", optNo: "No, I can't make it",
                 btnSubmit: "Send Data", rsvpDeadline: "* RSVP Deadline: May 1st, 2026", footerCont: "TO BE CONTINUED...", copied: "COPIED!", 
-                sendingMsg: "Sending...", successMsg: "Data saved successfully!", errorMsg: "Error sending data."
+                sendingMsg: "Sending...", successMsg: "Data saved successfully!", errorMsg: "Error sending data.",
+                btnGame: "LET'S PLAY!"
             }
         };
 
@@ -401,6 +439,8 @@
             document.getElementById('btnEnviar').textContent = t.btnSubmit;
             document.getElementById('rsvp-deadline').textContent = t.rsvpDeadline;
             document.getElementById('footer-cont').textContent = t.footerCont;
+            document.getElementById('btn-game-link').textContent = t.btnGame;
+
             document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(`btn-${lang}`).classList.add('active');
             document.getElementById(`m-btn-${lang}`).classList.add('active');
