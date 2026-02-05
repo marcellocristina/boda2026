@@ -47,7 +47,7 @@
         .hero-title .ampersand { font-size: 0.6em; margin: -0.1rem 0; }
 
         @media (min-width: 768px) {
-            .hero-title { flex-direction: row; gap: 1.5rem; line-height: 1.1; font-size: clamp(4rem, 9vw, 8rem); }
+            .hero-title { flex-direction: row; font-size: clamp(4rem, 9vw, 8rem); line-height: 1.1; gap: 1.5rem; }
             .hero-title .ampersand { margin: 0; font-size: 0.7em; }
         }
 
@@ -66,6 +66,16 @@
         @keyframes game-jiggle {
             0%, 100% { transform: rotate(-5deg) scale(1); }
             50% { transform: rotate(5deg) scale(1.05); }
+        }
+
+        @keyframes scroll-bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0) rotate(-2deg);}
+            40% {transform: translateY(-10px) rotate(2deg);}
+            60% {transform: translateY(-5px) rotate(-1deg);}
+        }
+
+        .scroll-arrow-container {
+            animation: scroll-bounce 2s infinite;
         }
 
         .married-badge {
@@ -217,6 +227,7 @@
         </div>
     </section>
 
+    <!-- Contador con márgenes optimizados -->
     <div class="container mx-auto -mt-16 md:-mt-24 lg:-mt-32 relative z-30 px-4">
         <div class="comic-panel p-4 md:p-8 bg-yellow-400 flex flex-nowrap md:flex-wrap justify-center gap-2 md:gap-16 items-center overflow-x-auto">
             <div class="text-center">
@@ -236,9 +247,17 @@
                 <span class="comic-title text-xs md:text-2xl" id="label-sec">SEG</span>
             </div>
         </div>
+
+        <!-- Flecha de Scroll pegada a la historia -->
+        <div class="flex justify-center mt-4 md:mt-6 scroll-arrow-container">
+            <a href="#historia" class="bg-red-600 text-white w-12 h-12 md:w-16 md:h-16 flex items-center justify-center border-4 border-black rounded-full shadow-[4px_4px_0px_black] hover:bg-blue-600 transition-colors">
+                <i class="fas fa-chevron-down text-xl md:text-3xl"></i>
+            </a>
+        </div>
     </div>
 
-    <section id="historia" class="py-24 container mx-auto px-4 reveal">
+    <!-- Sección Historia corregida para carga inmediata en móviles -->
+    <section id="historia" class="pt-4 pb-24 container mx-auto px-4 reveal">
         <div class="grid md:grid-cols-2 gap-16 items-center">
             <div class="comic-panel group">
                 <img src="fotos/historia.jpg" alt="Nuestra Historia" class="w-full h-[500px] object-cover">
@@ -395,7 +414,7 @@
         
         function setLanguage(lang) {
             currentLang = lang;
-            localStorage.setItem('selectedLanguage', lang); // Guarda el idioma
+            localStorage.setItem('selectedLanguage', lang);
             const t = translations[lang];
             
             document.getElementById('nav-title').textContent = t.navTitle;
@@ -445,8 +464,9 @@
         }
 
         window.onload = () => {
-            const savedLang = localStorage.getItem('selectedLanguage'); // Recupera el idioma
+            const savedLang = localStorage.getItem('selectedLanguage');
             if (savedLang) setLanguage(savedLang);
+            // Ejecutar reveal al cargar para mostrar secciones ya visibles
             reveal();
         };
 
@@ -499,10 +519,16 @@
         function reveal() {
             const reveals = document.querySelectorAll(".reveal");
             for (let i = 0; i < reveals.length; i++) {
-                if (reveals[i].getBoundingClientRect().top < window.innerHeight - 150) reveals[i].classList.add("active");
+                // Ajustamos el trigger para que sea más permisivo al cargar (50px de margen)
+                const triggerPoint = window.innerHeight - 50;
+                if (reveals[i].getBoundingClientRect().top < triggerPoint) {
+                    reveals[i].classList.add("active");
+                }
             }
         }
         window.addEventListener("scroll", reveal);
+        // También llamar a reveal al redimensionar la ventana
+        window.addEventListener("resize", reveal);
     </script>
 </body>
 </html>
