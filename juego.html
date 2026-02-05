@@ -105,6 +105,10 @@
             transition: all 0.2s;
         }
 
+        .btn-exit:hover {
+            background: #ef4444;
+        }
+
         #screen-overlay {
             position: absolute;
             inset: 0;
@@ -146,7 +150,8 @@
 <div id="game-container">
     <div id="ui-overlay">
         <div class="score-bubble" id="p1-score">TÚ: 0</div>
-        <button class="btn-exit" onclick="location.reload()">SALIR</button>
+        <!-- El botón ahora redirige a index.html -->
+        <button class="btn-exit" onclick="window.location.href='index.html'">SALIR</button>
         <div class="score-bubble" id="p2-score">MARCELLO: 0</div>
     </div>
 
@@ -204,7 +209,7 @@
 
     const INITIAL_SPEED_Y = 5;
     const MIN_SPEED_Y = 3.5; 
-    const MIN_SPEED_X = 2.2; // Aumentado ligeramente para evitar trayectorias muertas
+    const MIN_SPEED_X = 2.2; 
     
     let ball = {
         x: canvas.width / 2,
@@ -261,7 +266,6 @@
             ball.y = cpu.y + paddleHeight + ball.radius + 10;
             ball.speedY = INITIAL_SPEED_Y;
         }
-        // Aseguramos speedX mínima al sacar
         ball.speedX = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 2 + MIN_SPEED_X);
     }
 
@@ -335,24 +339,20 @@
             if (cpuCenter < ball.x - 10) cpu.x += cpuSpeed;
             else if (cpuCenter > ball.x + 10) cpu.x -= cpuSpeed;
 
-            // Colisión con paredes laterales
             if (ball.x - ball.radius < 0 || ball.x + ball.radius > canvas.width) {
                 ball.speedX = -ball.speedX;
-                // Si tras el rebote la velocidad X es muy baja, le damos un empujón
                 if (Math.abs(ball.speedX) < MIN_SPEED_X) {
                     ball.speedX = ball.speedX < 0 ? -MIN_SPEED_X : MIN_SPEED_X;
                 }
                 spawnOnomatopoeia(ball.x > canvas.width/2 ? ball.x-60 : ball.x+10, ball.y, '¡BOING!');
             }
 
-            // Colisión Jugador
             if (ball.y + ball.radius > player.y && ball.y < player.y + paddleHeight &&
                 ball.x > player.x && ball.x < player.x + paddleWidth) {
                 ball.speedY = -Math.max(Math.abs(ball.speedY), MIN_SPEED_Y);
                 const deltaX = ball.x - (player.x + paddleWidth / 2);
-                ball.speedX = deltaX * 0.3; // Factor de ángulo ligeramente mayor
+                ball.speedX = deltaX * 0.3; 
                 
-                // Forzar velocidad horizontal mínima para evitar trayectorias verticales
                 if (Math.abs(ball.speedX) < MIN_SPEED_X) {
                     ball.speedX = ball.speedX < 0 ? -MIN_SPEED_X : MIN_SPEED_X;
                 }
@@ -360,14 +360,12 @@
                 spawnOnomatopoeia(ball.x - 20, ball.y - 50, '¡ZAS!');
             }
 
-            // Colisión Marcello
             if (ball.y - ball.radius < cpu.y + paddleHeight && ball.y > cpu.y &&
                 ball.x > cpu.x && ball.x < cpu.x + paddleWidth) {
                 ball.speedY = Math.max(Math.abs(ball.speedY), MIN_SPEED_Y);
                 const deltaX = ball.x - (cpu.x + paddleWidth / 2);
                 ball.speedX = deltaX * 0.3;
                 
-                // Forzar velocidad horizontal mínima
                 if (Math.abs(ball.speedX) < MIN_SPEED_X) {
                     ball.speedX = ball.speedX < 0 ? -MIN_SPEED_X : MIN_SPEED_X;
                 }
