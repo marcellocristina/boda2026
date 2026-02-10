@@ -74,9 +74,13 @@
             60% {transform: translateY(-5px) rotate(-1deg);}
         }
 
+        /* ANIMACIÓN ACTUALIZADA CON PAUSA */
         @keyframes marathon {
-            from { transform: translate3d(-150px, 0, 0); }
-            to { transform: translate3d(100vw, 0, 0); }
+            0% { transform: translate3d(-150px, 0, 0); }
+            /* El personaje termina su recorrido rápido */
+            25% { transform: translate3d(100vw, 0, 0); }
+            /* Se queda esperando fuera de pantalla hasta el final del ciclo */
+            100% { transform: translate3d(100vw, 0, 0); }
         }
 
         @keyframes pop-in {
@@ -85,7 +89,6 @@
             100% { transform: scale(1) translate(-50%, -50%); opacity: 1; }
         }
 
-        /* TAMAÑO DEL GIF GRANDE Y AJUSTES DE VELOCIDAD */
         .running-gif-container {
             width: 100%;
             height: 140px; 
@@ -102,19 +105,19 @@
             height: 130px; 
             position: absolute;
             bottom: 0;
-            animation: marathon 6s linear infinite;
+            /* Escritorio: 3s de carrera + 5s de espera = 8s total */
+            animation: marathon 8s linear infinite;
             will-change: transform;
         }
 
-        /* AJUSTES PARA MÓVIL: Mantiene tamaño y aumenta velocidad */
         @media (max-width: 768px) {
             .running-gif-container { 
                 height: 140px; 
             } 
             .running-gif { 
                 height: 130px; 
-                /* Bajamos de 4.5s a 3s para que vaya más rápido en pantallas pequeñas */
-                animation: marathon 3s linear infinite; 
+                /* Móvil: 1.5s de carrera (más rápido) + 5s de espera = 6.5s total */
+                animation: marathon 6.5s linear infinite; 
             }
         }
 
@@ -210,12 +213,10 @@
             text-shadow: 4px 4px 0px black; transform: rotate(-8deg); display: inline-block;
         }
 
-        /* Confetti */
         .confetti {
             position: absolute; width: 10px; height: 10px; pointer-events: none; z-index: 50;
         }
 
-        /* Success Message Overlay */
         .success-bubble {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
             background: var(--comic-yellow); border: 5px solid black; padding: 2rem;
