@@ -76,18 +76,21 @@
 
         /* ANIMACIÓN MARATÓN */
         @keyframes marathon {
-            from { transform: translateX(-150px); }
-            to { transform: translateX(100vw); }
+            from { transform: translateX(-150px) translateZ(0); }
+            to { transform: translateX(100vw) translateZ(0); }
         }
 
         .running-gif-container {
             width: 100%;
             height: 120px;
-            background-color: #dc2626; /* Fondo rojo integrado */
+            background-color: #dc2626; 
             position: relative;
             overflow: hidden;
             border-bottom: 4px solid black;
-            margin-top: -1rem; /* Sube el gif para pegarlo más al formulario */
+            margin-top: -1rem; 
+            /* Previene parpadeos en iOS */
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
 
         .running-gif {
@@ -95,17 +98,19 @@
             position: absolute;
             bottom: 0;
             animation: marathon 7s linear infinite;
+            /* FIX iPHONE: Forzar aceleración de hardware para que el GIF no se congele */
             will-change: transform;
-            transform: translateZ(0);
+            transform: translate3d(0, 0, 0) perspective(1000px);
+            -webkit-transform: translate3d(0, 0, 0) perspective(1000px);
         }
 
-        /* Velocidad adaptativa: en móvil cruza más rápido */
+        /* Velocidad adaptativa: en móvil cruza más rápido (3s) */
         @media (max-width: 768px) {
             .running-gif {
                 animation: marathon 3s linear infinite;
             }
             .running-gif-container {
-                margin-top: -2rem; /* Aún más pegado en móvil */
+                margin-top: -2.5rem; /* Aún menos espacio en móvil */
             }
         }
 
@@ -288,7 +293,7 @@
                 <span class="comic-title text-xs md:text-2xl" id="label-days">DÍAS</span>
             </div>
             <div class="text-center">
-                <span id="hours" class="block text-3xl md:text-6xl font-bold text-black Gabriel leading-none">00</span>
+                <span id="hours" class="block text-3xl md:text-6xl font-bold text-black leading-none">00</span>
                 <span class="comic-title text-xs md:text-2xl" id="label-hours">HORAS</span>
             </div>
             <div class="text-center">
