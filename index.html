@@ -79,6 +79,12 @@
             to { transform: translate3d(100vw, 0, 0); }
         }
 
+        @keyframes pop-in {
+            0% { transform: scale(0) translate(-50%, -50%); opacity: 0; }
+            80% { transform: scale(1.1) translate(-50%, -50%); opacity: 1; }
+            100% { transform: scale(1) translate(-50%, -50%); opacity: 1; }
+        }
+
         .running-gif-container {
             width: 100%;
             height: 80px;
@@ -199,6 +205,20 @@
             text-shadow: 4px 4px 0px black; transform: rotate(-8deg); display: inline-block;
         }
 
+        /* Confetti */
+        .confetti {
+            position: absolute; width: 10px; height: 10px; pointer-events: none; z-index: 50;
+        }
+
+        /* Success Message Overlay */
+        .success-bubble {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: var(--comic-yellow); border: 5px solid black; padding: 2rem;
+            box-shadow: 10px 10px 0px black; z-index: 60; display: none;
+            animation: pop-in 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            pointer-events: none; width: 80%; text-align: center;
+        }
+
         #lightbox {
             display: none; position: fixed; z-index: 1000; top: 0; left: 0;
             width: 100%; height: 100%; background: rgba(0,0,0,0.9);
@@ -209,19 +229,10 @@
         .reveal.active { opacity: 1; transform: translateY(0); }
 
         .captcha-box {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            background: #fdf2f2;
-            padding: 1rem;
-            border: 2px dashed black;
-            border-radius: 8px;
+            display: flex; align-items: center; gap: 1rem; background: #fdf2f2;
+            padding: 1rem; border: 2px dashed black; border-radius: 8px;
         }
-        .captcha-question {
-            font-family: 'Bangers', cursive;
-            font-size: 1.5rem;
-            color: var(--comic-red);
-        }
+        .captcha-question { font-family: 'Bangers', cursive; font-size: 1.5rem; color: var(--comic-red); }
     </style>
 </head>
 <body class="text-gray-900">
@@ -355,11 +366,9 @@
     <section id="regalos" class="py-24 bg-gray-200 border-t-8 border-black">
         <div class="container mx-auto px-6 text-center reveal">
             <div class="max-w-3xl mx-auto comic-panel-gift p-10 md:p-12 bg-white relative">
-                <div class="absolute -top-10 -left-2 md:-left-12 onomatopeya text-3xl md:text-5xl bg-yellow-400 px-4 py-2 border-4 border-black z-50">¡THWIP!</div>
-                
+                <div class="absolute -top-10 -left-2 md:-left-12 onomatopeya text-3xl md:text-5xl bg-yellow-400 px-4 py-2 border-4 border-black z-10">¡THWIP!</div>
                 <h2 class="text-4xl md:text-5xl mb-8 uppercase text-blue-700" id="gift-title">MESA DE REGALOS</h2>
                 <p class="text-xl md:text-2xl mb-10" id="gift-p">Vuestra presencia es nuestro mejor regalo, pero si deseáis tener un detalle adicional:</p>
-                
                 <div class="bg-blue-50 border-4 border-dashed border-black p-6 rounded-xl flex flex-col md:flex-row items-center justify-between gap-4">
                     <span class="font-mono text-xl md:text-2xl font-bold tracking-widest text-black uppercase break-all">ES12 3456 7890 1234 5678</span>
                     <button onclick="copyToClipboard('ES12 3456 7890 1234 5678', this)" class="w-full md:w-auto bg-black text-white px-8 py-4 text-lg uppercase font-bold hover:bg-blue-600 transition shadow-lg active:scale-95" id="btn-copy">Copiar IBAN</button>
@@ -368,20 +377,26 @@
         </div>
     </section>
 
-    <section id="confirmar" class="py-24 bg-red-600 border-t-8 border-black">
-        <div class="container mx-auto px-4">
+    <section id="confirmar" class="py-24 bg-red-600 border-t-8 border-black relative overflow-hidden">
+        <div id="confetti-container" class="absolute inset-0 pointer-events-none"></div>
+        <div class="container mx-auto px-4 relative z-10">
             <div class="max-w-3xl mx-auto text-center mb-12">
                 <h2 class="text-4xl md:text-6xl text-white uppercase drop-shadow-md" id="rsvp-title">Confirmar Asistencia</h2>
                 <p class="text-white text-2xl mt-2 font-bold" id="rsvp-subtitle">¿Serás nuestro próximo aliado en el gran día?</p>
             </div>
 
-            <div class="max-w-2xl mx-auto comic-panel p-8 md:p-12 bg-white transform -rotate-0.5 mb-8">
+            <div class="max-w-2xl mx-auto comic-panel p-8 md:p-12 bg-white transform -rotate-0.5 mb-8 overflow-hidden relative">
+                <!-- Success Popup -->
+                <div id="success-bubble" class="success-bubble">
+                    <div class="onomatopeya text-4xl mb-2">¡BOOM!</div>
+                    <p class="text-xl font-bold uppercase" id="success-text">¡Misión Cumplida! Datos enviados.</p>
+                </div>
+
                 <form id="registroForm" class="space-y-6">
                     <div>
                         <label class="comic-label" id="label-name" for="nombre">Nombre Completo:</label>
                         <input type="text" id="nombre" name="nombre" required class="w-full p-4 comic-input bg-blue-50" placeholder="Escribe tu nombre">
                     </div>
-
                     <div>
                         <label class="comic-label" id="label-join" for="asistencia">¿Asistirás?</label>
                         <select id="asistencia" name="asistencia" class="w-full p-4 comic-input bg-yellow-50 cursor-pointer">
@@ -389,7 +404,6 @@
                             <option value="No" id="opt-no">No podré asistir</option>
                         </select>
                     </div>
-
                     <div class="space-y-4">
                         <label class="comic-label" id="label-captcha">Misión Humana: Resuelve el acertijo</label>
                         <div class="captcha-box">
@@ -397,14 +411,13 @@
                             <input type="number" id="captcha-answer" required class="w-24 p-3 comic-input text-center text-xl" placeholder="?">
                         </div>
                     </div>
-
                     <div class="pt-4">
-                        <button type="submit" id="btnEnviar" class="w-full bg-black text-yellow-400 text-3xl font-bold py-6 comic-panel hover:bg-blue-600 hover:text-white transition-all transform hover:-translate-y-2 uppercase">
-                            Enviar Datos
+                        <button type="submit" id="btnEnviar" class="w-full bg-black text-yellow-400 text-3xl font-bold py-6 comic-panel hover:bg-blue-600 hover:text-white transition-all transform hover:-translate-y-2 uppercase flex items-center justify-center gap-4">
+                            <span id="btn-text">Enviar Datos</span>
+                            <i id="btn-spinner" class="fas fa-spinner fa-spin hidden"></i>
                         </button>
                     </div>
                 </form>
-                
                 <div id="estado" class="mt-4 text-center font-bold text-2xl uppercase tracking-wider min-h-[1.5em]"></div>
                 <p class="text-center mt-6 text-gray-500 font-bold italic" id="rsvp-deadline">* Fecha límite: 1 de Mayo, 2026</p>
             </div>
@@ -419,7 +432,6 @@
             </div>
             <p class="opacity-30 text-[9px] mt-1 mb-0 leading-none">© 2026 Marcello & Cristina Studios.</p>
         </div>
-
         <div class="running-gif-container bg-black">
             <img src="fotos/corre.gif" alt="Corriendo" class="running-gif" loading="eager">
         </div>
@@ -441,7 +453,8 @@
                 placeholderName: "Escribe tu nombre", labelJoin: "¿Asistirás?", optYes: "Sí, asistiré", optNo: "No podré asistir",
                 btnSubmit: "Enviar Datos", rsvpDeadline: "* Fecha límite: 1 de Mayo, 2026", footerCont: "CONTINUARÁ...", copied: "¡COPIADO!", 
                 sendingMsg: "Enviando...", successMsg: "¡Enviado correctamente!", errorMsg: "Hubo un error al enviar.",
-                btnGame: "¡JUGUEMOS!", labelCaptcha: "Misión Humana: Resuelve el acertijo", captchaError: "¡Error de cálculo! Inténtalo de nuevo."
+                btnGame: "¡JUGUEMOS!", labelCaptcha: "Misión Humana: Resuelve el acertijo", captchaError: "¡Error de cálculo! Inténtalo de nuevo.",
+                successText: "¡Misión Cumplida! Datos enviados."
             },
             it: {
                 navTitle: "M&C: EDIZIONE SPECIALE", navHistory: "STORIA", navGallery: "GALLERIA", navLocation: "POSIZIONE", navRsvp: "CONFERMA",
@@ -455,7 +468,8 @@
                 placeholderName: "Scrivi il tuo nome", labelJoin: "Parteciperai?", optYes: "Sì, ci sarò", optNo: "No, non potrò",
                 btnSubmit: "Invia Dati", rsvpDeadline: "* Scadenza: 1 Maggio, 2026", footerCont: "CONTINUA...", copied: "COPIATO!", 
                 sendingMsg: "Inviando...", successMsg: "Inviato con successo!", errorMsg: "Errore durante l'invio.",
-                btnGame: "GIOCHIAMO!", labelCaptcha: "Missione Umana: Risolvi l'enigma", captchaError: "Errore di calcolo! Riprova."
+                btnGame: "GIOCHIAMO!", labelCaptcha: "Missione Umana: Risolvi l'enigma", captchaError: "Errore di calcolo! Riprova.",
+                successText: "Missione Compiuta! Dati inviati."
             },
             en: {
                 navTitle: "M&C: SPECIAL EDITION", navHistory: "STORY", navGallery: "GALLERY", navLocation: "LOCATION", navRsvp: "RSVP",
@@ -469,13 +483,13 @@
                 placeholderName: "Write your name", labelJoin: "Will you attend?", optYes: "Yes, I'll be there", optNo: "No, I can't make it",
                 btnSubmit: "Send Data", rsvpDeadline: "* RSVP Deadline: May 1st, 2026", footerCont: "TO BE CONTINUED...", copied: "COPIED!", 
                 sendingMsg: "Sending...", successMsg: "Sent successfully!", errorMsg: "Error sending data.",
-                btnGame: "LET'S PLAY!", labelCaptcha: "Human Mission: Solve the riddle", captchaError: "Math error! Try again."
+                btnGame: "LET'S PLAY!", labelCaptcha: "Human Mission: Solve the riddle", captchaError: "Math error! Try again.",
+                successText: "Mission Accomplished! Data sent."
             }
         };
 
         let currentLang = 'es';
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwaON4cTPF10VsaNDNPFynFBGJujTm_8NhLGd5I__2KKn2P5rt7avB_WYqhJqUg4m29/exec';
-        
         let captchaResult = 0;
 
         function generateCaptcha() {
@@ -525,17 +539,46 @@
             document.getElementById('label-join').textContent = t.labelJoin;
             document.getElementById('opt-yes').textContent = t.optYes;
             document.getElementById('opt-no').textContent = t.optNo;
-            document.getElementById('btnEnviar').textContent = t.btnSubmit;
+            document.getElementById('btn-text').textContent = t.btnSubmit;
             document.getElementById('rsvp-deadline').textContent = t.rsvpDeadline;
             document.getElementById('footer-cont').textContent = t.footerCont;
             document.getElementById('btn-game-link').textContent = t.btnGame;
             document.getElementById('label-captcha').textContent = t.labelCaptcha;
+            document.getElementById('success-text').textContent = t.successText;
 
             document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
             const btn = document.getElementById(`btn-${lang}`);
             const mBtn = document.getElementById(`m-btn-${lang}`);
             if(btn) btn.classList.add('active');
             if(mBtn) mBtn.classList.add('active');
+        }
+
+        function createConfetti() {
+            const container = document.getElementById('confetti-container');
+            const colors = ['#FFD700', '#FF4500', '#0080FF', '#2ecc71', '#ffffff'];
+            for (let i = 0; i < 80; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = -10 + 'px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                
+                const duration = Math.random() * 3 + 2;
+                const delay = Math.random() * 1.5;
+                
+                confetti.animate([
+                    { transform: `translate3d(0, 0, 0) rotate(0deg)`, opacity: 1 },
+                    { transform: `translate3d(${(Math.random() - 0.5) * 200}px, 600px, 0) rotate(${Math.random() * 800}deg)`, opacity: 0 }
+                ], {
+                    duration: duration * 1000,
+                    delay: delay * 1000,
+                    easing: 'cubic-bezier(0, .9, .6, 1)',
+                    fill: 'forwards'
+                });
+                container.appendChild(confetti);
+                setTimeout(() => confetti.remove(), (duration + delay) * 1000);
+            }
         }
 
         window.onload = () => {
@@ -547,7 +590,10 @@
 
         const form = document.getElementById('registroForm');
         const btnEnviar = document.getElementById('btnEnviar');
+        const btnSpinner = document.getElementById('btn-spinner');
+        const btnText = document.getElementById('btn-text');
         const estado = document.getElementById('estado');
+        const successBubble = document.getElementById('success-bubble');
 
         form.addEventListener('submit', e => {
             e.preventDefault();
@@ -560,8 +606,9 @@
             }
 
             btnEnviar.disabled = true;
+            btnSpinner.classList.remove('hidden');
+            btnText.classList.add('hidden');
             estado.innerText = translations[currentLang].sendingMsg;
-            // CAMBIO: Azul para "Enviando..."
             estado.style.color = "#0080FF"; 
             
             const datos = { 
@@ -576,11 +623,22 @@
                 body: JSON.stringify(datos) 
             })
             .then(() => { 
-                estado.innerText = translations[currentLang].successMsg; 
-                // CAMBIO: Verde para "Enviado correctamente"
-                estado.style.color = "#2ecc71"; 
-                form.reset(); 
-                btnEnviar.disabled = false; 
+                // Éxito: Animación sin quitar el formulario
+                createConfetti();
+                successBubble.style.display = 'block';
+                estado.innerText = "";
+                
+                // Limpiar feedback de carga
+                btnEnviar.disabled = false;
+                btnSpinner.classList.add('hidden');
+                btnText.classList.remove('hidden');
+
+                // Ocultar mensaje de éxito después de 5 segundos
+                setTimeout(() => {
+                    successBubble.style.display = 'none';
+                }, 5000);
+
+                form.reset();
                 generateCaptcha();
             })
             .catch(error => { 
@@ -588,6 +646,8 @@
                 estado.innerText = translations[currentLang].errorMsg; 
                 estado.style.color = "#FF4500"; 
                 btnEnviar.disabled = false; 
+                btnSpinner.classList.add('hidden');
+                btnText.classList.remove('hidden');
             });
         });
 
