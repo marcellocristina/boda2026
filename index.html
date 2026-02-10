@@ -76,35 +76,35 @@
 
         /* ANIMACIÓN MARATÓN */
         @keyframes marathon {
-            from { transform: translateX(-150px) translateZ(0); }
-            to { transform: translateX(100vw) translateZ(0); }
+            from { transform: translate3d(-150px, 0, 0); }
+            to { transform: translate3d(100vw, 0, 0); }
         }
 
         .running-gif-container {
             width: 100%;
-            height: 100px;
+            height: 80px;
             background-color: black; 
             position: relative;
             overflow: hidden;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
             display: block;
-            margin-bottom: -1px; /* Solapamiento mínimo para evitar líneas por subpíxeles */
+            margin: 0;
+            padding: 0;
+            border: none;
         }
 
         .running-gif {
-            height: 90px;
+            height: 75px;
             position: absolute;
             bottom: 0;
-            animation: marathon 7s linear infinite;
+            animation: marathon 6s linear infinite;
             will-change: transform;
-            transform: translate3d(0, 0, 0) perspective(1000px);
-            -webkit-transform: translate3d(0, 0, 0) perspective(1000px);
         }
 
         @media (max-width: 768px) {
-            .running-gif {
-                animation: marathon 3s linear infinite;
+            .running-gif-container { height: 65px; }
+            .running-gif { 
+                height: 60px;
+                animation: marathon 4.5s linear infinite; 
             }
         }
 
@@ -142,9 +142,9 @@
             display: inline-block;
             background: var(--comic-green);
             color: white;
-            padding: 0.25rem 0.75rem;
+            padding: 0.2rem 0.6rem;
             font-family: 'Luckiest Guy', cursive;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             border: 2px solid black;
             box-shadow: 2px 2px 0px black;
             transform: rotate(-3deg);
@@ -418,18 +418,19 @@
         </div>
     </section>
 
-    <!-- Footer Unificado -->
-    <footer class="bg-black text-white border-t-8 border-yellow-400 p-0 m-0">
-        <div class="running-gif-container">
-            <img src="fotos/corre.gif" alt="Corriendo" class="running-gif" loading="eager">
+    <!-- Footer Ultra Compacto -->
+    <footer class="bg-black text-white border-t-8 border-yellow-400 p-0 m-0 overflow-hidden flex flex-col">
+        <div class="pt-4 pb-0 text-center">
+            <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-center gap-2 md:gap-6">
+                <p class="comic-title text-2xl md:text-4xl text-yellow-400 leading-tight m-0" id="footer-cont">CONTINUARÁ...</p>
+                <a href="juego.html" class="btn-game m-0" id="btn-game-link">¡JUGUEMOS!</a>
+            </div>
+            <p class="opacity-30 text-[9px] mt-1 mb-0 leading-none">© 2026 Marcello & Cristina Studios.</p>
         </div>
 
-        <div class="pb-12 pt-4 text-center">
-            <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12">
-                <p class="comic-title text-4xl md:text-6xl text-yellow-400" id="footer-cont">CONTINUARÁ...</p>
-                <a href="juego.html" class="btn-game text-xl md:text-2xl px-6 py-2" id="btn-game-link">¡JUGUEMOS!</a>
-            </div>
-            <p class="opacity-50 text-sm mt-12">© 2026 Marcello & Cristina Studios.</p>
+        <!-- GIF en la base absoluta - Altura reducida para compactar -->
+        <div class="running-gif-container bg-black">
+            <img src="fotos/corre.gif" alt="Corriendo" class="running-gif" loading="eager">
         </div>
     </footer>
 
