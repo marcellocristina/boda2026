@@ -54,7 +54,7 @@
             }
             .person {
                 transform-origin: bottom center;
-                scale: 0.6; /* Un poco más pequeño para dar aire */
+                scale: 0.6; 
             }
             #comic-feedback {
                 font-size: 50px !important;
@@ -62,7 +62,7 @@
             }
             .instructions {
                 font-size: 18px !important;
-                width: 80%;
+                width: 60%;
                 text-align: center;
             }
         }
@@ -160,6 +160,34 @@
             transform: translateX(-50%) rotate(-1deg);
         }
 
+        /* Estilo del botón de fin de juego / salir */
+        .btn-exit {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #000;
+            color: #fff;
+            font-family: 'Bangers', cursive;
+            font-size: 22px;
+            padding: 8px 24px;
+            border: 4px solid #fff;
+            box-shadow: 4px 4px 0px #ef4444;
+            cursor: pointer !important;
+            z-index: 1001;
+            transition: transform 0.1s, box-shadow 0.1s;
+            pointer-events: auto;
+        }
+
+        .btn-exit:hover {
+            transform: translate(-2px, -2px) rotate(2deg);
+            box-shadow: 6px 6px 0px #ef4444;
+        }
+
+        .btn-exit:active {
+            transform: translate(2px, 2px);
+            box-shadow: 0px 0px 0px #ef4444;
+        }
+
         .rec-indicator {
             position: absolute;
             top: 15px;
@@ -188,6 +216,9 @@
     <div id="comic-feedback">¡PERFECTO!</div>
     <div class="instructions">¡PON AL NARANJA EN EL MEDIO Y HAZ CLIC!</div>
     
+    <!-- Botón para volver al inicio -->
+    <button class="btn-exit" onclick="event.stopPropagation(); window.location.href='index.html'">SALIR</button>
+
     <div id="viewfinder">
         <div class="rec-indicator">CLICK!</div>
         <div class="corner top-left"></div>
@@ -212,8 +243,7 @@
             "¡SMILE!", "¡POLLITO!", "¡PIZZA!", "¡OH MY GOD!",
             "¡AQUÍ!", "¡YEE-HAW!", "¡BELLA!", "¡DO I LOOK GOOD?",
             "¡PHOTO BOMB!", "¡ESPAGUETI!", "¡HOLA CARACOLA!", "¡WHATCHA DOING?",
-	    "¡VAMOS!", "¡ESA MANO!", "¡ME MEO!", "¡EEEOO?"
-		
+            "¡VAMOS!", "¡ESA MANO!", "¡ME MEO!", "¡EEEOO?"
         ];
 
         const characterData = [
@@ -354,8 +384,6 @@
             const vCenterX = mouseX;
             const vCenterY = vfRect.top + vfRect.height / 2;
             
-            // AJUSTE CRÍTICO: En móvil elevamos el suelo mucho más (70px vs 20px) 
-            // para compensar la escala visual y centrarlo en el visor.
             const floorY = vfRect.bottom - (isMobile ? 70 : 20);
 
             const detectW = isMobile ? 110 : 190;
@@ -377,7 +405,6 @@
             people.forEach(p => {
                 const headRect = p.el.getBoundingClientRect();
                 const hcx = headRect.left + headRect.width / 2;
-                // En móvil la cabeza está visualmente más abajo del borde superior del contenedor
                 const hcy = headRect.top + (isMobile ? 25 : 45); 
                 p.isPosing = Math.abs(hcx - vCenterX) < detectW && Math.abs(hcy - vCenterY) < detectH;
             });
@@ -450,12 +477,10 @@
 
                 p.currentX = Math.max(isMobile ? 30 : 60, Math.min(window.innerWidth - (isMobile ? 30 : 60), p.currentX));
                 
-                // Calculamos la altura visual real
                 const visualCharacterHeight = isMobile ? 120 : 200; 
                 const topPos = floorY - visualCharacterHeight + p.currentY;
                 
                 p.el.style.top = `${topPos}px`;
-                // Centramos horizontalmente restando la mitad del ancho del SVG escalado
                 p.el.style.transform = `translate(${p.currentX - (isMobile ? 42 : 60)}px, 0) rotate(${p.angle}deg)`;
                 
                 const headRect = p.el.getBoundingClientRect();
@@ -469,7 +494,7 @@
             if (isMouseIdle) return; 
 
             const angle = Math.atan2(vcy - hcy, vcx - hcx);
-            const dist = Math.min(8, Math.hypot(vcx - hcx, vcy - hcy) / 40);
+            const dist = Math.min(8, Math.hypot(vcy - hcy, vcx - hcx) / 40);
 
             const ox = Math.cos(angle) * dist;
             const oy = Math.sin(angle) * dist;
