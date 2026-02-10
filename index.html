@@ -82,35 +82,29 @@
 
         .running-gif-container {
             width: 100%;
-            height: 120px;
-            background-color: #dc2626; 
+            height: 100px;
+            background-color: black; 
             position: relative;
             overflow: hidden;
-            border-bottom: 4px solid black;
-            margin-top: -1rem; 
-            /* Previene parpadeos en iOS */
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
+            display: block;
+            margin-bottom: -1px; /* Solapamiento mínimo para evitar líneas por subpíxeles */
         }
 
         .running-gif {
-            height: 110px;
+            height: 90px;
             position: absolute;
             bottom: 0;
             animation: marathon 7s linear infinite;
-            /* FIX iPHONE: Forzar aceleración de hardware para que el GIF no se congele */
             will-change: transform;
             transform: translate3d(0, 0, 0) perspective(1000px);
             -webkit-transform: translate3d(0, 0, 0) perspective(1000px);
         }
 
-        /* Velocidad adaptativa: en móvil cruza más rápido (3s) */
         @media (max-width: 768px) {
             .running-gif {
                 animation: marathon 3s linear infinite;
-            }
-            .running-gif-container {
-                margin-top: -2.5rem; /* Aún menos espacio en móvil */
             }
         }
 
@@ -381,7 +375,7 @@
     </section>
 
     <!-- Confirmación RSVP -->
-    <section id="confirmar" class="pt-16 bg-red-600 border-t-8 border-black">
+    <section id="confirmar" class="py-24 bg-red-600 border-t-8 border-black">
         <div class="container mx-auto px-4">
             <div class="max-w-3xl mx-auto text-center mb-12">
                 <h2 class="text-4xl md:text-6xl text-white uppercase drop-shadow-md" id="rsvp-title">Confirmar Asistencia</h2>
@@ -422,19 +416,21 @@
                 <p class="text-center mt-6 text-gray-500 font-bold italic" id="rsvp-deadline">* Fecha límite: 1 de Mayo, 2026</p>
             </div>
         </div>
+    </section>
 
-        <!-- GIF Integrado: Menos espacio y velocidad dinámica -->
+    <!-- Footer Unificado -->
+    <footer class="bg-black text-white border-t-8 border-yellow-400 p-0 m-0">
         <div class="running-gif-container">
             <img src="fotos/corre.gif" alt="Corriendo" class="running-gif" loading="eager">
         </div>
-    </section>
 
-    <footer class="bg-black text-white py-10 text-center border-t-4 border-yellow-400">
-        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">
-            <p class="comic-title text-4xl text-yellow-400" id="footer-cont">CONTINUARÁ...</p>
-            <a href="juego.html" class="btn-game" id="btn-game-link">¡JUGUEMOS!</a>
+        <div class="pb-12 pt-4 text-center">
+            <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12">
+                <p class="comic-title text-4xl md:text-6xl text-yellow-400" id="footer-cont">CONTINUARÁ...</p>
+                <a href="juego.html" class="btn-game text-xl md:text-2xl px-6 py-2" id="btn-game-link">¡JUGUEMOS!</a>
+            </div>
+            <p class="opacity-50 text-sm mt-12">© 2026 Marcello & Cristina Studios.</p>
         </div>
-        <p class="opacity-50 text-sm mt-8">© 2026 Marcello & Cristina Studios.</p>
     </footer>
 
     <!-- Lightbox -->
