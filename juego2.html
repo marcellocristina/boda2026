@@ -29,8 +29,8 @@
 
         #viewfinder {
             position: fixed;
-            --vf-width: 440px;
-            --vf-height: 320px;
+            --vf-width: 360px;
+            --vf-height: 260px;
             width: var(--vf-width);
             height: var(--vf-height);
             border: 6px solid #000;
@@ -38,7 +38,7 @@
             border-radius: 12px;
             pointer-events: none;
             z-index: 100;
-            top: 60%; 
+            top: 50%; 
             left: 50%;
             transform: translate(-50%, -50%);
             background: rgba(255,255,255,0.05);
@@ -47,23 +47,16 @@
 
         @media (max-width: 640px) {
             #viewfinder {
-                --vf-width: 280px;
-                --vf-height: 200px;
+                --vf-width: 220px;
+                --vf-height: 160px;
                 border-width: 4px;
-                top: 50%; 
-            }
-            .person {
-                transform-origin: bottom center;
-                scale: 0.6; 
             }
             #comic-feedback {
                 font-size: 50px !important;
                 padding: 10px 30px !important;
             }
-            .instructions {
-                font-size: 18px !important;
-                width: 60%;
-                text-align: center;
+            #photo-result {
+                width: 260px !important;
             }
         }
 
@@ -140,52 +133,123 @@
             background: #ef4444;
             padding: 20px 60px;
             border: 8px solid #000;
-            transition: transform 0.3s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+            transition: transform 0.3s cubic-bezier(0.6, -0.28, 0.735, 0.045), opacity 0.2s;
+            opacity: 0;
+            display: none; /* Inicialmente oculto */
         }
 
-        .instructions {
-            position: fixed;
-            top: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: #000;
-            z-index: 200;
-            font-family: 'Bangers', cursive;
-            font-size: 24px;
-            letter-spacing: 2px;
-            background: #fff;
-            padding: 10px 30px;
-            border: 4px solid #000;
-            box-shadow: 6px 6px 0px #000;
-            transform: translateX(-50%) rotate(-1deg);
-        }
-
-        /* Estilo del botón de fin de juego / salir */
-        .btn-exit {
+        /* Mission UI */
+        #mission-panel {
             position: fixed;
             top: 20px;
-            right: 20px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-1deg);
+            background: white;
+            border: 4px solid black;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 6px 6px 0px black;
+            z-index: 200;
+        }
+
+        #mission-target-preview {
+            width: 40px;
+            height: 40px;
+            border: 3px solid black;
+            border-radius: 50%;
+        }
+
+        .mission-text {
+            font-family: 'Bangers', cursive;
+            font-size: 24px;
+            color: black;
+        }
+
+        #start-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .btn-start {
+            background: #f97316;
+            border: 4px solid white;
+            padding: 15px 40px;
+            font-family: 'Bangers', cursive;
+            font-size: 32px;
+            margin-top: 30px;
+            cursor: pointer;
+            box-shadow: 0 8px 0 #9a3412;
+        }
+
+        .btn-start:active {
+            transform: translateY(4px);
+            box-shadow: 0 4px 0 #9a3412;
+        }
+
+        /* Foto Result UI - Polaroid */
+        #photo-result {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0) rotate(-5deg);
+            width: 360px;
+            background: #fff;
+            padding: 15px 15px 70px 15px;
+            border: 1px solid #ddd;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+            z-index: 1500;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        #photo-result.show {
+            transform: translate(-50%, -50%) scale(1.1) rotate(2deg);
+        }
+        #photo-canvas-container {
+            width: 100%;
+            aspect-ratio: 360 / 260; 
+            background: #f3f4f6;
+            border: 3px solid #000;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Botón de Salir */
+        .btn-exit {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
             background: #000;
             color: #fff;
             font-family: 'Bangers', cursive;
-            font-size: 22px;
-            padding: 8px 24px;
+            font-size: 24px;
+            padding: 12px 35px;
             border: 4px solid #fff;
-            box-shadow: 4px 4px 0px #ef4444;
+            box-shadow: 0px 6px 0px #ef4444;
             cursor: pointer !important;
             z-index: 1001;
-            transition: transform 0.1s, box-shadow 0.1s;
+            transition: all 0.1s;
             pointer-events: auto;
+            border-radius: 8px;
         }
 
         .btn-exit:hover {
-            transform: translate(-2px, -2px) rotate(2deg);
-            box-shadow: 6px 6px 0px #ef4444;
+            background: #ef4444;
+            box-shadow: 0px 6px 0px #000;
         }
 
         .btn-exit:active {
-            transform: translate(2px, 2px);
-            box-shadow: 0px 0px 0px #ef4444;
+            transform: translate(-50%, 4px);
+            box-shadow: 0px 2px 0px #000;
         }
 
         .rec-indicator {
@@ -202,22 +266,38 @@
         }
 
         @keyframes blink { 50% { opacity: 0; } }
-        
         @keyframes pop {
-            0% { transform: translate(-50%, -50%) scale(0) rotate(-10deg); }
-            50% { transform: translate(-50%, -50%) scale(1.2) rotate(5deg); }
-            100% { transform: translate(-50%, -50%) scale(1) rotate(-2deg); }
+            0% { transform: translate(-50%, -50%) scale(0) rotate(-10deg); opacity: 1; }
+            50% { transform: translate(-50%, -50%) scale(1.2) rotate(5deg); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1) rotate(-2deg); opacity: 1; }
         }
     </style>
 </head>
 <body onclick="takePhoto()" ontouchstart="handleTouch(event)" ontouchmove="handleTouch(event)">
 
+    <div id="start-overlay">
+        <h1 style="font-family: 'Bangers', cursive; font-size: 60px;">¡PREPÁRATE!</h1>
+        <p style="font-size: 24px;">Debes encontrar a este personaje entre la multitud:</p>
+        <div id="overlay-target-circle" style="width: 100px; height: 100px; border: 6px solid white; border-radius: 50%; margin-top: 20px;"></div>
+        <button class="btn-start" onclick="startGame(event)">¡A POR ELLOS!</button>
+    </div>
+
+    <!-- Polaroid Result -->
+    <div id="photo-result">
+        <div id="photo-canvas-container"></div>
+        <div style="text-align: center; margin-top: 20px; font-family: 'Bangers', cursive; font-size: 28px; color: #333; letter-spacing: 1px;">¡FOTAZA!</div>
+    </div>
+
     <div id="flash"></div>
     <div id="comic-feedback">¡PERFECTO!</div>
-    <div class="instructions">¡PON AL NARANJA EN EL MEDIO Y HAZ CLIC!</div>
     
-    <!-- Botón para volver al inicio -->
-    <button class="btn-exit" onclick="event.stopPropagation(); window.location.href='index.html'">SALIR</button>
+    <div id="mission-panel" style="display: none;">
+        <span class="mission-text">OBJETIVO:</span>
+        <div id="mission-target-preview"></div>
+        <span class="mission-text" id="mission-color-name">???</span>
+    </div>
+    
+    <button class="btn-exit" onclick="event.stopPropagation(); window.location.href='index.html'">SALIR DEL JUEGO</button>
 
     <div id="viewfinder">
         <div class="rec-indicator">CLICK!</div>
@@ -234,7 +314,12 @@
         const viewfinder = document.getElementById('viewfinder');
         const flash = document.getElementById('flash');
         const feedback = document.getElementById('comic-feedback');
-        const personCount = 7;
+        const missionPanel = document.getElementById('mission-panel');
+        const overlay = document.getElementById('start-overlay');
+        const photoResult = document.getElementById('photo-result');
+        const photoCanvasContainer = document.getElementById('photo-canvas-container');
+        
+        const personCount = 8;
         const people = [];
         
         const funPhrases = [
@@ -244,25 +329,112 @@
             "¡AQUÍ!", "¡YEE-HAW!", "¡BELLA!", "¡DO I LOOK GOOD?",
             "¡PHOTO BOMB!", "¡ESPAGUETI!", "¡HOLA CARACOLA!", "¡WHATCHA DOING?",
             "¡VAMOS!", "¡ESA MANO!", "¡ME MEO!", "¡EEEOO?",
-	    "¡VIVA LOS NOVIOS!", "¡QUE NO SALGO!", "¡NO VEO!", "ESA BODA"
+            "¡VIVA LOS NOVIOS!", "¡QUE NO SALGO!", "¡NO VEO!", "¡ESA BODA!"
         ];
+
+        function shuffle(array) {
+            const newArr = [...array];
+            for (let i = newArr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
+            }
+            return newArr;
+        }
 
         const characterData = [
-            { color: '#ef4444' },
-            { color: '#3b82f6' },
-            { color: '#10b981' },
-            { color: '#f97316', isOrange: true }, 
-            { color: '#8b5cf6' },
-            { color: '#ec4899' },
-            { color: '#06b6d4' }
+            { color: '#ef4444', name: 'ROJO' },
+            { color: '#3b82f6', name: 'AZUL' },
+            { color: '#10b981', name: 'VERDE' },
+            { color: '#f97316', name: 'NARANJA' }, 
+            { color: '#8b5cf6', name: 'MORADO' },
+            { color: '#ec4899', name: 'ROSA' },
+            { color: '#06b6d4', name: 'CIAN' },
+            { color: '#000000', name: 'NEGRO' }
         ];
 
-        characterData.sort(() => Math.random() - 0.5);
-
+        let targetPerson = null;
         let mouseX = window.innerWidth / 2;
         let lastMouseMoveTime = Date.now();
         let isMouseIdle = false;
         let feedbackTimer = null;
+        let gameActive = false;
+
+        function startGame(e) {
+            if(e) e.stopPropagation();
+            overlay.style.display = 'none';
+            photoResult.classList.remove('show');
+            missionPanel.style.display = 'flex';
+            gameActive = true;
+        }
+
+        function setupMission() {
+            const targetData = characterData[Math.floor(Math.random() * characterData.length)];
+            targetPerson = targetData;
+            document.getElementById('overlay-target-circle').style.backgroundColor = targetData.color;
+            document.getElementById('mission-target-preview').style.backgroundColor = targetData.color;
+            document.getElementById('mission-color-name').innerText = targetData.name;
+        }
+
+        function createPerson(index, data) {
+            const container = document.createElement('div');
+            container.className = 'person';
+            const startX = (window.innerWidth / (personCount + 1)) * (index + 1);
+            const scale = 0.7 + Math.random() * 0.6;
+            
+            const personState = {
+                id: index,
+                el: container,
+                currentX: startX,
+                currentY: 0,
+                velX: 0,
+                angle: 0,
+                phase: Math.random() * Math.PI * 2,
+                personality: 0.02 + Math.random() * 0.1,
+                isPosing: false,
+                phraseTimer: Math.random() * 200,
+                color: data.color,
+                scale: scale,
+                phrasePool: shuffle(funPhrases),
+                phraseIndex: 0
+            };
+
+            const svgMarkup = `
+                <div class="speech-bubble" id="bubble-${index}">${personState.phrasePool[0]}</div>
+                <div class="character-svg-wrapper" style="transform: scale(${scale}); transform-origin: bottom center;">
+                    <svg width="120" height="200" viewBox="0 0 120 200" style="overflow: visible;">
+                        <rect x="42" y="160" width="12" height="40" fill="#000" />
+                        <rect x="66" y="160" width="12" height="40" fill="#000" />
+                        <path d="M12 170 Q12 60 60 60 Q108 60 108 170" fill="#000" />
+                        <path d="M18 165 Q18 70 60 70 Q102 70 102 165" fill="${data.color}" />
+                        <circle cx="60" cy="45" r="38" fill="#000" />
+                        <circle cx="60" cy="45" r="34" fill="#ffdbac" />
+                        <circle cx="45" cy="40" r="10" fill="#000" />
+                        <circle cx="45" cy="40" r="8" fill="#fff" />
+                        <circle id="p-l-${index}" cx="45" cy="40" r="4" fill="#000" />
+                        <circle cx="75" cy="40" r="12" fill="#000" />
+                        <circle cx="75" cy="40" r="10" fill="#fff" />
+                        <circle id="p-r-${index}" cx="75" cy="40" r="5" fill="#000" />
+                        <path id="m-${index}" d="M45 65 Q60 65 75 65" stroke="black" stroke-width="4" stroke-linecap="round" fill="none" />
+                    </svg>
+                </div>
+            `;
+            
+            container.innerHTML = svgMarkup;
+            stage.appendChild(container);
+            
+            personState.pupilL = document.getElementById(`p-l-${index}`);
+            personState.pupilR = document.getElementById(`p-r-${index}`);
+            personState.mouth = document.getElementById(`m-${index}`);
+            personState.bubble = document.getElementById(`bubble-${index}`);
+            personState.svgWrapper = container.querySelector('.character-svg-wrapper');
+            
+            return personState;
+        }
+
+        setupMission();
+        for (let i = 0; i < personCount; i++) {
+            people.push(createPerson(i, characterData[i]));
+        }
 
         function handleTouch(e) {
             if (e.touches && e.touches[0]) {
@@ -281,159 +453,134 @@
             lastMouseMoveTime = Date.now();
             if (isMouseIdle) {
                 isMouseIdle = false;
-                viewfinder.classList.remove('stable');
             }
-        }
-
-        function createPerson(index, data) {
-            const container = document.createElement('div');
-            container.className = 'person';
-            
-            const startX = (window.innerWidth / (personCount + 1)) * (index + 1);
-            
-            const personState = {
-                id: index,
-                el: container,
-                currentX: startX,
-                currentY: 0,
-                velX: 0,
-                angle: 0,
-                phase: Math.random() * Math.PI * 2,
-                personality: 0.02 + Math.random() * 0.1,
-                isPosing: false,
-                phraseTimer: Math.random() * 200,
-                isOrange: data.isOrange || false
-            };
-
-            const initialPhrase = personState.isOrange ? "¡ESTOY AQUÍ!" : funPhrases[Math.floor(Math.random() * funPhrases.length)];
-
-            const svg = `
-                <div class="speech-bubble" id="bubble-${index}">${initialPhrase}</div>
-                <svg width="120" height="200" viewBox="0 0 120 200" style="overflow: visible;">
-                    <rect x="42" y="160" width="12" height="40" fill="#000" />
-                    <rect x="66" y="160" width="12" height="40" fill="#000" />
-                    <path d="M12 170 Q12 60 60 60 Q108 60 108 170" fill="#000" />
-                    <path d="M18 165 Q18 70 60 70 Q102 70 102 165" fill="${data.color}" />
-                    
-                    <circle cx="60" cy="45" r="38" fill="#000" />
-                    <circle cx="60" cy="45" r="34" fill="#ffdbac" />
-                    
-                    <circle cx="45" cy="40" r="10" fill="#000" />
-                    <circle cx="45" cy="40" r="8" fill="#fff" />
-                    <circle id="p-l-${index}" cx="45" cy="40" r="4" fill="#000" />
-                    
-                    <circle cx="75" cy="40" r="12" fill="#000" />
-                    <circle cx="75" cy="40" r="10" fill="#fff" />
-                    <circle id="p-r-${index}" cx="75" cy="40" r="5" fill="#000" />
-                    
-                    <path id="m-${index}" d="M45 65 Q60 65 75 65" stroke="black" stroke-width="4" stroke-linecap="round" fill="none" />
-                </svg>
-            `;
-            
-            container.innerHTML = svg;
-            stage.appendChild(container);
-            
-            personState.pupilL = document.getElementById(`p-l-${index}`);
-            personState.pupilR = document.getElementById(`p-r-${index}`);
-            personState.mouth = document.getElementById(`m-${index}`);
-            personState.bubble = document.getElementById(`bubble-${index}`);
-            
-            return personState;
-        }
-
-        for (let i = 0; i < personCount; i++) {
-            people.push(createPerson(i, characterData[i]));
         }
 
         function takePhoto() {
+            if (!gameActive) return;
+
             flash.style.opacity = '1';
             setTimeout(() => flash.style.opacity = '0', 100);
 
-            const orange = people.find(p => p.isOrange);
-            const diff = Math.abs(orange.currentX - mouseX);
-            
-            const threshold = window.innerWidth < 640 ? 25 : 30;
+            const targetObj = people.find(p => p.color === targetPerson.color);
+            const diff = Math.abs(targetObj.currentX - mouseX);
+            const threshold = window.innerWidth < 640 ? 30 : 35;
 
             if (diff < threshold) {
-                showFeedback("¡GENIAL!", "#22c55e");
-            } else if (diff < threshold * 5) {
-                showFeedback("¡CASI!", "#f59e0b");
+                gameActive = false;
+                showFeedback("¡FOTAZA!", "#22c55e", true);
+                renderPhotoResult();
+                
+                setTimeout(() => {
+                    photoResult.classList.add('show');
+                }, 850);
+
+                setTimeout(() => {
+                    photoResult.classList.remove('show');
+                    setupMission();
+                    overlay.style.display = 'flex';
+                }, 4500);
             } else {
-                showFeedback("¡FALLO!", "#ef4444");
+                showFeedback("¡NO ES ESE!", "#ef4444", false);
             }
         }
 
-        function showFeedback(text, color) {
-            if (feedbackTimer) clearTimeout(feedbackTimer);
+        function renderPhotoResult() {
+            photoCanvasContainer.innerHTML = '';
+            const canvasW = photoCanvasContainer.offsetWidth;
+            const viewfinderW = parseInt(getComputedStyle(viewfinder).getPropertyValue('--vf-width'));
+            const scaleFactor = canvasW / viewfinderW; 
+            
+            people.forEach(p => {
+                const clone = p.svgWrapper.cloneNode(true);
+                clone.style.position = 'absolute';
+                const relX = (p.currentX - mouseX) * scaleFactor + (canvasW / 2);
+                clone.style.left = `${relX - 30}px`; 
+                clone.style.bottom = `5px`;
+                clone.style.transform = `scale(${p.scale * scaleFactor})`;
+                photoCanvasContainer.appendChild(clone);
+            });
+        }
+
+        function showFeedback(text, color, isFinal) {
+            if (feedbackTimer) {
+                clearTimeout(feedbackTimer);
+                feedback.style.display = 'none';
+            }
             
             feedback.innerText = text;
             feedback.style.background = color;
+            feedback.style.display = 'block';
+            feedback.style.opacity = '1';
             feedback.style.animation = 'none';
             feedback.offsetHeight; 
-            feedback.style.animation = 'pop 0.6s forwards';
+            feedback.style.animation = 'pop 0.5s forwards';
+            
+            // Si es final, se oculta rápido para no solaparse con la Polaroid
+            const duration = isFinal ? 600 : 1000;
             
             feedbackTimer = setTimeout(() => {
+                feedback.style.opacity = '0';
                 feedback.style.transform = 'translate(-50%, -50%) scale(0)';
-            }, 2000);
+                // Lo ocultamos completamente del DOM después de la transición
+                setTimeout(() => {
+                    feedback.style.display = 'none';
+                }, 200);
+            }, duration);
         }
 
         function update() {
             const now = Date.now();
             const isMobile = window.innerWidth < 640;
-            
             const vfRect = viewfinder.getBoundingClientRect();
             const vCenterX = mouseX;
             const vCenterY = vfRect.top + vfRect.height / 2;
-            
-            const floorY = vfRect.bottom - (isMobile ? 70 : 20);
+            const floorY = vfRect.bottom - (isMobile ? 10 : 20);
 
-            const detectW = isMobile ? 110 : 190;
-            const detectH = isMobile ? 90 : 140;
-            const spacing = isMobile ? 48 : 60;
+            const detectW = isMobile ? 85 : 150;
+            const detectH = isMobile ? 75 : 120;
+            const spacing = isMobile ? 50 : 70;
 
             if (now - lastMouseMoveTime > 800 && !isMouseIdle) {
                 isMouseIdle = true;
-                viewfinder.classList.add('stable');
             }
 
-            const orange = people.find(p => p.isOrange);
-            if (Math.abs(orange.currentX - mouseX) < (isMobile ? 22 : 25)) {
-                viewfinder.classList.add('perfect');
-            } else {
-                viewfinder.classList.remove('perfect');
+            if (targetPerson && gameActive) {
+                const targetObj = people.find(p => p.color === targetPerson.color);
+                if (Math.abs(targetObj.currentX - mouseX) < (isMobile ? 22 : 30)) {
+                    viewfinder.classList.add('perfect');
+                } else {
+                    viewfinder.classList.remove('perfect');
+                }
             }
 
-            people.forEach(p => {
+            people.forEach((p, i) => {
                 const headRect = p.el.getBoundingClientRect();
                 const hcx = headRect.left + headRect.width / 2;
                 const hcy = headRect.top + (isMobile ? 25 : 45); 
                 p.isPosing = Math.abs(hcx - vCenterX) < detectW && Math.abs(hcy - vCenterY) < detectH;
-            });
 
-            people.forEach((p, i) => {
                 p.phraseTimer--;
                 if (p.phraseTimer <= 0) {
-                    if (p.phraseTimer === 0 && !p.isOrange) {
-                        p.bubble.innerText = funPhrases[Math.floor(Math.random() * funPhrases.length)];
+                    if (p.phraseTimer === 0) {
+                        p.phraseIndex = (p.phraseIndex + 1) % p.phrasePool.length;
+                        p.bubble.innerText = p.phrasePool[p.phraseIndex];
                     }
                     p.bubble.classList.add('active');
-                    if (p.phraseTimer < -60) p.phraseTimer = 150 + Math.random() * 250;
+                    if (p.phraseTimer < -60) p.phraseTimer = 200 + Math.random() * 300;
                 } else {
                     p.bubble.classList.remove('active');
                 }
 
-                if (isMouseIdle) {
+                if (isMouseIdle || !gameActive) {
                     p.velX = 0;
                     p.currentY *= 0.2;
                     p.angle *= 0.2;
-                    if (p.isPosing) {
-                        p.mouth.setAttribute('d', 'M40 60 Q60 85 80 60'); 
-                    }
+                    if (p.isPosing) p.mouth.setAttribute('d', 'M40 60 Q60 85 80 60'); 
                 } else {
                     if (p.isPosing) {
                         let separationForce = 0;
-                        const minDistance = isMobile ? 70 : 100;
-
+                        const minDistance = isMobile ? 75 : 110;
                         people.forEach(other => {
                             if (other.id !== p.id && other.isPosing) {
                                 const dist = p.currentX - other.currentX;
@@ -443,7 +590,6 @@
                                 }
                             }
                         });
-
                         p.velX *= 0.6; 
                         p.velX += separationForce;
                         p.currentX += p.velX;
@@ -454,14 +600,8 @@
                         const offsetFromMouse = (i - (personCount - 1) / 2) * spacing;
                         const targetX = mouseX + offsetFromMouse;
                         const dx = targetX - p.currentX;
-                        
-                        if (Math.abs(dx) < 0.5) {
-                            p.velX = 0;
-                            p.currentX = targetX;
-                        } else {
-                            p.velX = dx * p.personality;
-                            p.currentX += p.velX;
-                        }
+                        p.velX = dx * p.personality;
+                        p.currentX += p.velX;
 
                         const moveSpeed = Math.abs(p.velX);
                         if (moveSpeed > 0.2) {
@@ -476,30 +616,24 @@
                     }
                 }
 
-                p.currentX = Math.max(isMobile ? 30 : 60, Math.min(window.innerWidth - (isMobile ? 30 : 60), p.currentX));
-                
+                p.currentX = Math.max(40, Math.min(window.innerWidth - 40, p.currentX));
                 const visualCharacterHeight = isMobile ? 120 : 200; 
                 const topPos = floorY - visualCharacterHeight + p.currentY;
                 
                 p.el.style.top = `${topPos}px`;
                 p.el.style.transform = `translate(${p.currentX - (isMobile ? 42 : 60)}px, 0) rotate(${p.angle}deg)`;
                 
-                const headRect = p.el.getBoundingClientRect();
-                updateEyes(p, vCenterX, vCenterY, headRect.left + headRect.width / 2, headRect.top + (isMobile ? 25 : 45));
+                updateEyes(p, vCenterX, vCenterY, hcx, hcy);
             });
 
             requestAnimationFrame(update);
         }
 
         function updateEyes(p, vcx, vcy, hcx, hcy) {
-            if (isMouseIdle) return; 
-
             const angle = Math.atan2(vcy - hcy, vcx - hcx);
             const dist = Math.min(8, Math.hypot(vcy - hcy, vcx - hcx) / 40);
-
             const ox = Math.cos(angle) * dist;
             const oy = Math.sin(angle) * dist;
-
             p.pupilL.setAttribute('cx', 45 + ox);
             p.pupilL.setAttribute('cy', 40 + oy);
             p.pupilR.setAttribute('cx', 75 + ox);
