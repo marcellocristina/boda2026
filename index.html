@@ -156,7 +156,7 @@
       transition:max-height .5s ease-in-out,opacity .3s ease;
       opacity:0;display:flex;flex-direction:column;width:100%;
     }
-    #mobile-menu.open{max-height:700px;opacity:1;padding-bottom:1.5rem;}
+    #mobile-menu.open{max-height:800px;opacity:1;padding-bottom:1.5rem;}
 
     .nav-link{
       font-family:'Bangers',cursive;font-size:1.5rem;letter-spacing:1px;
@@ -245,6 +245,7 @@
       box-shadow:3px 3px 0px black;
       display:inline-block;
       transform:rotate(-1deg);
+      word-break:break-all;
     }
     .comic-link-badge:hover{transform:rotate(0deg) scale(1.05);color:var(--comic-green);}
 
@@ -266,6 +267,7 @@
           <button onclick="setLanguage('en')" class="lang-btn" id="btn-en">EN</button>
         </div>
 
+        <!-- Hamburguesa (la dejamos como lo tenías: visible siempre) -->
         <button onclick="toggleMenu()" class="text-3xl text-yellow-400 hover:scale-125 transition-transform focus:outline-none">
           <i class="fas fa-bars" id="menu-icon"></i>
         </button>
@@ -279,6 +281,8 @@
         </div>
 
         <a href="#historia" onclick="toggleMenu()" class="nav-link" id="nav-history">HISTORIA</a>
+        <!-- ✅ NUEVO BOTÓN -->
+        <a href="#info" onclick="toggleMenu()" class="nav-link" id="nav-info">INFORMACIÓN</a>
         <a href="#donde" onclick="toggleMenu()" class="nav-link" id="nav-location">UBICACIÓN</a>
         <a href="#confirmar" onclick="toggleMenu()" class="nav-link nav-link-rsvp" id="nav-rsvp">CONFIRMAR</a>
         <a href="#galeria" onclick="toggleMenu()" class="nav-link" id="nav-gallery">GALERÍA</a>
@@ -374,7 +378,9 @@
     <h2 class="text-center text-6xl mb-16 uppercase" id="location-title">COORDENADAS SECRETAS</h2>
     <div class="grid md:grid-cols-2 gap-12">
       <div class="comic-panel p-10 bg-red-500 text-white transform -rotate-0.5 overflow-hidden">
-        <div class="bg-black w-20 h-20 rounded-full flex items-center justify-center mb-6 border-4 border-white"><i class="fab fa-fort-awesome text-4xl"></i></div>
+        <div class="bg-black w-20 h-20 rounded-full flex items-center justify-center mb-6 border-4 border-white">
+          <i class="fab fa-fort-awesome text-4xl"></i>
+        </div>
         <h3 class="comic-title text-4xl mb-4" id="church-title">LA BODA</h3>
         <p class="text-2xl font-bold mb-2 text-white" id="church-name">Castello Fiuzzi</p>
         <p class="text-xl mb-8" id="church-time">27 de junio • 18:00 h</p>
@@ -384,7 +390,9 @@
       </div>
 
       <div class="comic-panel p-10 bg-yellow-400 transform rotate-0.5 overflow-hidden">
-        <div class="bg-black w-20 h-20 rounded-full flex items-center justify-center mb-6 border-4 border-white"><i class="fas fa-glass-cheers text-4xl text-yellow-400"></i></div>
+        <div class="bg-black w-20 h-20 rounded-full flex items-center justify-center mb-6 border-4 border-white">
+          <i class="fas fa-glass-cheers text-4xl text-yellow-400"></i>
+        </div>
         <h3 class="comic-title text-4xl mb-4 text-black" id="party-title">PREBODA</h3>
         <p class="text-2xl font-bold text-black mb-2" id="party-name">Terrazze Fiorelli, San Nicolla Arcella</p>
         <p class="text-xl text-black mb-8" id="party-time">Viernes 26 de junio • Un encuentro informal antes del Atardecer para empezar a celebrar juntos</p>
@@ -607,13 +615,11 @@
     // ==========================
     // TRADUCCIONES COMPLETAS (ES/IT/EN)
     // ==========================
-    // NOTA: Mantengo todos tus textos en ES como base, y traduzco a IT/EN el contenido UI.
-    // Los links se mantienen tal cual.
-
     const translations = {
       es: {
         navTitle: "M&C: EDICIÓN ESPECIAL",
         navHistory: "HISTORIA",
+        navInfo: "INFORMACIÓN",
         navLocation: "UBICACIÓN",
         navRsvp: "CONFIRMAR",
         navGallery: "GALERÍA",
@@ -730,7 +736,6 @@
         successText: "¡Misión Cumplida! Datos enviados.",
 
         galleryTitle: "ÁLBUM DE AVENTURAS",
-
         footerCont: "CONTINUARÁ...",
         btnGame: "¡JUGUEMOS!"
       },
@@ -738,6 +743,7 @@
       it: {
         navTitle: "M&C: EDIZIONE SPECIALE",
         navHistory: "STORIA",
+        navInfo: "INFORMAZIONI",
         navLocation: "POSIZIONE",
         navRsvp: "CONFERMA",
         navGallery: "GALLERIA",
@@ -779,66 +785,59 @@
         stayP:
           "“Vi lasciamo diverse opzioni di alloggio a seconda del tipo di soggiorno che preferite, tenendo conto che tutti questi paesi sono a soli 5 minuti di auto tra loro e che è normale pranzare, cenare e godersi la spiaggia in tre paesi diversi:",
         stay1:
-          "Scalea: il centro commerciale della zona, ideale se volete più atmosfera: grande varietà di ristoranti, negozi, spiagge ampie e vita notturna rilassata. Scalea Vecchia è un borgo antico molto caratteristico: le sue stradine strette e le infinite scalinate vi faranno perdere nel tempo.",
+          "Scalea: il centro commerciale della zona, ideale se volete più atmosfera—molti ristoranti, negozi, spiagge ampie e vita notturna rilassata. Scalea Vecchia è un borgo antico molto caratteristico: le sue stradine strette e le infinite scalinate vi faranno perdere nel tempo.",
         stay2:
           "San Nicola Arcella è un paese piccolo e molto pittoresco, perfetto se cercate tranquillità. L’accesso al mare è un po’ complesso (lunghe scale o in auto), ma le sue spiagge sono incorniciate tra le rocce, come la spettacolare Spiaggia dell’ARCOMAGNO.",
         stay3:
-          "Praia a Mare: una piccola città con spiaggia e ristoranti tipici, più tranquilla ma vivace, con l’isola di Dino Ferrari: un luogo perfetto per fare snorkeling, raggiungibile facilmente in pedalò o anche a nuoto dalla spiaggia di fronte.",
+          "Praia a Mare: una piccola città con spiaggia e ristoranti tipici, più tranquilla ma vivace, con l’isola di Dino Ferrari: un luogo perfetto per fare snorkeling, raggiungibile facilmente in pedalò o anche a nuoto.",
 
         carRec:
           "👉 Consiglio importante: per muovervi nella zona e godervi tutto con comodità, è molto consigliato noleggiare un’auto all’aeroporto di arrivo. Se volete noleggiarla a Scalea, avvisateci in anticipo.",
 
         moreTitle: "Oltre a Scalea, San Nicola Arcella e Praia a Mare, vi consigliamo:",
         more1Prefix:
-          "Diamante: un paese famoso per i suoi murales e il lungomare. Non perdete un gelato da Da Niní sul mare, o le spiagge di fronte all’isola di Cirella o la baia d’oro (",
+          "Diamante: famoso per i murales e il lungomare. Non perdete un gelato da Da Niní sul mare o le spiagge davanti all’isola di Cirella / Baia d’Oro (",
         more1Suffix: ")",
         more2:
-          "Orsomarso: un paese di montagna a soli 10 minuti dal mare, nel Parco Naturale del Pollino, immerso nella natura, con ristoranti tipici e percorsi lungo il fiume (link del ristorante La Riviera per provare la cucina dell’entroterra).",
+          "Orsomarso: paese di montagna a 10 minuti dal mare, nel Parco del Pollino, natura, ristoranti tipici e percorsi sul fiume (link La Riviera).",
         more3:
-          "Papasidero e rafting sul fiume Lao: diverse compagnie offrono questa esperienza divertente tra canyon naturali, con partenza da Scalea.",
+          "Papasidero e rafting sul fiume Lao: esperienza divertente tra canyon naturali, con partenza da Scalea.",
         more4:
-          "Grisolia: accesso alla montagna di La Mula (1.400 metri – escursione per veri avventurieri), con alberi secolari e tronchi giganteschi nei quali si può letteralmente entrare (esperienza con bambini - link). Link ristorante",
+          "Grisolia: accesso a La Mula (1.400 m) per veri avventurieri, alberi secolari e tronchi giganti (link).",
         more5:
-          "In tutti i paesi ci sono spiagge libere o stabilimenti (“lido”), dove a giugno il costo è circa 10–20 € al giorno per ombrellone, lettini e docce. Link..",
+          "Spiagge libere o lidi: a giugno circa 10–20 € al giorno per ombrellone, lettini e docce. Link..",
         more6:
-          "Maratea, nella vicina Basilicata: un vero gioiello sul mare.",
+          "Maratea (Basilicata): un vero gioiello sul mare.",
         more7:
-          "Gite in barca all’isola di Praia e alle sue grotte: un’attività ideale per esplorare la costa. Link…",
+          "Gite in barca all’isola di Praia e alle sue grotte. Link…",
 
         foodTitle: "Gastronomia calabrese",
         foodP:
-          "La cucina calabrese è intensa, autentica e legata ai prodotti locali: mare e montagna convivono a pochi metri di distanza.\n" +
-          "Troverete pasta fatta in casa, pesce e frutti di mare freschissimi, formaggi come ricotta e pecorino e salumi tradizionali come la famosa ’nduja.\n" +
-          "La vicinanza a Napoli si nota nelle pizzerie di alto livello e nella pasticceria (babà, sfogliatelle). Potrete gustare anche pasta di mandorle e la variante al cedro (tipica della zona) e cannoli siciliani. Limoncello, liquore al Cedro e molti liquori tipici (Amaro del Capo, Jefferson, ..).",
+          "Cucina intensa e autentica, legata ai prodotti locali: mare e montagna a pochi metri.\n" +
+          "Pasta fatta in casa, pesce freschissimo, ricotta/pecorino e salumi come la ’nduja.\n" +
+          "Pizzerie di alto livello, dolci (babà, sfogliatelle), pasta di mandorle al cedro, cannoli, liquori tipici.",
 
         restTitle: "Ristoranti consigliati",
 
         extraTitle: "Escursioni per allungare il viaggio",
-        extraP: "Se volete approfittare del viaggio per conoscere meglio il Sud Italia, ecco alcune idee:",
-        extra1:
-          "Se arrivate all’aeroporto di Napoli: Procida, Sorrento e la Costiera Amalfitana, Pompei e i templi di Paestum.",
-        extra2:
-          "Se arrivate a Lamezia Terme: Tropea ed escursione a Stromboli, con il suo vulcano attivo. Da Tropea si possono fare gite in giornata con soste di alcune ore sull’isola. Potete visitare anche Pizzo Calabro, un pittoresco paese costiero, famoso per il gelato “tartufo”.",
-        extra3:
-          "Più a sud scoprirete la Calabria più autentica: Scilla, Reggio Calabria, Gerace e Pentedattilo — probabilmente non conoscete nessuno così coraggioso da uscire dal commerciale e esplorare queste gemme.",
-        extra4:
-          "Verso est: Matera e la regione Puglia, con paesaggi unici e città storiche.",
+        extraP: "Se volete scoprire di più del Sud Italia, ecco alcune idee:",
+        extra1: "Se arrivate a Napoli: Procida, Sorrento e Costiera Amalfitana, Pompei, Paestum.",
+        extra2: "Se arrivate a Lamezia Terme: Tropea e Stromboli; anche Pizzo Calabro (gelato tartufo).",
+        extra3: "Calabria autentica: Scilla, Reggio Calabria, Gerace, Pentedattilo.",
+        extra4: "Verso est: Matera e Puglia.",
 
         airTitle: "Come arrivare: aeroporti",
-        airP1: "Le principali opzioni per arrivare sono:",
-        air1: "Volare a Napoli (buoni collegamenti in treno di vari tipi o in auto).",
-        air2: "Volare a Roma (e proseguire con l’alta velocità fino a Scalea).",
-        air3:
-          "Volare a Lamezia Terme, l’aeroporto più vicino (ci sono treni per Scalea, ma l’opzione più comoda è in auto o con autista privato — chiedeteci).",
+        airP1: "Opzioni principali:",
+        air1: "Volare a Napoli (buoni collegamenti in treno o auto).",
+        air2: "Volare a Roma (alta velocità fino a Scalea).",
+        air3: "Volare a Lamezia Terme (più vicino; meglio auto o driver privato).",
 
         beforeTitle: "Prima e dopo il matrimonio",
-        beforeP:
-          "Noi saremo in zona dal 22 giugno al 4 luglio e saremo felici di condividere del tempo con voi anche oltre il giorno della cerimonia, ad esempio con la nostra pre-festa:",
-        prebodaP:
-          "📍 Terrazze Fiorelli, San Nicolla Arcella\n🗓 Venerdì 26 giugno\nUn incontro informale prima del tramonto per iniziare a festeggiare insieme",
+        beforeP: "Saremo in zona dal 22 giugno al 4 luglio e felici di vedervi anche oltre la cerimonia, ad esempio alla nostra pre-festa:",
+        prebodaP: "📍 Terrazze Fiorelli, San Nicolla Arcella\n🗓 Venerdì 26 giugno\nIncontro informale prima del tramonto",
 
         giftTitle: "LISTA NOZZE",
-        giftP: "La vostra presenza è il regalo più bello, ma se desiderate fare un pensiero:",
+        giftP: "La vostra presenza è il regalo più bello, ma se volete fare un pensiero:",
         btnCopy: "Copia IBAN",
 
         rsvpTitle: "Conferma Presenza",
@@ -858,7 +857,6 @@
         successText: "Missione compiuta! Dati inviati.",
 
         galleryTitle: "ALBUM DELLE AVVENTURE",
-
         footerCont: "CONTINUA...",
         btnGame: "GIOCHIAMO!"
       },
@@ -866,6 +864,7 @@
       en: {
         navTitle: "M&C: SPECIAL EDITION",
         navHistory: "STORY",
+        navInfo: "INFO",
         navLocation: "LOCATION",
         navRsvp: "RSVP",
         navGallery: "GALLERY",
@@ -880,7 +879,7 @@
         historyTitle: "Welcome to Cristina and Marcello’s wedding",
         historyP1:
           "Welcome to this little corner where one more of our adventures begins.\n" +
-          "We’re truly excited to share this event with you. We’d love you to come with so much affection and discover a place that’s part of our family—it fills us with joy.",
+          "We’re truly excited to share this event with you. We’d love you to come and discover a place that’s part of our family—it fills us with joy.",
         historyP2a:
           "The wedding will take place on June 27 at 6:00 PM, in a very special setting: Castello Fiuzzi, facing the Tyrrhenian Sea and Dino Ferrari island (",
         historyP2b:
@@ -894,76 +893,69 @@
 
         partyTitle: "PRE-WEDDING",
         partyName: "Terrazze Fiorelli, San Nicolla Arcella",
-        partyTime: "Friday, June 26 • A casual get-together before sunset to start celebrating together",
+        partyTime: "Friday, June 26 • A casual meet-up before sunset to start celebrating together",
         btnMap2: "Get Directions",
 
         infoTitle: "The place: Calabria, Southern Italy",
         infoP1:
-          "The wedding takes place in the well-known Riviera dei Cedri, on Calabria’s Upper Tyrrhenian coast—an authentic, bright area full of character, where sea and mountains meet vertically, with no transition.\n" +
-          "Calabria means wild landscapes, sunlit stone villages rocked by the sea, bold gastronomy, and a calm, welcoming way of life.\n" +
-          "An unusual destination, perfect for enjoying a few days before or after the wedding.",
+          "The wedding takes place in the Riviera dei Cedri on Calabria’s Upper Tyrrhenian coast—an authentic, bright area where sea and mountains meet vertically.\n" +
+          "Calabria means wild landscapes, sunlit stone villages by the sea, bold gastronomy, and a calm, welcoming lifestyle.\n" +
+          "An unusual destination, perfect for a few days before or after the wedding.",
 
         stayTitle: "Where to stay",
         stayP:
-          "“Here are several accommodation options depending on the kind of stay you prefer, keeping in mind that all these towns are only about 5 minutes’ drive from each other, and it’s normal to have lunch, dinner, and enjoy the beach across three different towns:",
+          "“Here are a few accommodation options. All these towns are only ~5 minutes’ drive from each other, and it’s normal to eat and go to the beach across different towns:",
         stay1:
-          "Scalea: the area’s commercial hub, ideal if you want more atmosphere—lots of restaurants, shops, wide beaches, and relaxed nightlife. Scalea Vecchia is a very characteristic old town; its narrow streets and endless stairways will take you back in time.",
+          "Scalea: the area’s hub—restaurants, shops, wide beaches, relaxed nightlife. Scalea Vecchia is the charming old town with narrow streets and endless stairs.",
         stay2:
-          "San Nicola Arcella is small and very picturesque—perfect if you’re looking for peace and quiet. Access to the sea can be a bit tricky (long stairs or by car), but its beaches are framed by rocks, like the spectacular ARCOMAGNO beach.",
+          "San Nicola Arcella: small and picturesque. Sea access can be tricky (stairs or by car), but beaches are framed by rocks like the ARCOMAGNO beach.",
         stay3:
-          "Praia a Mare: a small city with beach and traditional restaurants, calmer but lively, with Dino Ferrari island—great for easy snorkeling; you can reach it by pedal boat or even by swimming from the beach opposite.",
+          "Praia a Mare: a small seaside town, calm but lively, with Dino Ferrari island—great for easy snorkeling and reachable by pedal boat or swimming.",
 
         carRec:
-          "👉 Important recommendation: to move around easily and enjoy everything comfortably, it’s highly recommended to rent a car at the airport you arrive at. If you want to rent it in Scalea, let us know in advance.",
+          "👉 Important: renting a car at your arrival airport is highly recommended. If you want to rent in Scalea, tell us in advance.",
 
         moreTitle: "Besides Scalea, San Nicola Arcella and Praia a Mare, we recommend:",
         more1Prefix:
-          "Diamante: famous for its murals and seaside promenade. Don’t miss a gelato at Da Niní by the sea, or the beaches facing Cirella island or Baia d’Oro (",
+          "Diamante: famous for murals and seaside promenade. Don’t miss gelato at Da Niní or beaches facing Cirella island / Baia d’Oro (",
         more1Suffix: ")",
         more2:
-          "Orsomarso: a mountain village just 10 minutes from the sea, in the Pollino Natural Park, surrounded by nature, with traditional restaurants and river routes (link the restaurant La Riviera to try inland cuisine).",
+          "Orsomarso: a mountain village 10 minutes from the sea, in Pollino Natural Park (link La Riviera).",
         more3:
-          "Papasidero and rafting on the Lao river: several companies offer this fun experience through natural canyons, departing from Scalea.",
+          "Papasidero & rafting on the Lao river: fun canyon experience departing from Scalea.",
         more4:
-          "Grisolia: access to La Mula mountain (1,400m—hike for true adventurers), with centuries-old trees and giant trunks you can literally step into (kids experience - link). Restaurant link",
+          "Grisolia: access to La Mula mountain (1,400m) for true adventurers (link).",
         more5:
-          "In all towns there are free beaches or paid beach clubs (“lido”), where in June the cost is around €10–20/day for umbrella, loungers and showers. Link..",
+          "Free beaches or paid beach clubs (“lido”): about €10–20/day in June. Link..",
         more6:
-          "Maratea, in nearby Basilicata: a true seaside gem.",
+          "Maratea (Basilicata): a true seaside gem.",
         more7:
-          "Boat trips to Praia island and its caves—an ideal activity to explore the coast. Link…",
+          "Boat trips to Praia island and its caves. Link…",
 
         foodTitle: "Calabrian gastronomy",
         foodP:
-          "Calabrian cuisine is bold, authentic, and deeply tied to local products; sea and mountains coexist just meters apart.\n" +
-          "You’ll find homemade pasta, ultra-fresh fish and seafood, cheeses like ricotta and pecorino, and traditional cured meats like the famous ’nduja.\n" +
-          "Naples’ proximity shows in high-level pizzerias and pastries (babà, sfogliatelle). You can also enjoy almond paste and its cedar variation (typical of the area) and Sicilian cannoli. Limoncello, liquore al Cedro and many typical liqueurs (Amaro del Capo, Jefferson, ..).",
+          "Bold, authentic cuisine tied to local products—sea and mountains just meters apart.\n" +
+          "Homemade pasta, ultra-fresh fish/seafood, ricotta/pecorino, cured meats like ’nduja.\n" +
+          "Great pizzerias, pastries, cedar-flavored almond paste, cannoli, and typical liqueurs.",
 
         restTitle: "Recommended restaurants",
 
         extraTitle: "Excursions to extend the trip",
-        extraP: "If you’d like to use the trip to discover more of Southern Italy, here are some ideas:",
-        extra1:
-          "If you arrive at Naples airport: Procida, Sorrento and the Amalfi Coast, Pompeii and the temples of Paestum.",
-        extra2:
-          "If you arrive at Lamezia Terme: Tropea and a trip to Stromboli with its active volcano. From Tropea you can do day trips with a few hours on the island. You can also visit Pizzo Calabro, a picturesque coastal town famous for its “tartufo” gelato.",
-        extra3:
-          "Further south you’ll find Calabria at its most authentic: Scilla, Reggio Calabria, Gerace and Pentedattilo — you probably don’t know anyone brave enough to step away from the commercial routes and explore these gems.",
-        extra4:
-          "To the east: Matera and the Puglia region, with unique landscapes and historic cities.",
+        extraP: "If you’d like to explore more of Southern Italy, here are some ideas:",
+        extra1: "If you arrive in Naples: Procida, Sorrento, Amalfi Coast, Pompeii, Paestum.",
+        extra2: "If you arrive in Lamezia Terme: Tropea & Stromboli; also Pizzo Calabro (tartufo gelato).",
+        extra3: "Authentic Calabria: Scilla, Reggio Calabria, Gerace, Pentedattilo.",
+        extra4: "To the east: Matera and Puglia.",
 
         airTitle: "How to get there: airports",
-        airP1: "Main options to get there:",
-        air1: "Fly to Naples (good connections by train of different types or by car).",
-        air2: "Fly to Rome (and continue by high-speed train to Scalea).",
-        air3:
-          "Fly to Lamezia Terme, the closest airport (there are trains to Scalea, but the most comfortable is by car or private driver — ask us).",
+        airP1: "Main options:",
+        air1: "Fly to Naples (good train/car connections).",
+        air2: "Fly to Rome (high-speed train to Scalea).",
+        air3: "Fly to Lamezia Terme (closest; best by car or private driver).",
 
         beforeTitle: "Before and after the wedding",
-        beforeP:
-          "We’ll be in the area from June 22 to July 4, and we’d love to spend time with you beyond the ceremony day—for example at our pre-wedding meet-up:",
-        prebodaP:
-          "📍 Terrazze Fiorelli, San Nicolla Arcella\n🗓 Friday, June 26\nA casual get-together before sunset to start celebrating together",
+        beforeP: "We’ll be in the area from June 22 to July 4 and would love to see you beyond the ceremony—like at our pre-wedding meet-up:",
+        prebodaP: "📍 Terrazze Fiorelli, San Nicolla Arcella\n🗓 Friday, June 26\nCasual meet-up before sunset",
 
         giftTitle: "GIFT REGISTRY",
         giftP: "Your presence is our best gift, but if you’d like to give something extra:",
@@ -986,7 +978,6 @@
         successText: "Mission accomplished! Data sent.",
 
         galleryTitle: "ADVENTURE ALBUM",
-
         footerCont: "TO BE CONTINUED...",
         btnGame: "LET’S PLAY!"
       }
@@ -1005,6 +996,7 @@
       // Top nav
       document.getElementById("nav-title").textContent = t.navTitle;
       document.getElementById("nav-history").textContent = t.navHistory;
+      document.getElementById("nav-info").textContent = t.navInfo; // ✅ NUEVO
       document.getElementById("nav-location").textContent = t.navLocation;
       document.getElementById("nav-rsvp").textContent = t.navRsvp;
       document.getElementById("nav-gallery").textContent = t.navGallery;
@@ -1020,7 +1012,6 @@
       document.getElementById("badge-history").textContent = t.badgeHistory;
       document.getElementById("history-title").textContent = t.historyTitle;
       document.getElementById("history-p1").innerHTML = t.historyP1.replace(/\n/g, "<br>");
-      // Montamos el párrafo 2 con LINK SOLO AQUÍ (sin el link de arriba, ya quitado)
       document.getElementById("history-p2").innerHTML =
         `${t.historyP2a}<a href="${SITE_LINK}" target="_blank" rel="noopener noreferrer" class="comic-link-badge">${SITE_LINK}</a>${t.historyP2b}`;
 
