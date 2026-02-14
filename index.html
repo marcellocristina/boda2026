@@ -120,6 +120,15 @@
     }
     .comic-panel:hover{transform:scale(1.01) rotate(-.2deg);}
 
+    /* ====== DESACTIVAR ANIMACIÓN HOVER EN BLOQUE INFO ====== */
+    #info .comic-panel{ transition:none !important; }
+    #info .comic-panel:hover{ transform:none !important; }
+
+    /* (opcional útil) también quitar el hover de las tarjetas de alojamiento dentro de INFO */
+    #info .stay-card{ transition:none !important; }
+    #info .stay-card:hover{ transform:none !important; }
+    /* ======================================================= */
+
     .btn-game{
       display:inline-block;
       background:var(--comic-green);
@@ -412,7 +421,7 @@
       box-shadow:3px 3px 0px black;
     }
 
-</style>
+  </style>
 </head>
 
 <body class="text-gray-900">
@@ -758,7 +767,8 @@
       </div>
     </div>
   </section>
-<section id="galeria" class="py-24 bg-blue-600 border-y-8 border-black">
+
+  <section id="galeria" class="py-24 bg-blue-600 border-y-8 border-black">
     <div class="container mx-auto px-4">
       <h2 class="text-center text-6xl text-white mb-16 uppercase drop-shadow-md" id="gallery-title"></h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
