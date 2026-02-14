@@ -1,695 +1,1283 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marcello & Cristina - ¡EL GRAN EVENTO!</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Luckiest+Guy&family=Kalam:wght@700&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --comic-yellow: #FFD700;
-            --comic-red: #FF4500;
-            --comic-blue: #0080FF;
-            --comic-green: #2ecc71;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marcello & Cristina - ¡EL GRAN EVENTO!</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Luckiest+Guy&family=Kalam:wght@700&display=swap" rel="stylesheet" />
 
-        body {
-            background-color: #f0f0f0;
-            background-image: radial-gradient(#ccc 1px, transparent 1px);
-            background-size: 20px 20px;
-            font-family: 'Kalam', cursive;
-            scroll-behavior: smooth;
-        }
+  <style>
+    :root{
+      --comic-yellow:#FFD700;
+      --comic-red:#FF4500;
+      --comic-blue:#0080FF;
+      --comic-green:#2ecc71;
+    }
 
-        h1, h2, h3, .comic-title {
-            font-family: 'Luckiest Guy', cursive;
-            letter-spacing: 2px;
-            -webkit-text-stroke: 1.5px black;
-            paint-order: stroke fill;
-        }
+    body{
+      background-color:#f0f0f0;
+      background-image:radial-gradient(#ccc 1px,transparent 1px);
+      background-size:20px 20px;
+      font-family:'Kalam',cursive;
+      scroll-behavior:smooth;
+    }
 
-        .hero-title {
-            font-size: clamp(3.5rem, 12vw, 7.5rem);
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            line-height: 0.9;
-            text-align: center;
-            word-break: break-word;
-        }
+    h1,h2,h3,.comic-title{
+      font-family:'Luckiest Guy',cursive;
+      letter-spacing:2px;
+      -webkit-text-stroke:1.5px black;
+      paint-order:stroke fill;
+    }
 
-        .hero-title span { display: block; }
-        .hero-title .ampersand { font-size: 0.6em; margin: -0.1rem 0; }
+    .hero-title{
+      font-size:clamp(3.5rem,12vw,7.5rem);
+      width:100%;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      line-height:.9;
+      text-align:center;
+      word-break:break-word;
+    }
 
-        @media (min-width: 768px) {
-            .hero-title { flex-direction: row; font-size: clamp(4rem, 9vw, 8rem); line-height: 1.1; gap: 1.5rem; }
-            .hero-title .ampersand { margin: 0; font-size: 0.7em; }
-        }
+    .hero-title span{display:block;}
+    .hero-title .ampersand{font-size:.6em;margin:-.1rem 0;}
 
-        @keyframes comic-pulse-left {
-            0% { transform: scale(1) rotate(-12deg); }
-            50% { transform: scale(1.1) rotate(-10deg); }
-            100% { transform: scale(1) rotate(-12deg); }
-        }
+    @media (min-width:768px){
+      .hero-title{flex-direction:row;font-size:clamp(4rem,9vw,8rem);line-height:1.1;gap:1.5rem;}
+      .hero-title .ampersand{margin:0;font-size:.7em;}
+    }
 
-        @keyframes comic-pulse-center {
-            0% { transform: scale(1) rotate(12deg); }
-            50% { transform: scale(1.15) rotate(14deg); }
-            100% { transform: scale(1) rotate(12deg); }
-        }
+    @keyframes comic-pulse-left{
+      0%{transform:scale(1) rotate(-12deg);}
+      50%{transform:scale(1.1) rotate(-10deg);}
+      100%{transform:scale(1) rotate(-12deg);}
+    }
+    @keyframes comic-pulse-center{
+      0%{transform:scale(1) rotate(12deg);}
+      50%{transform:scale(1.15) rotate(14deg);}
+      100%{transform:scale(1) rotate(12deg);}
+    }
+    @keyframes game-jiggle{
+      0%,100%{transform:rotate(-5deg) scale(1);}
+      50%{transform:rotate(5deg) scale(1.05);}
+    }
+    @keyframes scroll-bounce{
+      0%,20%,50%,80%,100%{transform:translateY(0) rotate(-2deg);}
+      40%{transform:translateY(-10px) rotate(2deg);}
+      60%{transform:translateY(-5px) rotate(-1deg);}
+    }
+    @keyframes marathon{
+      0%{transform:translate3d(-150px,0,0);}
+      25%{transform:translate3d(100vw,0,0);}
+      100%{transform:translate3d(100vw,0,0);}
+    }
+    @keyframes pop-in{
+      0%{transform:scale(0) translate(-50%,-50%);opacity:0;}
+      80%{transform:scale(1.1) translate(-50%,-50%);opacity:1;}
+      100%{transform:scale(1) translate(-50%,-50%);opacity:1;}
+    }
 
-        @keyframes game-jiggle {
-            0%, 100% { transform: rotate(-5deg) scale(1); }
-            50% { transform: rotate(5deg) scale(1.05); }
-        }
+    .running-gif-container{
+      width:100%;
+      height:140px;
+      background-color:black;
+      position:relative;
+      overflow:hidden;
+      display:block;
+      margin:0;
+      padding:0;
+      border:none;
+    }
+    .running-gif{
+      height:130px;
+      position:absolute;
+      bottom:0;
+      animation:marathon 8s linear infinite;
+      will-change:transform;
+    }
+    @media (max-width:768px){
+      .running-gif-container{height:140px;}
+      .running-gif{height:130px;animation:marathon 6.5s linear infinite;}
+    }
 
-        @keyframes scroll-bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateY(0) rotate(-2deg);}
-            40% {transform: translateY(-10px) rotate(2deg);}
-            60% {transform: translateY(-5px) rotate(-1deg);}
-        }
+    .scroll-arrow-container{animation:scroll-bounce 2s infinite;}
 
-        /* ANIMACIÓN ACTUALIZADA CON PAUSA */
-        @keyframes marathon {
-            0% { transform: translate3d(-150px, 0, 0); }
-            /* El personaje termina su recorrido rápido */
-            25% { transform: translate3d(100vw, 0, 0); }
-            /* Se queda esperando fuera de pantalla hasta el final del ciclo */
-            100% { transform: translate3d(100vw, 0, 0); }
-        }
+    .married-badge{
+      animation:comic-pulse-left 5s ease-in-out infinite;
+      filter:drop-shadow(8px 8px 0px rgba(0,0,0,0.4));
+      width:55vw;max-width:700px;min-width:280px;opacity:1!important;
+      margin-left:-5%;
+    }
+    .boom-badge{
+      animation:comic-pulse-center 4.5s ease-in-out infinite;
+      filter:drop-shadow(-10px 10px 0px rgba(0,0,0,0.4));
+      width:60vw;max-width:700px;min-width:250px;
+      transform-origin:center center;margin-right:-8%;margin-top:-3%;opacity:1!important;
+    }
 
-        @keyframes pop-in {
-            0% { transform: scale(0) translate(-50%, -50%); opacity: 0; }
-            80% { transform: scale(1.1) translate(-50%, -50%); opacity: 1; }
-            100% { transform: scale(1) translate(-50%, -50%); opacity: 1; }
-        }
+    .comic-panel{
+      background:white;border:4px solid black;box-shadow:10px 10px 0px black;
+      transition:all .3s ease;position:relative;
+    }
+    .comic-panel-gift{
+      background:white;border:4px solid black;box-shadow:10px 10px 0px black;
+      transition:all .3s ease;position:relative;
+    }
+    .comic-panel:hover,.comic-panel-gift:hover{transform:scale(1.01) rotate(-.2deg);}
 
-        .running-gif-container {
-            width: 100%;
-            height: 140px; 
-            background-color: black; 
-            position: relative;
-            overflow: hidden;
-            display: block;
-            margin: 0;
-            padding: 0;
-            border: none;
-        }
+    .btn-game{
+      display:inline-block;
+      background:var(--comic-green);
+      color:white;
+      padding:.2rem .6rem;
+      font-family:'Luckiest Guy',cursive;
+      font-size:.85rem;
+      border:2px solid black;
+      box-shadow:2px 2px 0px black;
+      transform:rotate(-3deg);
+      transition:all .2s;
+      animation:game-jiggle 3s infinite ease-in-out;
+      cursor:pointer;
+      text-decoration:none;
+    }
+    .btn-game:hover{
+      transform:rotate(0deg) scale(1.1);
+      background:var(--comic-yellow);
+      color:black;
+      box-shadow:1px 1px 0px black;
+    }
 
-        .running-gif {
-            height: 130px; 
-            position: absolute;
-            bottom: 0;
-            /* Escritorio: 3s de carrera + 5s de espera = 8s total */
-            animation: marathon 8s linear infinite;
-            will-change: transform;
-        }
+    #mobile-menu{
+      max-height:0;overflow:hidden;
+      transition:max-height .5s ease-in-out,opacity .3s ease;
+      opacity:0;display:flex;flex-direction:column;width:100%;
+    }
+    #mobile-menu.open{max-height:700px;opacity:1;padding-bottom:1.5rem;}
 
-        @media (max-width: 768px) {
-            .running-gif-container { 
-                height: 140px; 
-            } 
-            .running-gif { 
-                height: 130px; 
-                /* Móvil: 1.5s de carrera (más rápido) + 5s de espera = 6.5s total */
-                animation: marathon 6.5s linear infinite; 
-            }
-        }
+    .nav-link{
+      font-family:'Bangers',cursive;font-size:1.5rem;letter-spacing:1px;
+      padding:12px 24px;width:auto;text-align:center;
+      transition:all .3s cubic-bezier(0.68,-0.55,0.265,1.55);
+      border-radius:4px;cursor:pointer;display:inline-block;
+    }
+    .nav-link:hover{transform:scale(1.2) rotate(5deg);color:var(--comic-yellow);}
+    .nav-link-rsvp{
+      background-color:var(--comic-yellow);
+      color:black;margin-top:1rem;border:3px solid black;
+      box-shadow:6px 6px 0px black;
+    }
 
-        .scroll-arrow-container {
-            animation: scroll-bounce 2s infinite;
-        }
+    .lang-btn{
+      font-family:'Bangers',cursive;
+      padding:4px 8px;border:2px solid white;transition:.3s;
+    }
+    .lang-btn.active{background:var(--comic-yellow);color:black;border-color:black;}
 
-        .married-badge {
-            animation: comic-pulse-left 5s ease-in-out infinite;
-            filter: drop-shadow(8px 8px 0px rgba(0,0,0,0.4));
-            width: 55vw; max-width: 700px; min-width: 280px; opacity: 1 !important;
-            margin-left: -5%;
-        }
+    .comic-input{
+      border:3px solid black;box-shadow:4px 4px 0px black;
+      font-family:'Kalam',cursive;font-weight:bold;
+    }
+    .comic-label{
+      font-family:'Luckiest Guy',cursive;text-transform:uppercase;
+      color:black;margin-bottom:.5rem;display:block;
+    }
 
-        .boom-badge {
-            animation: comic-pulse-center 4.5s ease-in-out infinite;
-            filter: drop-shadow(-10px 10px 0px rgba(0,0,0,0.4));
-            width: 60vw; max-width: 700px; min-width: 250px;
-            transform-origin: center center; margin-right: -8%; margin-top: -3%; opacity: 1 !important;
-        }
+    .speech-bubble{
+      position:relative;background:white;border:3px solid black;border-radius:20px;
+      padding:25px;box-shadow:5px 5px 0px rgba(0,0,0,0.1);
+    }
+    .speech-bubble::after{
+      content:'';
+      position:absolute;bottom:-20px;left:50px;
+      border-width:20px 20px 0;border-style:solid;
+      border-color:black transparent;display:block;width:0;
+    }
 
-        .comic-panel {
-            background: white; border: 4px solid black; box-shadow: 10px 10px 0px black;
-            transition: all 0.3s ease; position: relative;
-        }
+    .onomatopeya{
+      font-family:'Bangers',cursive;font-size:3rem;color:var(--comic-red);
+      text-shadow:4px 4px 0px black;transform:rotate(-8deg);display:inline-block;
+    }
 
-        .comic-panel-gift {
-            background: white; border: 4px solid black; box-shadow: 10px 10px 0px black;
-            transition: all 0.3s ease; position: relative;
-        }
+    .confetti{position:absolute;width:10px;height:10px;pointer-events:none;z-index:50;}
 
-        .comic-panel:hover, .comic-panel-gift:hover { transform: scale(1.01) rotate(-0.2deg); }
+    .success-bubble{
+      position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+      background:var(--comic-yellow);border:5px solid black;padding:2rem;
+      box-shadow:10px 10px 0px black;z-index:60;display:none;
+      animation:pop-in .5s cubic-bezier(0.175,0.885,0.32,1.275) forwards;
+      pointer-events:none;width:80%;text-align:center;
+    }
 
-        .btn-game {
-            display: inline-block;
-            background: var(--comic-green);
-            color: white;
-            padding: 0.2rem 0.6rem;
-            font-family: 'Luckiest Guy', cursive;
-            font-size: 0.85rem;
-            border: 2px solid black;
-            box-shadow: 2px 2px 0px black;
-            transform: rotate(-3deg);
-            transition: all 0.2s;
-            animation: game-jiggle 3s infinite ease-in-out;
-            cursor: pointer;
-            text-decoration: none;
-        }
+    #lightbox{
+      display:none;position:fixed;z-index:1000;top:0;left:0;
+      width:100%;height:100%;background:rgba(0,0,0,0.9);
+      justify-content:center;align-items:center;
+    }
 
-        .btn-game:hover {
-            transform: rotate(0deg) scale(1.1);
-            background: var(--comic-yellow);
-            color: black;
-            box-shadow: 1px 1px 0px black;
-        }
+    .reveal{opacity:0;transform:translateY(30px);transition:all .8s ease-out;}
+    .reveal.active{opacity:1;transform:translateY(0);}
 
-        #mobile-menu {
-            max-height: 0; overflow: hidden; transition: max-height 0.5s ease-in-out, opacity 0.3s ease;
-            opacity: 0; display: flex; flex-direction: column; width: 100%;
-        }
+    .captcha-box{
+      display:flex;align-items:center;gap:1rem;background:#fdf2f2;
+      padding:1rem;border:2px dashed black;border-radius:8px;
+    }
+    .captcha-question{font-family:'Bangers',cursive;font-size:1.5rem;color:var(--comic-red);}
 
-        #mobile-menu.open { max-height: 700px; opacity: 1; padding-bottom: 1.5rem; }
+    /* LINKS (NO AZUL/NEGRO) */
+    .comic-link{
+      color:var(--comic-red);
+      text-decoration:underline;
+      font-weight:900;
+    }
+    .comic-link:hover{color:var(--comic-green);}
 
-        .nav-link {
-            font-family: 'Bangers', cursive; font-size: 1.5rem; letter-spacing: 1px;
-            padding: 12px 24px; width: auto; text-align: center;
-            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); border-radius: 4px;
-            cursor: pointer; display: inline-block;
-        }
+    .comic-link-badge{
+      color:var(--comic-red);
+      text-decoration:underline;
+      font-weight:900;
+      background:var(--comic-yellow);
+      padding:.15rem .45rem;
+      border:2px solid black;
+      box-shadow:3px 3px 0px black;
+      display:inline-block;
+      transform:rotate(-1deg);
+    }
+    .comic-link-badge:hover{transform:rotate(0deg) scale(1.05);color:var(--comic-green);}
 
-        .nav-link:hover { transform: scale(1.2) rotate(5deg); color: var(--comic-yellow); }
-        .nav-link-rsvp { background-color: var(--comic-yellow); color: black; margin-top: 1rem; border: 3px solid black; box-shadow: 6px 6px 0px black; }
-
-        .lang-btn { font-family: 'Bangers', cursive; padding: 4px 8px; border: 2px solid white; transition: 0.3s; }
-        .lang-btn.active { background: var(--comic-yellow); color: black; border-color: black; }
-
-        .comic-input { border: 3px solid black; box-shadow: 4px 4px 0px black; font-family: 'Kalam', cursive; font-weight: bold; }
-        .comic-label { font-family: 'Luckiest Guy', cursive; text-transform: uppercase; color: black; margin-bottom: 0.5rem; display: block; }
-
-        .speech-bubble {
-            position: relative; background: white; border: 3px solid black; border-radius: 20px;
-            padding: 25px; box-shadow: 5px 5px 0px rgba(0,0,0,0.1);
-        }
-
-        .speech-bubble::after {
-            content: ''; position: absolute; bottom: -20px; left: 50px;
-            border-width: 20px 20px 0; border-style: solid; border-color: black transparent;
-            display: block; width: 0;
-        }
-
-        .onomatopeya {
-            font-family: 'Bangers', cursive; font-size: 3rem; color: var(--comic-red);
-            text-shadow: 4px 4px 0px black; transform: rotate(-8deg); display: inline-block;
-        }
-
-        .confetti {
-            position: absolute; width: 10px; height: 10px; pointer-events: none; z-index: 50;
-        }
-
-        .success-bubble {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            background: var(--comic-yellow); border: 5px solid black; padding: 2rem;
-            box-shadow: 10px 10px 0px black; z-index: 60; display: none;
-            animation: pop-in 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-            pointer-events: none; width: 80%; text-align: center;
-        }
-
-        #lightbox {
-            display: none; position: fixed; z-index: 1000; top: 0; left: 0;
-            width: 100%; height: 100%; background: rgba(0,0,0,0.9);
-            justify-content: center; align-items: center;
-        }
-
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-
-        .captcha-box {
-            display: flex; align-items: center; gap: 1rem; background: #fdf2f2;
-            padding: 1rem; border: 2px dashed black; border-radius: 8px;
-        }
-        .captcha-question { font-family: 'Bangers', cursive; font-size: 1.5rem; color: var(--comic-red); }
-    </style>
+    .comic-list li{margin-bottom:.5rem;}
+    .comic-divider{border-top:4px dashed black;margin:1.25rem 0;}
+  </style>
 </head>
+
 <body class="text-gray-900">
 
-    <nav class="bg-black text-white p-4 sticky top-0 z-50 border-b-4 border-yellow-400">
-        <div class="container mx-auto">
-            <div class="flex justify-between items-center">
-                <h1 class="text-2xl text-yellow-400" id="nav-title">M&C: EDICIÓN ESPECIAL</h1>
-                <div class="hidden md:flex space-x-2">
-                    <button onclick="setLanguage('it')" class="lang-btn" id="btn-it">IT</button>
-                    <button onclick="setLanguage('es')" class="lang-btn active" id="btn-es">ES</button>
-                    <button onclick="setLanguage('en')" class="lang-btn" id="btn-en">EN</button>
-                </div>
-                <button onclick="toggleMenu()" class="text-3xl text-yellow-400 hover:scale-125 transition-transform focus:outline-none">
-                    <i class="fas fa-bars" id="menu-icon"></i>
-                </button>
-            </div>
-            <div id="mobile-menu" class="flex flex-col items-center mt-2">
-                <div class="flex space-x-4 mb-4 md:hidden">
-                    <button onclick="setLanguage('it')" class="lang-btn" id="m-btn-it">IT</button>
-                    <button onclick="setLanguage('es')" class="lang-btn active" id="m-btn-es">ES</button>
-                    <button onclick="setLanguage('en')" class="lang-btn" id="m-btn-en">EN</button>
-                </div>
-                <a href="#historia" onclick="toggleMenu()" class="nav-link" id="nav-history">HISTORIA</a>
-                <a href="#galeria" onclick="toggleMenu()" class="nav-link" id="nav-gallery">GALERÍA</a>
-                <a href="#donde" onclick="toggleMenu()" class="nav-link" id="nav-location">UBICACIÓN</a>
-                <a href="#confirmar" onclick="toggleMenu()" class="nav-link nav-link-rsvp" id="nav-rsvp">CONFIRMAR</a>
-            </div>
-        </div>
-    </nav>
+  <nav class="bg-black text-white p-4 sticky top-0 z-50 border-b-4 border-yellow-400">
+    <div class="container mx-auto">
+      <div class="flex justify-between items-center">
+        <h1 class="text-2xl text-yellow-400" id="nav-title">M&C: EDICIÓN ESPECIAL</h1>
 
-    <section class="relative h-[65vh] md:h-[90vh] flex items-center justify-center overflow-hidden border-b-8 border-black">
-        <div class="absolute inset-0 z-0">
-            <img src="fotos/hero1.jpg" alt="Marcello y Cristina" class="w-full h-full object-cover object-center">
-            <div class="absolute inset-0 bg-black/10"></div>
-        </div>
-        <div class="absolute inset-0 z-10 pointer-events-none flex items-start justify-start p-2">
-            <img src="fotos/married.png" alt="Married" class="married-badge">
-        </div>
-        <div class="absolute inset-0 z-10 pointer-events-none flex items-start justify-end overflow-visible">
-            <img src="fotos/boom.png" alt="Boom" class="boom-badge">
-        </div>
-        <div class="relative z-20 text-center px-4 w-full flex flex-col items-center justify-center">
-            <div class="w-full max-w-full flex justify-center">
-                <h1 class="hero-title text-white mb-6 drop-shadow-[0_10px_10px_rgba(0,0,0,0.9)] uppercase">
-                    <span>MARCELLO</span>
-                    <span class="ampersand">&</span>
-                    <span>CRISTINA</span>
-                </h1>
-            </div>
-            <div class="bg-black text-white inline-block px-8 py-3 transform -skew-x-6 border-2 border-yellow-400">
-                <p class="text-2xl md:text-5xl font-bold uppercase" id="hero-date">10 JUNIO 2026</p>
-            </div>
-        </div>
-    </section>
-
-    <div class="container mx-auto -mt-16 md:-mt-24 lg:-mt-32 relative z-30 px-4">
-        <div class="comic-panel p-4 md:p-8 bg-yellow-400 flex flex-nowrap md:flex-wrap justify-center gap-2 md:gap-16 items-center overflow-x-auto">
-            <div class="text-center">
-                <span id="days" class="block text-3xl md:text-6xl font-bold text-black leading-none">00</span>
-                <span class="comic-title text-xs md:text-2xl" id="label-days">DÍAS</span>
-            </div>
-            <div class="text-center">
-                <span id="hours" class="block text-3xl md:text-6xl font-bold text-black leading-none">00</span>
-                <span class="comic-title text-xs md:text-2xl" id="label-hours">HORAS</span>
-            </div>
-            <div class="text-center">
-                <span id="minutes" class="block text-3xl md:text-6xl font-bold text-black leading-none">00</span>
-                <span class="comic-title text-xs md:text-2xl" id="label-min">MIN</span>
-            </div>
-            <div class="text-center border-l-2 md:border-l-4 border-black pl-2 md:pl-6">
-                <span id="seconds" class="block text-3xl md:text-6xl font-bold text-red-600 leading-none">00</span>
-                <span class="comic-title text-xs md:text-2xl" id="label-sec">SEG</span>
-            </div>
+        <div class="hidden md:flex space-x-2">
+          <button onclick="setLanguage('it')" class="lang-btn" id="btn-it">IT</button>
+          <button onclick="setLanguage('es')" class="lang-btn active" id="btn-es">ES</button>
+          <button onclick="setLanguage('en')" class="lang-btn" id="btn-en">EN</button>
         </div>
 
-        <div class="flex justify-center mt-4 md:mt-6 scroll-arrow-container">
-            <a href="#historia" class="bg-red-600 text-white w-12 h-12 md:w-16 md:h-16 flex items-center justify-center border-4 border-black rounded-full shadow-[4px_4px_0px_black] hover:bg-blue-600 transition-colors">
-                <i class="fas fa-chevron-down text-xl md:text-3xl"></i>
-            </a>
+        <button onclick="toggleMenu()" class="text-3xl text-yellow-400 hover:scale-125 transition-transform focus:outline-none">
+          <i class="fas fa-bars" id="menu-icon"></i>
+        </button>
+      </div>
+
+      <div id="mobile-menu" class="flex flex-col items-center mt-2">
+        <div class="flex space-x-4 mb-4 md:hidden">
+          <button onclick="setLanguage('it')" class="lang-btn" id="m-btn-it">IT</button>
+          <button onclick="setLanguage('es')" class="lang-btn active" id="m-btn-es">ES</button>
+          <button onclick="setLanguage('en')" class="lang-btn" id="m-btn-en">EN</button>
         </div>
+
+        <a href="#historia" onclick="toggleMenu()" class="nav-link" id="nav-history">HISTORIA</a>
+        <a href="#donde" onclick="toggleMenu()" class="nav-link" id="nav-location">UBICACIÓN</a>
+        <a href="#confirmar" onclick="toggleMenu()" class="nav-link nav-link-rsvp" id="nav-rsvp">CONFIRMAR</a>
+        <a href="#galeria" onclick="toggleMenu()" class="nav-link" id="nav-gallery">GALERÍA</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="relative h-[65vh] md:h-[90vh] flex items-center justify-center overflow-hidden border-b-8 border-black">
+    <div class="absolute inset-0 z-0">
+      <img src="fotos/hero1.jpg" alt="Marcello y Cristina" class="w-full h-full object-cover object-center">
+      <div class="absolute inset-0 bg-black/10"></div>
     </div>
 
-    <section id="historia" class="pt-4 pb-24 container mx-auto px-4 reveal">
-        <div class="grid md:grid-cols-2 gap-16 items-center">
-            <div class="comic-panel group overflow-hidden">
-                <img src="fotos/historia.jpg" alt="Nuestra Historia" class="w-full h-[500px] object-cover">
-                <div class="absolute top-4 left-4 bg-red-600 text-white px-4 py-1 comic-title transform -rotate-1 border-2 border-black" id="badge-history">ORIGIN STORY</div>
-            </div>
-            <div class="speech-bubble md:rotate-1">
-                <h2 class="text-5xl mb-6 text-blue-600 uppercase" id="history-title">CAPÍTULO 1: EL ENCUENTRO</h2>
-                <p class="text-2xl leading-relaxed mb-6 font-bold" id="history-p1">Como en los mejores cómics, no fue el azar, fue el destino. Marcello y Cristina unieron fuerzas para crear el equipo más poderoso del mundo.</p>
-                <p class="text-xl italic text-gray-700" id="history-p2">"Después de mil batallas y aventuras, hemos decidido firmar el contrato más importante de nuestras vidas."</p>
-                <div class="mt-8 text-right"><div class="onomatopeya text-4xl">¡ZAP!</div></div>
-            </div>
+    <div class="absolute inset-0 z-10 pointer-events-none flex items-start justify-start p-2">
+      <img src="fotos/married.png" alt="Married" class="married-badge">
+    </div>
+
+    <div class="absolute inset-0 z-10 pointer-events-none flex items-start justify-end overflow-visible">
+      <img src="fotos/boom.png" alt="Boom" class="boom-badge">
+    </div>
+
+    <div class="relative z-20 text-center px-4 w-full flex flex-col items-center justify-center">
+      <div class="w-full max-w-full flex justify-center">
+        <h1 class="hero-title text-white mb-6 drop-shadow-[0_10px_10px_rgba(0,0,0,0.9)] uppercase">
+          <span>MARCELLO</span>
+          <span class="ampersand">&</span>
+          <span>CRISTINA</span>
+        </h1>
+      </div>
+
+      <div class="bg-black text-white inline-block px-8 py-3 transform -skew-x-6 border-2 border-yellow-400">
+        <p class="text-2xl md:text-5xl font-bold uppercase" id="hero-date">27 JUNIO 2026 • 18:00 h</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="container mx-auto -mt-16 md:-mt-24 lg:-mt-32 relative z-30 px-4">
+    <div class="comic-panel p-4 md:p-8 bg-yellow-400 flex flex-nowrap md:flex-wrap justify-center gap-2 md:gap-16 items-center overflow-x-auto">
+      <div class="text-center">
+        <span id="days" class="block text-3xl md:text-6xl font-bold text-black leading-none">00</span>
+        <span class="comic-title text-xs md:text-2xl" id="label-days">DÍAS</span>
+      </div>
+      <div class="text-center">
+        <span id="hours" class="block text-3xl md:text-6xl font-bold text-black leading-none">00</span>
+        <span class="comic-title text-xs md:text-2xl" id="label-hours">HORAS</span>
+      </div>
+      <div class="text-center">
+        <span id="minutes" class="block text-3xl md:text-6xl font-bold text-black leading-none">00</span>
+        <span class="comic-title text-xs md:text-2xl" id="label-min">MIN</span>
+      </div>
+      <div class="text-center border-l-2 md:border-l-4 border-black pl-2 md:pl-6">
+        <span id="seconds" class="block text-3xl md:text-6xl font-bold text-red-600 leading-none">00</span>
+        <span class="comic-title text-xs md:text-2xl" id="label-sec">SEG</span>
+      </div>
+    </div>
+
+    <div class="flex justify-center mt-4 md:mt-6 scroll-arrow-container">
+      <a href="#historia" class="bg-red-600 text-white w-12 h-12 md:w-16 md:h-16 flex items-center justify-center border-4 border-black rounded-full shadow-[4px_4px_0px_black] hover:bg-blue-600 transition-colors">
+        <i class="fas fa-chevron-down text-xl md:text-3xl"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- HISTORIA / BIENVENIDA -->
+  <section id="historia" class="pt-4 pb-24 container mx-auto px-4 reveal">
+    <div class="grid md:grid-cols-2 gap-16 items-center">
+      <div class="comic-panel group overflow-hidden">
+        <img src="fotos/historia.jpg" alt="Nuestra Historia" class="w-full h-[500px] object-cover">
+        <div class="absolute top-4 left-4 bg-red-600 text-white px-4 py-1 comic-title transform -rotate-1 border-2 border-black" id="badge-history">BIENVENIDOS</div>
+      </div>
+
+      <div class="speech-bubble md:rotate-1">
+        <h2 class="text-4xl md:text-5xl mb-6 text-blue-600 uppercase" id="history-title">Bienvenidos a la boda de Cristina y Marcello</h2>
+
+        <p class="text-xl md:text-2xl leading-relaxed mb-6 font-bold" id="history-p1">
+          Bienvenidos a este pequeño rincón donde empieza una más de nuestras aventuras.
+          Nos hace muchísima ilusión compartir con vosotros este evento, que os animéis a venir con tanto cariño y conozcáis un lugar que forma parte de nuestra familia, nos llena de alegría.
+        </p>
+
+        <p class="text-lg md:text-xl leading-relaxed mb-4 font-bold" id="history-p2">
+          La boda tendrá lugar el 27 de junio a las 18:00 h, en un entorno muy especial: el Castello Fiuzzi, frente al mar Tirreno y la isola de Dino Ferrari
+          (<a href="https://cittadipraiaamare.it/en/to/" target="_blank" rel="noopener noreferrer" class="comic-link-badge">https://cittadipraiaamare.it/en/to/</a>).
+          Un lugar con historia, vistas espectaculares y la magia del sur de Italia como telón de fondo.
+        </p>
+
+        <div class="mt-6 text-right"><div class="onomatopeya text-4xl">¡ZAP!</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- UBICACIÓN -->
+  <section id="donde" class="py-24 container mx-auto px-4">
+    <h2 class="text-center text-6xl mb-16 uppercase" id="location-title">COORDENADAS SECRETAS</h2>
+    <div class="grid md:grid-cols-2 gap-12">
+      <div class="comic-panel p-10 bg-red-500 text-white transform -rotate-0.5 overflow-hidden">
+        <div class="bg-black w-20 h-20 rounded-full flex items-center justify-center mb-6 border-4 border-white"><i class="fab fa-fort-awesome text-4xl"></i></div>
+        <h3 class="comic-title text-4xl mb-4" id="church-title">LA BODA</h3>
+        <p class="text-2xl font-bold mb-2 text-white" id="church-name">Castello Fiuzzi</p>
+        <p class="text-xl mb-8" id="church-time">27 de junio • 18:00 h</p>
+        <a href="https://cittadipraiaamare.it/en/to/" target="_blank" rel="noopener noreferrer"
+          class="inline-block bg-white text-black px-8 py-3 border-4 border-black uppercase font-bold hover:bg-yellow-400 transition transform hover:translate-x-1 hover:-translate-y-1"
+          id="btn-map1">Abrir Mapa</a>
+      </div>
+
+      <div class="comic-panel p-10 bg-yellow-400 transform rotate-0.5 overflow-hidden">
+        <div class="bg-black w-20 h-20 rounded-full flex items-center justify-center mb-6 border-4 border-white"><i class="fas fa-glass-cheers text-4xl text-yellow-400"></i></div>
+        <h3 class="comic-title text-4xl mb-4 text-black" id="party-title">PREBODA</h3>
+        <p class="text-2xl font-bold text-black mb-2" id="party-name">Terrazze Fiorelli, San Nicolla Arcella</p>
+        <p class="text-xl text-black mb-8" id="party-time">Viernes 26 de junio • Un encuentro informal antes del Atardecer para empezar a celebrar juntos</p>
+        <a href="https://maps.app.goo.gl/yrWefBqyVL54ccKy6" target="_blank" rel="noopener noreferrer"
+          class="inline-block bg-black text-white px-8 py-3 border-4 border-black uppercase font-bold hover:bg-red-600 transition transform hover:translate-x-1 hover:-translate-y-1"
+          id="btn-map2">Cómo llegar</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- INFO -->
+  <section id="info" class="py-24 bg-gray-200 border-t-8 border-black">
+    <div class="container mx-auto px-6 reveal">
+      <div class="max-w-5xl mx-auto comic-panel p-10 md:p-12 bg-white relative">
+        <div class="absolute -top-10 -left-2 md:-left-12 onomatopeya text-3xl md:text-5xl bg-yellow-400 px-4 py-2 border-4 border-black z-10">¡THWIP!</div>
+
+        <h2 class="text-4xl md:text-5xl mb-8 uppercase text-blue-700" id="info-title">El lugar: Calabria, sur de Italia</h2>
+
+        <p class="text-xl md:text-2xl mb-6 font-bold" id="info-p1">
+          La boda se celebra en la conocida Riviera dei Cedri, en el alto Tirreno de Calabria, una zona auténtica, luminosa y llena de carácter, donde el mar y la montaña se encuentran de manera vertical, sin transición.
+          Calabria es sinónimo de paisajes salvajes, pueblos de piedra bañados por el sol y mecidos por el mar, gastronomía intensa y una forma de vivir tranquila y acogedora.
+          Un destino poco habitual y perfecto para disfrutar unos días antes o después de la boda.
+        </p>
+
+        <div class="comic-divider"></div>
+
+        <h3 class="comic-title text-3xl md:text-4xl mb-4 text-red-600" id="stay-title">Dónde alojarse</h3>
+
+        <p class="text-lg md:text-xl mb-4 font-bold" id="stay-p">
+          “Os dejamos varias opciones de alojamiento según el tipo de estancia que prefiráis, teniendo en cuenta que todos estos pueblos están a apenas 5 minutos en coche entre sí, y que es normal es comer, cenar y disfrutar de la playa en tres pueblos diferentes:
+        </p>
+
+        <ul class="text-lg md:text-xl mb-6 list-disc pl-6 font-bold comic-list" id="stay-list">
+          <li id="stay-li1">Scalea: El centro comercial de la zona, ideal si queréis más ambiente: gran variedad de restaurantes, tiendas, playas amplias y vida nocturna relajada. Scalea vecchia é un pueblo antiguo muy característico, sus calles estrechas y sus infinitas escaleras os harán perder en el tiempo.</li>
+          <li id="stay-li2">San Nicola Arcella es un pueblo pequeño y muy pintoresco, perfecto si buscáis tranquilidad. El acceso al mar es un poco complejo, puede ser por escaleras largas o en coche, pero sus playas están enmarcadas entre rocas, como la espectacular Playa del ARCOMAGNO.</li>
+          <li id="stay-li3">Praia a Mare: Una pequeña ciudad con playa y restaurantes típicos, más tranquilo pero vivace, con la isla de Dino Ferrari que puede ser un lugar para bucear fácil de llegar en barco a pedaletas o incluso nadando si sales de la playa de enfrente.</li>
+        </ul>
+
+        <p class="text-lg md:text-xl mb-6 font-bold" id="car-rec">
+          👉 Recomendación importante: para moveros por la zona y disfrutar de todo con comodidad, es muy recomendable alquilar coche en el aeropuerto donde lleguéis. Si la queréis alquilar en Scalea, avisadnos con antelación.
+        </p>
+
+        <div class="comic-divider"></div>
+
+        <p class="text-lg md:text-xl mb-4 font-bold" id="more-places-title">Además de Scalea, San Nicola Arcella y Praia a Mare, os recomendamos:</p>
+
+        <ul class="text-lg md:text-xl mb-6 list-disc pl-6 font-bold comic-list">
+          <li id="more-li1">
+            Diamante: un pueblo famoso por sus murales y su paseo marítimo. No os perdáis un gelato en Da Niní junto al mar, o visitar las playas frente a la isla de Cirella o la baia d’oro
+            (<a class="comic-link" href="https://maps.app.goo.gl/ozwoQguTYWCSDTc7A?g_st=ic" target="_blank" rel="noopener noreferrer">https://maps.app.goo.gl/ozwoQguTYWCSDTc7A?g_st=ic</a>)
+          </li>
+          <li id="more-li2">Orsomarso: un pueblo de montaña a solo 10 minutos del mar, enclavado en el Parque Natural del Pollino, rodeado de naturaleza, con restaurantes típicos y rutas por el río (link el restaurante La Riviera para probar la gastronomía del interior).</li>
+          <li id="more-li3">Papasidero y rafting en el río Lao: varias compañías ofrecen esta experiencia divertida entre cañones naturales, con salida desde Scalea.</li>
+          <li id="more-li4">Grisolia: acceso a la montaña de La Mula (1.400 metros – excursión para verdaderos adventureros), con árboles centenarios y troncos gigantes por los que literalmente se puede entrar (experiencia con niños - link). Link restaurante</li>
+          <li id="more-li5">En todos los pueblos hay playas libres o con servicio de pago (“lido”), donde en junio el coste ronda 10–20 € al día para sombrilla, tumbonas y duchas. Link..</li>
+          <li id="more-li6">Maratea, en la vecina Basilicata: un auténtico joya junto al mar.</li>
+          <li id="more-li7">Paseos en barco a la isla de Praia y sus grutas, una actividad ideal para explorar la costa. Link…</li>
+        </ul>
+
+        <div class="comic-divider"></div>
+
+        <h3 class="comic-title text-3xl md:text-4xl mb-4 text-blue-700" id="food-title">Gastronomía calabresa</h3>
+
+        <p class="text-lg md:text-xl mb-6 font-bold" id="food-p">
+          La cocina calabresa es intensa, auténtica y muy ligada a los productos locales, mar y montaña coexisten a pocos metros de distancia.
+          Encontraréis pasta casera, pescados y mariscos fresquísimos, quesos como la ricotta o el pecorino, y embutidos tradicionales como la famosa ’nduja.
+          La cercanía a Nápoles se nota en las pizzerías de alto nivel que podréis encontrar, así como en la pastelería (babá, sfogliatelle). También podréis disfrutar de pasta de almendras y su variante al cedro (típico de la zona) y cannoli sicilianos. Limoncello, liquore al Cedro y muchos licores típicos (Amaro del capo, Jefferson, ..).
+        </p>
+
+        <h3 class="comic-title text-3xl md:text-4xl mb-4 text-red-600" id="rest-title">Restaurantes recomendados</h3>
+
+        <ul class="text-lg md:text-xl mb-6 list-disc pl-6 font-bold comic-list">
+          <li id="rest-li1">Pizzeria Fa Tu<br><a class="comic-link" href="https://maps.google.com/?q=Pizzeria+Fa+Tu+Scalea" target="_blank" rel="noopener noreferrer">https://maps.google.com/?q=Pizzeria+Fa+Tu+Scalea</a></li>
+          <li id="rest-li2">La Riviera (Orsomarso)<br><a class="comic-link" href="https://maps.google.com/?q=La+Riviera+Orsomarso" target="_blank" rel="noopener noreferrer">https://maps.google.com/?q=La+Riviera+Orsomarso</a></li>
+          <li id="rest-li3">Palazzo dei Principi (más elegante, con vistas)<br><a class="comic-link" href="https://maps.google.com/?q=Palazzo+dei+Principi+Scalea" target="_blank" rel="noopener noreferrer">https://maps.google.com/?q=Palazzo+dei+Principi+Scalea</a></li>
+          <li id="rest-li4">La Scogliera – Scalea<br><a class="comic-link" href="https://maps.google.com/?q=La+Scogliera+Scalea" target="_blank" rel="noopener noreferrer">https://maps.google.com/?q=La+Scogliera+Scalea</a></li>
+          <li id="rest-li5">La Rondinella – Osteria Pop<br><a class="comic-link" href="https://maps.google.com/?q=La+Rondinella+Osteria+Pop" target="_blank" rel="noopener noreferrer">https://maps.google.com/?q=La+Rondinella+Osteria+Pop</a></li>
+          <li id="rest-li6">Ristorante Tari<br><a class="comic-link" href="https://maps.google.com/?q=Ristorante+Tari+Scalea" target="_blank" rel="noopener noreferrer">https://maps.google.com/?q=Ristorante+Tari+Scalea</a></li>
+          <li id="rest-li7">Cannolo Siciliano – Delizie Siciliane<br><a class="comic-link" href="https://maps.google.com/?q=Cannolo+Siciliano+Scalea" target="_blank" rel="noopener noreferrer">https://maps.google.com/?q=Cannolo+Siciliano+Scalea</a></li>
+          <li id="rest-li8">Granita – Vularie Siciliane<br><a class="comic-link" href="https://maps.google.com/?q=Vularie+Siciliane" target="_blank" rel="noopener noreferrer">https://maps.google.com/?q=Vularie+Siciliane</a></li>
+        </ul>
+
+        <div class="comic-divider"></div>
+
+        <h3 class="comic-title text-3xl md:text-4xl mb-4 text-blue-700" id="extra-title">Excursiones para alargar el viaje</h3>
+
+        <p class="text-lg md:text-xl mb-4 font-bold" id="extra-p">Si queréis aprovechar el viaje para conocer más del Sur de Italia, aquí tenéis algunas ideas:</p>
+
+        <ul class="text-lg md:text-xl mb-6 list-disc pl-6 font-bold comic-list">
+          <li id="extra-li1">Si llegáis al aeropuerto de Nápoles: Procida, Sorrento y la Costa Amalfitana, Pompeya y los templos de Paestum.</li>
+          <li id="extra-li2">Si llegáis a Lamezia Terme: Tropea y excursión a Stromboli, con su volcán activo. Desde Tropea se pueden hacer excursiones de un día a Stromboli, con paradas de algunas horas en la isla. También podéis visitar Pizzo Calabro, un pintoresco pueblo costero, famoso por su tartufo helado.</li>
+          <li id="extra-li3">Más al sur, descubriréis lo más auténtico y profundo de Calabria: Scilla, Reggio Calabria, Gerace y Pentedattilo — probablemente no conozcáis a nadie tan valiente como para salirse de lo comercial y explorar estas joyas.</li>
+          <li id="extra-li4">Hacia el este: Matera y la región de Puglia, con sus paisajes únicos y ciudades históricas.</li>
+        </ul>
+
+        <h3 class="comic-title text-3xl md:text-4xl mb-4 text-red-600" id="air-title">Cómo llegar: aeropuertos</h3>
+
+        <p class="text-lg md:text-xl mb-4 font-bold" id="air-p1">Las principales opciones para llegar son:</p>
+
+        <ul class="text-lg md:text-xl mb-6 list-disc pl-6 font-bold comic-list">
+          <li id="air-li1">Volar a Nápoles (buena conexión mediante trenes de diferentes tipos o en coche).</li>
+          <li id="air-li2">Volar a Roma (y continuar en AVE hasta Scalea).</li>
+          <li id="air-li3">Volar a Lamezia Terme, el aeropuerto más cercano a la zona (hay trenes hasta Scalea, aunque la forma más cómoda es en coche o con servicio de conductor privado — consultarnos).</li>
+        </ul>
+
+        <h3 class="comic-title text-3xl md:text-4xl mb-4 text-blue-700" id="before-title">Antes y después de la boda</h3>
+
+        <p class="text-lg md:text-xl mb-6 font-bold" id="before-p">
+          Nosotros estaremos por la zona del 22 de junio al 4 de julio, y estaremos encantados de compartir tiempo con todos vosotros más allá del día de la ceremonia como por ejemplo nuestra Preboda:
+        </p>
+
+        <p class="text-lg md:text-xl font-bold" id="preboda-p">
+          📍 Terrazze Fiorelli, San Nicolla Arcella <br>
+          🗓 Viernes 26 de junio <br>
+          Un encuentro informal antes del Atardecer para empezar a celebrar juntos
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- REGALOS -->
+  <section id="regalos" class="py-24 bg-gray-200 border-t-8 border-black">
+    <div class="container mx-auto px-6 text-center reveal">
+      <div class="max-w-3xl mx-auto comic-panel-gift p-10 md:p-12 bg-white relative">
+        <div class="absolute -top-10 -left-2 md:-left-12 onomatopeya text-3xl md:text-5xl bg-yellow-400 px-4 py-2 border-4 border-black z-10">¡THWIP!</div>
+        <h2 class="text-4xl md:text-5xl mb-8 uppercase text-blue-700" id="gift-title">MESA DE REGALOS</h2>
+        <p class="text-xl md:text-2xl mb-10" id="gift-p">Vuestra presencia es nuestro mejor regalo, pero si deseáis tener un detalle adicional:</p>
+        <div class="bg-blue-50 border-4 border-dashed border-black p-6 rounded-xl flex flex-col md:flex-row items-center justify-between gap-4">
+          <span class="font-mono text-xl md:text-2xl font-bold tracking-widest text-black uppercase break-all" id="gift-iban">ES12 3456 7890 1234 5678</span>
+          <button onclick="copyToClipboard(document.getElementById('gift-iban').innerText, this)"
+            class="w-full md:w-auto bg-black text-white px-8 py-4 text-lg uppercase font-bold hover:bg-blue-600 transition shadow-lg active:scale-95"
+            id="btn-copy">Copiar IBAN</button>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <section id="galeria" class="py-24 bg-blue-600 border-y-8 border-black">
-        <div class="container mx-auto px-4">
-            <h2 class="text-center text-6xl text-white mb-16 uppercase drop-shadow-md" id="gallery-title">ÁLBUM DE AVENTURAS</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="comic-panel overflow-hidden cursor-pointer" onclick="openLightbox('fotos/galeria1.jpg')"><img src="fotos/galeria1.jpg" class="w-full h-72 object-cover"></div>
-                <div class="comic-panel overflow-hidden transform rotate-1 cursor-pointer" onclick="openLightbox('fotos/galeria2.jpg')"><img src="fotos/galeria2.jpg" class="w-full h-72 object-cover"></div>
-                <div class="comic-panel overflow-hidden transform -rotate-1 cursor-pointer" onclick="openLightbox('fotos/galeria3.jpg')"><img src="fotos/galeria3.jpg" class="w-full h-72 object-cover"></div>
-                <div class="comic-panel overflow-hidden cursor-pointer" onclick="openLightbox('fotos/galeria4.jpg')"><img src="fotos/galeria4.jpg" class="w-full h-72 object-cover"></div>
-            </div>
+  <!-- RSVP -->
+  <section id="confirmar" class="py-24 bg-red-600 border-t-8 border-black relative overflow-hidden">
+    <div id="confetti-container" class="absolute inset-0 pointer-events-none"></div>
+    <div class="container mx-auto px-4 relative z-10">
+      <div class="max-w-3xl mx-auto text-center mb-12">
+        <h2 class="text-4xl md:text-6xl text-white uppercase drop-shadow-md" id="rsvp-title">Confirmar Asistencia</h2>
+        <p class="text-white text-2xl mt-2 font-bold" id="rsvp-subtitle">¿Serás nuestro próximo aliado en el gran día?</p>
+      </div>
+
+      <div class="max-w-2xl mx-auto comic-panel p-8 md:p-12 bg-white transform -rotate-0.5 mb-8 overflow-hidden relative">
+        <div id="success-bubble" class="success-bubble">
+          <div class="onomatopeya text-4xl mb-2">¡BOOM!</div>
+          <p class="text-xl font-bold uppercase" id="success-text">¡Misión Cumplida! Datos enviados.</p>
         </div>
-    </section>
 
-    <section id="donde" class="py-24 container mx-auto px-4">
-        <h2 class="text-center text-6xl mb-16 uppercase" id="location-title">COORDENADAS SECRETAS</h2>
-        <div class="grid md:grid-cols-2 gap-12">
-            <div class="comic-panel p-10 bg-red-500 text-white transform -rotate-0.5 overflow-hidden">
-                <div class="bg-black w-20 h-20 rounded-full flex items-center justify-center mb-6 border-4 border-white"><i class="fab fa-fort-awesome text-4xl"></i></div>
-                <h3 class="comic-title text-4xl mb-4" id="church-title">EL COMPROMISO</h3>
-                <p class="text-2xl font-bold mb-2 text-white" id="church-name">Catedral de Santa María</p>
-                <p class="text-xl mb-8" id="church-time">12:00 PM • ¡Operación Boda en marcha!</p>
-                <a href="https://maps.app.goo.gl/yrWefBqyVL54ccKy6" target="_blank" class="inline-block bg-white text-black px-8 py-3 border-4 border-black uppercase font-bold hover:bg-yellow-400 transition transform hover:translate-x-1 hover:-translate-y-1" id="btn-map1">Abrir Mapa</a>
+        <form id="registroForm" class="space-y-6">
+          <div>
+            <label class="comic-label" id="label-name" for="nombre">Nombre Completo:</label>
+            <input type="text" id="nombre" name="nombre" required class="w-full p-4 comic-input bg-blue-50" placeholder="Escribe tu nombre">
+          </div>
+
+          <div>
+            <label class="comic-label" id="label-join" for="asistencia">¿Asistirás?</label>
+            <select id="asistencia" name="asistencia" class="w-full p-4 comic-input bg-yellow-50 cursor-pointer">
+              <option value="Sí" id="opt-yes">Sí, asistiré</option>
+              <option value="No" id="opt-no">No podré asistir</option>
+            </select>
+          </div>
+
+          <div class="space-y-4">
+            <label class="comic-label" id="label-captcha">Misión Humana: Resuelve el acertijo</label>
+            <div class="captcha-box">
+              <span id="captcha-question" class="captcha-question">...</span>
+              <input type="number" id="captcha-answer" required class="w-24 p-3 comic-input text-center text-xl" placeholder="?">
             </div>
-            <div class="comic-panel p-10 bg-yellow-400 transform rotate-0.5 overflow-hidden">
-                <div class="bg-black w-20 h-20 rounded-full flex items-center justify-center mb-6 border-4 border-white"><i class="fas fa-glass-cheers text-4xl text-yellow-400"></i></div>
-                <h3 class="comic-title text-4xl mb-4 text-black" id="party-title">EL BANQUETE</h3>
-                <p class="text-2xl font-bold text-black mb-2" id="party-name">Finca "El Paraíso"</p>
-                <p class="text-xl text-black mb-8" id="party-time">08:00 PM • Fiesta nivel Superhéroe</p>
-                <a href="https://maps.app.goo.gl/yrWefBqyVL54ccKy6" target="_blank" class="inline-block bg-black text-white px-8 py-3 border-4 border-black uppercase font-bold hover:bg-red-600 transition transform hover:translate-x-1 hover:-translate-y-1" id="btn-map2">Cómo llegar</a>
-            </div>
-        </div>
-    </section>
+          </div>
 
-    <section id="regalos" class="py-24 bg-gray-200 border-t-8 border-black">
-        <div class="container mx-auto px-6 text-center reveal">
-            <div class="max-w-3xl mx-auto comic-panel-gift p-10 md:p-12 bg-white relative">
-                <div class="absolute -top-10 -left-2 md:-left-12 onomatopeya text-3xl md:text-5xl bg-yellow-400 px-4 py-2 border-4 border-black z-10">¡THWIP!</div>
-                <h2 class="text-4xl md:text-5xl mb-8 uppercase text-blue-700" id="gift-title">MESA DE REGALOS</h2>
-                <p class="text-xl md:text-2xl mb-10" id="gift-p">Vuestra presencia es nuestro mejor regalo, pero si deseáis tener un detalle adicional:</p>
-                <div class="bg-blue-50 border-4 border-dashed border-black p-6 rounded-xl flex flex-col md:flex-row items-center justify-between gap-4">
-                    <span class="font-mono text-xl md:text-2xl font-bold tracking-widest text-black uppercase break-all">ES12 3456 7890 1234 5678</span>
-                    <button onclick="copyToClipboard('ES12 3456 7890 1234 5678', this)" class="w-full md:w-auto bg-black text-white px-8 py-4 text-lg uppercase font-bold hover:bg-blue-600 transition shadow-lg active:scale-95" id="btn-copy">Copiar IBAN</button>
-                </div>
-            </div>
-        </div>
-    </section>
+          <div class="pt-4">
+            <button type="submit" id="btnEnviar" class="w-full bg-black text-yellow-400 text-3xl font-bold py-6 comic-panel hover:bg-blue-600 hover:text-white transition-all transform hover:-translate-y-2 uppercase flex items-center justify-center gap-4">
+              <span id="btn-text">Enviar Datos</span>
+              <i id="btn-spinner" class="fas fa-spinner fa-spin hidden"></i>
+            </button>
+          </div>
+        </form>
 
-    <section id="confirmar" class="py-24 bg-red-600 border-t-8 border-black relative overflow-hidden">
-        <div id="confetti-container" class="absolute inset-0 pointer-events-none"></div>
-        <div class="container mx-auto px-4 relative z-10">
-            <div class="max-w-3xl mx-auto text-center mb-12">
-                <h2 class="text-4xl md:text-6xl text-white uppercase drop-shadow-md" id="rsvp-title">Confirmar Asistencia</h2>
-                <p class="text-white text-2xl mt-2 font-bold" id="rsvp-subtitle">¿Serás nuestro próximo aliado en el gran día?</p>
-            </div>
+        <div id="estado" class="mt-4 text-center font-bold text-2xl uppercase tracking-wider min-h-[1.5em]"></div>
+        <p class="text-center mt-6 text-gray-500 font-bold italic" id="rsvp-deadline">* Fecha límite: 1 de Mayo, 2026</p>
+      </div>
+    </div>
+  </section>
 
-            <div class="max-w-2xl mx-auto comic-panel p-8 md:p-12 bg-white transform -rotate-0.5 mb-8 overflow-hidden relative">
-                <div id="success-bubble" class="success-bubble">
-                    <div class="onomatopeya text-4xl mb-2">¡BOOM!</div>
-                    <p class="text-xl font-bold uppercase" id="success-text">¡Misión Cumplida! Datos enviados.</p>
-                </div>
+  <!-- GALERÍA AL FINAL -->
+  <section id="galeria" class="py-24 bg-blue-600 border-y-8 border-black">
+    <div class="container mx-auto px-4">
+      <h2 class="text-center text-6xl text-white mb-16 uppercase drop-shadow-md" id="gallery-title">ÁLBUM DE AVENTURAS</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="comic-panel overflow-hidden cursor-pointer" onclick="openLightbox('fotos/galeria1.jpg')"><img src="fotos/galeria1.jpg" class="w-full h-72 object-cover"></div>
+        <div class="comic-panel overflow-hidden transform rotate-1 cursor-pointer" onclick="openLightbox('fotos/galeria2.jpg')"><img src="fotos/galeria2.jpg" class="w-full h-72 object-cover"></div>
+        <div class="comic-panel overflow-hidden transform -rotate-1 cursor-pointer" onclick="openLightbox('fotos/galeria3.jpg')"><img src="fotos/galeria3.jpg" class="w-full h-72 object-cover"></div>
+        <div class="comic-panel overflow-hidden cursor-pointer" onclick="openLightbox('fotos/galeria4.jpg')"><img src="fotos/galeria4.jpg" class="w-full h-72 object-cover"></div>
+      </div>
+    </div>
+  </section>
 
-                <form id="registroForm" class="space-y-6">
-                    <div>
-                        <label class="comic-label" id="label-name" for="nombre">Nombre Completo:</label>
-                        <input type="text" id="nombre" name="nombre" required class="w-full p-4 comic-input bg-blue-50" placeholder="Escribe tu nombre">
-                    </div>
-                    <div>
-                        <label class="comic-label" id="label-join" for="asistencia">¿Asistirás?</label>
-                        <select id="asistencia" name="asistencia" class="w-full p-4 comic-input bg-yellow-50 cursor-pointer">
-                            <option value="Sí" id="opt-yes">Sí, asistiré</option>
-                            <option value="No" id="opt-no">No podré asistir</option>
-                        </select>
-                    </div>
-                    <div class="space-y-4">
-                        <label class="comic-label" id="label-captcha">Misión Humana: Resuelve el acertijo</label>
-                        <div class="captcha-box">
-                            <span id="captcha-question" class="captcha-question">...</span>
-                            <input type="number" id="captcha-answer" required class="w-24 p-3 comic-input text-center text-xl" placeholder="?">
-                        </div>
-                    </div>
-                    <div class="pt-4">
-                        <button type="submit" id="btnEnviar" class="w-full bg-black text-yellow-400 text-3xl font-bold py-6 comic-panel hover:bg-blue-600 hover:text-white transition-all transform hover:-translate-y-2 uppercase flex items-center justify-center gap-4">
-                            <span id="btn-text">Enviar Datos</span>
-                            <i id="btn-spinner" class="fas fa-spinner fa-spin hidden"></i>
-                        </button>
-                    </div>
-                </form>
-                <div id="estado" class="mt-4 text-center font-bold text-2xl uppercase tracking-wider min-h-[1.5em]"></div>
-                <p class="text-center mt-6 text-gray-500 font-bold italic" id="rsvp-deadline">* Fecha límite: 1 de Mayo, 2026</p>
-            </div>
-        </div>
-    </section>
+  <footer class="bg-black text-white border-t-8 border-yellow-400 p-0 m-0 overflow-hidden flex flex-col">
+    <div class="pt-4 pb-0 text-center">
+      <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-center gap-2 md:gap-6">
+        <p class="comic-title text-2xl md:text-4xl text-yellow-400 leading-tight m-0" id="footer-cont">CONTINUARÁ...</p>
+        <a href="juego.html" class="btn-game m-0" id="btn-game-link">¡JUGUEMOS!</a>
+      </div>
+      <p class="opacity-30 text-[9px] mt-3 mb-0 leading-none">© 2026 Marcello & Cristina Studios.</p>
+    </div>
+    <div class="running-gif-container bg-black">
+      <img src="fotos/corre.gif" alt="Corriendo" class="running-gif" loading="eager">
+    </div>
+  </footer>
 
-    <footer class="bg-black text-white border-t-8 border-yellow-400 p-0 m-0 overflow-hidden flex flex-col">
-        <div class="pt-4 pb-0 text-center">
-            <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-center gap-2 md:gap-6">
-                <p class="comic-title text-2xl md:text-4xl text-yellow-400 leading-tight m-0" id="footer-cont">CONTINUARÁ...</p>
-                <a href="juego.html" class="btn-game m-0" id="btn-game-link">¡JUGUEMOS!</a>
-            </div>
-            <p class="opacity-30 text-[9px] mt-3 mb-0 leading-none">© 2026 Marcello & Cristina Studios.</p>
-        </div>
-        <div class="running-gif-container bg-black">
-            <img src="fotos/corre.gif" alt="Corriendo" class="running-gif" loading="eager">
-        </div>
-    </footer>
+  <div id="lightbox" onclick="closeLightbox()">
+    <img id="lightbox-img" src="" class="max-w-[90%] max-h-[80%] border-8 border-white outline outline-4 outline-black">
+  </div>
 
-    <div id="lightbox" onclick="closeLightbox()"><img id="lightbox-img" src="" class="max-w-[90%] max-h-[80%] border-8 border-white outline outline-4 outline-black"></div>
+  <script>
+    // ==========================
+    // TRADUCCIONES COMPLETAS (ES/IT/EN)
+    // ==========================
+    // NOTA: Mantengo todos tus textos en ES como base, y traduzco a IT/EN el contenido UI.
+    // Los links se mantienen tal cual.
 
-    <script>
-        const translations = {
-            es: {
-                navTitle: "M&C: EDICIÓN ESPECIAL", navHistory: "HISTORIA", navGallery: "GALERÍA", navLocation: "UBICACIÓN", navRsvp: "CONFIRMAR",
-                heroDate: "10 JUNIO 2026", labelDays: "DÍAS", labelHours: "HORAS", labelMin: "MIN", labelSec: "SEG",
-                badgeHistory: "LA HISTORIA", historyTitle: "CAPÍTULO 1: EL ENCUENTRO", historyP1: "Como en los mejores cómics, no fue el azar, fue el destino...", 
-                historyP2: '"Después de mil batallas, hemos decidido firmar el contrato más importante."', galleryTitle: "ÁLBUM DE AVENTURAS",
-                locationTitle: "COORDENADAS SECRETAS", churchTitle: "EL COMPROMISO", churchName: "Catedral de Santa María", churchTime: "12:00 PM • ¡Boda en marcha!",
-                btnMap: "Abrir Mapa", partyTitle: "EL BANQUETE", partyName: 'Finca "El Paraíso"', partyTime: "08:00 PM • Fiesta Superhéroe",
-                btnParty: "Cómo llegar", giftTitle: "MESA DE REGALOS", giftP: "Vuestra presencia es el regalo, pero si deseáis algo más:",
-                btnCopy: "Copiar IBAN", rsvpTitle: "Confirmar Asistencia", rsvpSubtitle: "¿Serás aliado en el gran día?", labelName: "Nombre Completo:",
-                placeholderName: "Escribe tu nombre", labelJoin: "¿Asistirás?", optYes: "Sí, asistiré", optNo: "No podré asistir",
-                btnSubmit: "Enviar Datos", rsvpDeadline: "* Fecha límite: 1 de Mayo, 2026", footerCont: "CONTINUARÁ...", copied: "¡COPIADO!", 
-                sendingMsg: "Enviando...", successMsg: "¡Enviado correctamente!", errorMsg: "Hubo un error al enviar.",
-                btnGame: "¡JUGUEMOS!", labelCaptcha: "Misión Humana: Resuelve el acertijo", captchaError: "¡Error de cálculo! Inténtalo de nuevo.",
-                successText: "¡Misión Cumplida! Datos enviados."
-            },
-            it: {
-                navTitle: "M&C: EDIZIONE SPECIALE", navHistory: "STORIA", navGallery: "GALLERIA", navLocation: "POSIZIONE", navRsvp: "CONFERMA",
-                heroDate: "10 GIUGNO 2026", labelDays: "GIORNI", labelHours: "ORE", labelMin: "MIN", labelSec: "SEC",
-                badgeHistory: "STORIA ORIGINALE", historyTitle: "CAPITOLO 1: L'INCONTRO", historyP1: "Come nei migliori fumetti, non è stato il caso, è stato il destino...",
-                historyP2: '"Dopo mille avventure, abbiamo deciso di firmare il contrato più importante."', galleryTitle: "ALBUM DELLE AVVENTURE",
-                locationTitle: "COORDINATE SEGRETE", churchTitle: "IL COMPROMESSO", churchName: "Cattedrale di Santa Maria", churchTime: "12:00 PM • Matrimonio!",
-                btnMap: "Apri Mappa", partyTitle: "IL BANCHETTO", partyName: 'Finca "Il Paradiso"', partyTime: "08:00 PM • Festa Supereroe",
-                btnParty: "Come arrivare", giftTitle: "LISTA NOZZE", giftP: "La vostra presencia è il regalo, ma se desiderate fare un pensiero:",
-                btnCopy: "Copia IBAN", rsvpTitle: "Conferma Presenza", rsvpSubtitle: "Sarai alleato nel grande giorno?", labelName: "Nome e cognome:",
-                placeholderName: "Scrivi il tuo nome", labelJoin: "Parteciperai?", optYes: "Sì, ci sarò", optNo: "No, non potrò",
-                btnSubmit: "Invia Dati", rsvpDeadline: "* Scadenza: 1 Maggio, 2026", footerCont: "CONTINUA...", copied: "COPIATO!", 
-                sendingMsg: "Inviando...", successMsg: "Inviato con successo!", errorMsg: "Errore durante l'invio.",
-                btnGame: "GIOCHIAMO!", labelCaptcha: "Missione Umana: Risolvi l'enigma", captchaError: "Errore di calcolo! Riprova.",
-                successText: "Missione Compiuta! Dati inviati."
-            },
-            en: {
-                navTitle: "M&C: SPECIAL EDITION", navHistory: "STORY", navGallery: "GALLERY", navLocation: "LOCATION", navRsvp: "RSVP",
-                heroDate: "JUNE 10 2026", labelDays: "DAYS", labelHours: "HOURS", labelMin: "MIN", labelSec: "SEC",
-                badgeHistory: "ORIGIN STORY", historyTitle: "CHAPTER 1: THE MEETING", historyP1: "Just like in the best comics, it wasn't chance, it was destiny...",
-                historyP2: '"After a thousand battles, we have decided to sign the most important contract."', galleryTitle: "ADVENTURE ALBUM",
-                locationTitle: "SECRET COORDINATES", churchTitle: "THE VOWS", churchName: "St. Mary's Cathedral", churchTime: "12:00 PM • Wedding!",
-                btnMap: "Open Map", partyTitle: "THE BANQUET", partyName: '"Paradise" Estate', partyTime: "08:00 PM • Superhero Party",
-                btnParty: "Get Directions", giftTitle: "GIFT REGISTRY", giftP: "Your presence is the best gift, but if you wish to give extra:",
-                btnCopy: "Copy IBAN", rsvpTitle: "Confirm Attendance", rsvpSubtitle: "Will you be our ally?", labelName: "Name and surname:",
-                placeholderName: "Write your name", labelJoin: "Will you attend?", optYes: "Yes, I'll be there", optNo: "No, I can't make it",
-                btnSubmit: "Send Data", rsvpDeadline: "* RSVP Deadline: May 1st, 2026", footerCont: "TO BE CONTINUED...", copied: "COPIED!", 
-                sendingMsg: "Sending...", successMsg: "Sent successfully!", errorMsg: "Error sending data.",
-                btnGame: "LET'S PLAY!", labelCaptcha: "Human Mission: Solve the riddle", captchaError: "Math error! Try again.",
-                successText: "Mission Accomplished! Data sent."
-            }
-        };
+    const translations = {
+      es: {
+        navTitle: "M&C: EDICIÓN ESPECIAL",
+        navHistory: "HISTORIA",
+        navLocation: "UBICACIÓN",
+        navRsvp: "CONFIRMAR",
+        navGallery: "GALERÍA",
 
-        let currentLang = 'es';
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbwaON4cTPF10VsaNDNPFynFBGJujTm_8NhLGd5I__2KKn2P5rt7avB_WYqhJqUg4m29/exec';
-        let captchaResult = 0;
+        heroDate: "27 JUNIO 2026 • 18:00 h",
+        labelDays: "DÍAS",
+        labelHours: "HORAS",
+        labelMin: "MIN",
+        labelSec: "SEG",
 
-        function generateCaptcha() {
-            const num1 = Math.floor(Math.random() * 9) + 1;
-            const num2 = Math.floor(Math.random() * 9) + 1;
-            captchaResult = num1 + num2;
-            document.getElementById('captcha-question').textContent = `${num1} + ${num2} = `;
-            document.getElementById('captcha-answer').value = '';
-        }
+        badgeHistory: "BIENVENIDOS",
+        historyTitle: "Bienvenidos a la boda de Cristina y Marcello",
+        historyP1: "Bienvenidos a este pequeño rincón donde empieza una más de nuestras aventuras.\nNos hace muchísima ilusión compartir con vosotros este evento, que os animéis a venir con tanto cariño y conozcáis un lugar que forma parte de nuestra familia, nos llena de alegría.",
+        historyP2a: "La boda tendrá lugar el 27 de junio a las 18:00 h, en un entorno muy especial: el Castello Fiuzzi, frente al mar Tirreno y la isola de Dino Ferrari (",
+        historyP2b: "). Un lugar con historia, vistas espectaculares y la magia del sur de Italia como telón de fondo.",
 
-        function setLanguage(lang) {
-            currentLang = lang;
-            localStorage.setItem('selectedLanguage', lang);
-            const t = translations[lang];
-            
-            document.getElementById('nav-title').textContent = t.navTitle;
-            document.getElementById('nav-history').textContent = t.navHistory;
-            document.getElementById('nav-gallery').textContent = t.navGallery;
-            document.getElementById('nav-location').textContent = t.navLocation;
-            document.getElementById('nav-rsvp').textContent = t.navRsvp;
-            document.getElementById('hero-date').textContent = t.heroDate;
-            document.getElementById('label-days').textContent = t.labelDays;
-            document.getElementById('label-hours').textContent = t.labelHours;
-            document.getElementById('label-min').textContent = t.labelMin;
-            document.getElementById('label-sec').textContent = t.labelSec;
-            document.getElementById('badge-history').textContent = t.badgeHistory;
-            document.getElementById('history-title').textContent = t.historyTitle;
-            document.getElementById('history-p1').textContent = t.historyP1;
-            document.getElementById('history-p2').textContent = t.historyP2;
-            document.getElementById('gallery-title').textContent = t.galleryTitle;
-            document.getElementById('location-title').textContent = t.locationTitle;
-            document.getElementById('church-title').textContent = t.churchTitle;
-            document.getElementById('church-name').textContent = t.churchName;
-            document.getElementById('church-time').textContent = t.churchTime;
-            document.getElementById('btn-map1').textContent = t.btnMap;
-            document.getElementById('party-title').textContent = t.partyTitle;
-            document.getElementById('party-name').textContent = t.partyName;
-            document.getElementById('party-time').textContent = t.partyTime;
-            document.getElementById('btn-map2').textContent = t.btnParty;
-            document.getElementById('gift-title').textContent = t.giftTitle;
-            document.getElementById('gift-p').textContent = t.giftP;
-            document.getElementById('btn-copy').textContent = t.btnCopy;
-            document.getElementById('rsvp-title').textContent = t.rsvpTitle;
-            document.getElementById('rsvp-subtitle').textContent = t.rsvpSubtitle;
-            document.getElementById('label-name').textContent = t.labelName;
-            document.getElementById('nombre').placeholder = t.placeholderName;
-            document.getElementById('label-join').textContent = t.labelJoin;
-            document.getElementById('opt-yes').textContent = t.optYes;
-            document.getElementById('opt-no').textContent = t.optNo;
-            document.getElementById('btn-text').textContent = t.btnSubmit;
-            document.getElementById('rsvp-deadline').textContent = t.rsvpDeadline;
-            document.getElementById('footer-cont').textContent = t.footerCont;
-            document.getElementById('btn-game-link').textContent = t.btnGame;
-            document.getElementById('label-captcha').textContent = t.labelCaptcha;
-            document.getElementById('success-text').textContent = t.successText;
+        locationTitle: "COORDENADAS SECRETAS",
+        churchTitle: "LA BODA",
+        churchName: "Castello Fiuzzi",
+        churchTime: "27 de junio • 18:00 h",
+        btnMap1: "Abrir Mapa",
 
-            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-            const btn = document.getElementById(`btn-${lang}`);
-            const mBtn = document.getElementById(`m-btn-${lang}`);
-            if(btn) btn.classList.add('active');
-            if(mBtn) mBtn.classList.add('active');
-        }
+        partyTitle: "PREBODA",
+        partyName: "Terrazze Fiorelli, San Nicolla Arcella",
+        partyTime: "Viernes 26 de junio • Un encuentro informal antes del Atardecer para empezar a celebrar juntos",
+        btnMap2: "Cómo llegar",
 
-        function createConfetti() {
-            const container = document.getElementById('confetti-container');
-            const colors = ['#FFD700', '#FF4500', '#0080FF', '#2ecc71', '#ffffff'];
-            for (let i = 0; i < 80; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.left = Math.random() * 100 + 'vw';
-                confetti.style.top = -10 + 'px';
-                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
-                
-                const duration = Math.random() * 3 + 2;
-                const delay = Math.random() * 1.5;
-                
-                confetti.animate([
-                    { transform: `translate3d(0, 0, 0) rotate(0deg)`, opacity: 1 },
-                    { transform: `translate3d(${(Math.random() - 0.5) * 200}px, 600px, 0) rotate(${Math.random() * 800}deg)`, opacity: 0 }
-                ], {
-                    duration: duration * 1000,
-                    delay: delay * 1000,
-                    easing: 'cubic-bezier(0, .9, .6, 1)',
-                    fill: 'forwards'
-                });
-                container.appendChild(confetti);
-                setTimeout(() => confetti.remove(), (duration + delay) * 1000);
-            }
-        }
+        infoTitle: "El lugar: Calabria, sur de Italia",
+        infoP1:
+          "La boda se celebra en la conocida Riviera dei Cedri, en el alto Tirreno de Calabria, una zona auténtica, luminosa y llena de carácter, donde el mar y la montaña se encuentran de manera vertical, sin transición.\n" +
+          "Calabria es sinónimo de paisajes salvajes, pueblos de piedra bañados por el sol y mecidos por el mar, gastronomía intensa y una forma de vivir tranquila y acogedora.\n" +
+          "Un destino poco habitual y perfecto para disfrutar unos días antes o después de la boda.",
 
-        window.onload = () => {
-            const savedLang = localStorage.getItem('selectedLanguage');
-            if (savedLang) setLanguage(savedLang);
-            generateCaptcha();
-            reveal();
-        };
+        stayTitle: "Dónde alojarse",
+        stayP:
+          "“Os dejamos varias opciones de alojamiento según el tipo de estancia que prefiráis, teniendo en cuenta que todos estos pueblos están a apenas 5 minutos en coche entre sí, y que es normal es comer, cenar y disfrutar de la playa en tres pueblos diferentes:",
+        stay1:
+          "Scalea: El centro comercial de la zona, ideal si queréis más ambiente: gran variedad de restaurantes, tiendas, playas amplias y vida nocturna relajada. Scalea vecchia é un pueblo antiguo muy característico, sus calles estrechas y sus infinitas escaleras os harán perder en el tiempo.",
+        stay2:
+          "San Nicola Arcella es un pueblo pequeño y muy pintoresco, perfecto si buscáis tranquilidad. El acceso al mar es un poco complejo, puede ser por escaleras largas o en coche, pero sus playas están enmarcadas entre rocas, como la espectacular Playa del ARCOMAGNO.",
+        stay3:
+          "Praia a Mare: Una pequeña ciudad con playa y restaurantes típicos, más tranquilo pero vivace, con la isla de Dino Ferrari que puede ser un lugar para bucear fácil de llegar en barco a pedaletas o incluso nadando si sales de la playa de enfrente.",
 
-        const form = document.getElementById('registroForm');
-        const btnEnviar = document.getElementById('btnEnviar');
-        const btnSpinner = document.getElementById('btn-spinner');
-        const btnText = document.getElementById('btn-text');
-        const estado = document.getElementById('estado');
-        const successBubble = document.getElementById('success-bubble');
+        carRec:
+          "👉 Recomendación importante: para moveros por la zona y disfrutar de todo con comodidad, es muy recomendable alquilar coche en el aeropuerto donde lleguéis. Si la queréis alquilar en Scalea, avisadnos con antelación.",
 
-        form.addEventListener('submit', e => {
-            e.preventDefault();
-            const userAnswer = parseInt(document.getElementById('captcha-answer').value);
-            if (userAnswer !== captchaResult) {
-                estado.innerText = translations[currentLang].captchaError;
-                estado.style.color = "#FF4500"; 
-                generateCaptcha();
-                return;
-            }
+        moreTitle: "Además de Scalea, San Nicola Arcella y Praia a Mare, os recomendamos:",
+        more1Prefix:
+          "Diamante: un pueblo famoso por sus murales y su paseo marítimo. No os perdáis un gelato en Da Niní junto al mar, o visitar las playas frente a la isla de Cirella o la baia d’oro (",
+        more1Suffix: ")",
+        more2:
+          "Orsomarso: un pueblo de montaña a solo 10 minutos del mar, enclavado en el Parque Natural del Pollino, rodeado de naturaleza, con restaurantes típicos y rutas por el río (link el restaurante La Riviera para probar la gastronomía del interior).",
+        more3:
+          "Papasidero y rafting en el río Lao: varias compañías ofrecen esta experiencia divertida entre cañones naturales, con salida desde Scalea.",
+        more4:
+          "Grisolia: acceso a la montaña de La Mula (1.400 metros – excursión para verdaderos adventureros), con árboles centenarios y troncos gigantes por los que literalmente se puede entrar (experiencia con niños - link). Link restaurante",
+        more5:
+          "En todos los pueblos hay playas libres o con servicio de pago (“lido”), donde en junio el coste ronda 10–20 € al día para sombrilla, tumbonas y duchas. Link..",
+        more6:
+          "Maratea, en la vecina Basilicata: un auténtico joya junto al mar.",
+        more7:
+          "Paseos en barco a la isla de Praia y sus grutas, una actividad ideal para explorar la costa. Link…",
 
-            btnEnviar.disabled = true;
-            btnSpinner.classList.remove('hidden');
-            btnText.classList.add('hidden');
-            estado.innerText = translations[currentLang].sendingMsg;
-            estado.style.color = "#0080FF"; 
-            
-            const datos = { 
-                nombre: document.getElementById('nombre').value, 
-                asistencia: document.getElementById('asistencia').value 
-            };
-            
-            fetch(scriptURL, { 
-                method: 'POST', 
-                mode: 'no-cors', 
-                headers: { 'Content-Type': 'application/json' }, 
-                body: JSON.stringify(datos) 
-            })
-            .then(() => { 
-                createConfetti();
-                successBubble.style.display = 'block';
-                estado.innerText = "";
-                btnEnviar.disabled = false;
-                btnSpinner.classList.add('hidden');
-                btnText.classList.remove('hidden');
-                setTimeout(() => { successBubble.style.display = 'none'; }, 5000);
-                form.reset();
-                generateCaptcha();
-            })
-            .catch(error => { 
-                console.error('Error:', error); 
-                estado.innerText = translations[currentLang].errorMsg; 
-                estado.style.color = "#FF4500"; 
-                btnEnviar.disabled = false; 
-                btnSpinner.classList.add('hidden');
-                btnText.classList.remove('hidden');
-            });
+        foodTitle: "Gastronomía calabresa",
+        foodP:
+          "La cocina calabresa es intensa, auténtica y muy ligada a los productos locales, mar y montaña coexisten a pocos metros de distancia.\n" +
+          "Encontraréis pasta casera, pescados y mariscos fresquísimos, quesos como la ricotta o el pecorino, y embutidos tradicionales como la famosa ’nduja.\n" +
+          "La cercanía a Nápoles se nota en las pizzerías de alto nivel que podréis encontrar, así como en la pastelería (babá, sfogliatelle). También podréis disfrutar de pasta de almendras y su variante al cedro (típico de la zona) y cannoli sicilianos. Limoncello, liquore al Cedro y muchos licores típicos (Amaro del capo, Jefferson, ..).",
+
+        restTitle: "Restaurantes recomendados",
+
+        extraTitle: "Excursiones para alargar el viaje",
+        extraP: "Si queréis aprovechar el viaje para conocer más del Sur de Italia, aquí tenéis algunas ideas:",
+        extra1:
+          "Si llegáis al aeropuerto de Nápoles: Procida, Sorrento y la Costa Amalfitana, Pompeya y los templos de Paestum.",
+        extra2:
+          "Si llegáis a Lamezia Terme: Tropea y excursión a Stromboli, con su volcán activo. Desde Tropea se pueden hacer excursiones de un día a Stromboli, con paradas de algunas horas en la isla. También podéis visitar Pizzo Calabro, un pintoresco pueblo costero, famoso por su tartufo helado.",
+        extra3:
+          "Más al sur, descubriréis lo más auténtico y profundo de Calabria: Scilla, Reggio Calabria, Gerace y Pentedattilo — probablemente no conozcáis a nadie tan valiente como para salirse de lo comercial y explorar estas joyas.",
+        extra4:
+          "Hacia el este: Matera y la región de Puglia, con sus paisajes únicos y ciudades históricas.",
+
+        airTitle: "Cómo llegar: aeropuertos",
+        airP1: "Las principales opciones para llegar son:",
+        air1: "Volar a Nápoles (buena conexión mediante trenes de diferentes tipos o en coche).",
+        air2: "Volar a Roma (y continuar en AVE hasta Scalea).",
+        air3:
+          "Volar a Lamezia Terme, el aeropuerto más cercano a la zona (hay trenes hasta Scalea, aunque la forma más cómoda es en coche o con servicio de conductor privado — consultarnos).",
+
+        beforeTitle: "Antes y después de la boda",
+        beforeP:
+          "Nosotros estaremos por la zona del 22 de junio al 4 de julio, y estaremos encantados de compartir tiempo con todos vosotros más allá del día de la ceremonia como por ejemplo nuestra Preboda:",
+        prebodaP:
+          "📍 Terrazze Fiorelli, San Nicolla Arcella\n🗓 Viernes 26 de junio\nUn encuentro informal antes del Atardecer para empezar a celebrar juntos",
+
+        giftTitle: "MESA DE REGALOS",
+        giftP: "Vuestra presencia es nuestro mejor regalo, pero si deseáis tener un detalle adicional:",
+        btnCopy: "Copiar IBAN",
+
+        rsvpTitle: "Confirmar Asistencia",
+        rsvpSubtitle: "¿Serás nuestro próximo aliado en el gran día?",
+        labelName: "Nombre Completo:",
+        placeholderName: "Escribe tu nombre",
+        labelJoin: "¿Asistirás?",
+        optYes: "Sí, asistiré",
+        optNo: "No podré asistir",
+        labelCaptcha: "Misión Humana: Resuelve el acertijo",
+        btnSubmit: "Enviar Datos",
+        rsvpDeadline: "* Fecha límite: 1 de Mayo, 2026",
+        sendingMsg: "Enviando...",
+        captchaError: "¡Error de cálculo! Inténtalo de nuevo.",
+        errorMsg: "Hubo un error al enviar.",
+        copied: "¡COPIADO!",
+        successText: "¡Misión Cumplida! Datos enviados.",
+
+        galleryTitle: "ÁLBUM DE AVENTURAS",
+
+        footerCont: "CONTINUARÁ...",
+        btnGame: "¡JUGUEMOS!"
+      },
+
+      it: {
+        navTitle: "M&C: EDIZIONE SPECIALE",
+        navHistory: "STORIA",
+        navLocation: "POSIZIONE",
+        navRsvp: "CONFERMA",
+        navGallery: "GALLERIA",
+
+        heroDate: "27 GIUGNO 2026 • 18:00",
+        labelDays: "GIORNI",
+        labelHours: "ORE",
+        labelMin: "MIN",
+        labelSec: "SEC",
+
+        badgeHistory: "BENVENUTI",
+        historyTitle: "Benvenuti al matrimonio di Cristina e Marcello",
+        historyP1:
+          "Benvenuti in questo piccolo angolo dove inizia un’altra delle nostre avventure.\n" +
+          "Ci fa davvero piacere condividere con voi questo evento, che veniate con tanto affetto e che scopriate un luogo che fa parte della nostra famiglia: ci riempie di gioia.",
+        historyP2a:
+          "Il matrimonio si terrà il 27 giugno alle 18:00, in un luogo davvero speciale: Castello Fiuzzi, di fronte al Mar Tirreno e all’isola di Dino Ferrari (",
+        historyP2b:
+          "). Un luogo ricco di storia, con viste spettacolari e la magia del Sud Italia come sfondo.",
+
+        locationTitle: "COORDINATE SEGRETE",
+        churchTitle: "IL MATRIMONIO",
+        churchName: "Castello Fiuzzi",
+        churchTime: "27 giugno • 18:00",
+        btnMap1: "Apri Mappa",
+
+        partyTitle: "PRE-MATRIMONIO",
+        partyName: "Terrazze Fiorelli, San Nicolla Arcella",
+        partyTime: "Venerdì 26 giugno • Un incontro informale prima del tramonto per iniziare a festeggiare insieme",
+        btnMap2: "Come arrivare",
+
+        infoTitle: "Il luogo: Calabria, Sud Italia",
+        infoP1:
+          "Il matrimonio si celebra nella famosa Riviera dei Cedri, sull’Alto Tirreno calabrese: una zona autentica, luminosa e piena di carattere, dove mare e montagna si incontrano in modo verticale, senza transizione.\n" +
+          "La Calabria è sinonimo di paesaggi selvaggi, borghi di pietra baciati dal sole e cullati dal mare, gastronomia intensa e uno stile di vita tranquillo e accogliente.\n" +
+          "Una meta poco abituale e perfetta per godersi qualche giorno prima o dopo il matrimonio.",
+
+        stayTitle: "Dove alloggiare",
+        stayP:
+          "“Vi lasciamo diverse opzioni di alloggio a seconda del tipo di soggiorno che preferite, tenendo conto che tutti questi paesi sono a soli 5 minuti di auto tra loro e che è normale pranzare, cenare e godersi la spiaggia in tre paesi diversi:",
+        stay1:
+          "Scalea: il centro commerciale della zona, ideale se volete più atmosfera: grande varietà di ristoranti, negozi, spiagge ampie e vita notturna rilassata. Scalea Vecchia è un borgo antico molto caratteristico: le sue stradine strette e le infinite scalinate vi faranno perdere nel tempo.",
+        stay2:
+          "San Nicola Arcella è un paese piccolo e molto pittoresco, perfetto se cercate tranquillità. L’accesso al mare è un po’ complesso (lunghe scale o in auto), ma le sue spiagge sono incorniciate tra le rocce, come la spettacolare Spiaggia dell’ARCOMAGNO.",
+        stay3:
+          "Praia a Mare: una piccola città con spiaggia e ristoranti tipici, più tranquilla ma vivace, con l’isola di Dino Ferrari: un luogo perfetto per fare snorkeling, raggiungibile facilmente in pedalò o anche a nuoto dalla spiaggia di fronte.",
+
+        carRec:
+          "👉 Consiglio importante: per muovervi nella zona e godervi tutto con comodità, è molto consigliato noleggiare un’auto all’aeroporto di arrivo. Se volete noleggiarla a Scalea, avvisateci in anticipo.",
+
+        moreTitle: "Oltre a Scalea, San Nicola Arcella e Praia a Mare, vi consigliamo:",
+        more1Prefix:
+          "Diamante: un paese famoso per i suoi murales e il lungomare. Non perdete un gelato da Da Niní sul mare, o le spiagge di fronte all’isola di Cirella o la baia d’oro (",
+        more1Suffix: ")",
+        more2:
+          "Orsomarso: un paese di montagna a soli 10 minuti dal mare, nel Parco Naturale del Pollino, immerso nella natura, con ristoranti tipici e percorsi lungo il fiume (link del ristorante La Riviera per provare la cucina dell’entroterra).",
+        more3:
+          "Papasidero e rafting sul fiume Lao: diverse compagnie offrono questa esperienza divertente tra canyon naturali, con partenza da Scalea.",
+        more4:
+          "Grisolia: accesso alla montagna di La Mula (1.400 metri – escursione per veri avventurieri), con alberi secolari e tronchi giganteschi nei quali si può letteralmente entrare (esperienza con bambini - link). Link ristorante",
+        more5:
+          "In tutti i paesi ci sono spiagge libere o stabilimenti (“lido”), dove a giugno il costo è circa 10–20 € al giorno per ombrellone, lettini e docce. Link..",
+        more6:
+          "Maratea, nella vicina Basilicata: un vero gioiello sul mare.",
+        more7:
+          "Gite in barca all’isola di Praia e alle sue grotte: un’attività ideale per esplorare la costa. Link…",
+
+        foodTitle: "Gastronomia calabrese",
+        foodP:
+          "La cucina calabrese è intensa, autentica e legata ai prodotti locali: mare e montagna convivono a pochi metri di distanza.\n" +
+          "Troverete pasta fatta in casa, pesce e frutti di mare freschissimi, formaggi come ricotta e pecorino e salumi tradizionali come la famosa ’nduja.\n" +
+          "La vicinanza a Napoli si nota nelle pizzerie di alto livello e nella pasticceria (babà, sfogliatelle). Potrete gustare anche pasta di mandorle e la variante al cedro (tipica della zona) e cannoli siciliani. Limoncello, liquore al Cedro e molti liquori tipici (Amaro del Capo, Jefferson, ..).",
+
+        restTitle: "Ristoranti consigliati",
+
+        extraTitle: "Escursioni per allungare il viaggio",
+        extraP: "Se volete approfittare del viaggio per conoscere meglio il Sud Italia, ecco alcune idee:",
+        extra1:
+          "Se arrivate all’aeroporto di Napoli: Procida, Sorrento e la Costiera Amalfitana, Pompei e i templi di Paestum.",
+        extra2:
+          "Se arrivate a Lamezia Terme: Tropea ed escursione a Stromboli, con il suo vulcano attivo. Da Tropea si possono fare gite in giornata con soste di alcune ore sull’isola. Potete visitare anche Pizzo Calabro, un pittoresco paese costiero, famoso per il gelato “tartufo”.",
+        extra3:
+          "Più a sud scoprirete la Calabria più autentica: Scilla, Reggio Calabria, Gerace e Pentedattilo — probabilmente non conoscete nessuno così coraggioso da uscire dal commerciale e esplorare queste gemme.",
+        extra4:
+          "Verso est: Matera e la regione Puglia, con paesaggi unici e città storiche.",
+
+        airTitle: "Come arrivare: aeroporti",
+        airP1: "Le principali opzioni per arrivare sono:",
+        air1: "Volare a Napoli (buoni collegamenti in treno di vari tipi o in auto).",
+        air2: "Volare a Roma (e proseguire con l’alta velocità fino a Scalea).",
+        air3:
+          "Volare a Lamezia Terme, l’aeroporto più vicino (ci sono treni per Scalea, ma l’opzione più comoda è in auto o con autista privato — chiedeteci).",
+
+        beforeTitle: "Prima e dopo il matrimonio",
+        beforeP:
+          "Noi saremo in zona dal 22 giugno al 4 luglio e saremo felici di condividere del tempo con voi anche oltre il giorno della cerimonia, ad esempio con la nostra pre-festa:",
+        prebodaP:
+          "📍 Terrazze Fiorelli, San Nicolla Arcella\n🗓 Venerdì 26 giugno\nUn incontro informale prima del tramonto per iniziare a festeggiare insieme",
+
+        giftTitle: "LISTA NOZZE",
+        giftP: "La vostra presenza è il regalo più bello, ma se desiderate fare un pensiero:",
+        btnCopy: "Copia IBAN",
+
+        rsvpTitle: "Conferma Presenza",
+        rsvpSubtitle: "Sarai il nostro prossimo alleato nel grande giorno?",
+        labelName: "Nome e cognome:",
+        placeholderName: "Scrivi il tuo nome",
+        labelJoin: "Parteciperai?",
+        optYes: "Sì, ci sarò",
+        optNo: "No, non potrò",
+        labelCaptcha: "Missione umana: risolvi l’indovinello",
+        btnSubmit: "Invia Dati",
+        rsvpDeadline: "* Scadenza: 1 Maggio 2026",
+        sendingMsg: "Invio in corso...",
+        captchaError: "Errore di calcolo! Riprova.",
+        errorMsg: "Errore durante l’invio.",
+        copied: "COPIATO!",
+        successText: "Missione compiuta! Dati inviati.",
+
+        galleryTitle: "ALBUM DELLE AVVENTURE",
+
+        footerCont: "CONTINUA...",
+        btnGame: "GIOCHIAMO!"
+      },
+
+      en: {
+        navTitle: "M&C: SPECIAL EDITION",
+        navHistory: "STORY",
+        navLocation: "LOCATION",
+        navRsvp: "RSVP",
+        navGallery: "GALLERY",
+
+        heroDate: "JUNE 27, 2026 • 6:00 PM",
+        labelDays: "DAYS",
+        labelHours: "HOURS",
+        labelMin: "MIN",
+        labelSec: "SEC",
+
+        badgeHistory: "WELCOME",
+        historyTitle: "Welcome to Cristina and Marcello’s wedding",
+        historyP1:
+          "Welcome to this little corner where one more of our adventures begins.\n" +
+          "We’re truly excited to share this event with you. We’d love you to come with so much affection and discover a place that’s part of our family—it fills us with joy.",
+        historyP2a:
+          "The wedding will take place on June 27 at 6:00 PM, in a very special setting: Castello Fiuzzi, facing the Tyrrhenian Sea and Dino Ferrari island (",
+        historyP2b:
+          "). A place full of history, spectacular views, and the magic of Southern Italy as the backdrop.",
+
+        locationTitle: "SECRET COORDINATES",
+        churchTitle: "THE WEDDING",
+        churchName: "Castello Fiuzzi",
+        churchTime: "June 27 • 6:00 PM",
+        btnMap1: "Open Map",
+
+        partyTitle: "PRE-WEDDING",
+        partyName: "Terrazze Fiorelli, San Nicolla Arcella",
+        partyTime: "Friday, June 26 • A casual get-together before sunset to start celebrating together",
+        btnMap2: "Get Directions",
+
+        infoTitle: "The place: Calabria, Southern Italy",
+        infoP1:
+          "The wedding takes place in the well-known Riviera dei Cedri, on Calabria’s Upper Tyrrhenian coast—an authentic, bright area full of character, where sea and mountains meet vertically, with no transition.\n" +
+          "Calabria means wild landscapes, sunlit stone villages rocked by the sea, bold gastronomy, and a calm, welcoming way of life.\n" +
+          "An unusual destination, perfect for enjoying a few days before or after the wedding.",
+
+        stayTitle: "Where to stay",
+        stayP:
+          "“Here are several accommodation options depending on the kind of stay you prefer, keeping in mind that all these towns are only about 5 minutes’ drive from each other, and it’s normal to have lunch, dinner, and enjoy the beach across three different towns:",
+        stay1:
+          "Scalea: the area’s commercial hub, ideal if you want more atmosphere—lots of restaurants, shops, wide beaches, and relaxed nightlife. Scalea Vecchia is a very characteristic old town; its narrow streets and endless stairways will take you back in time.",
+        stay2:
+          "San Nicola Arcella is small and very picturesque—perfect if you’re looking for peace and quiet. Access to the sea can be a bit tricky (long stairs or by car), but its beaches are framed by rocks, like the spectacular ARCOMAGNO beach.",
+        stay3:
+          "Praia a Mare: a small city with beach and traditional restaurants, calmer but lively, with Dino Ferrari island—great for easy snorkeling; you can reach it by pedal boat or even by swimming from the beach opposite.",
+
+        carRec:
+          "👉 Important recommendation: to move around easily and enjoy everything comfortably, it’s highly recommended to rent a car at the airport you arrive at. If you want to rent it in Scalea, let us know in advance.",
+
+        moreTitle: "Besides Scalea, San Nicola Arcella and Praia a Mare, we recommend:",
+        more1Prefix:
+          "Diamante: famous for its murals and seaside promenade. Don’t miss a gelato at Da Niní by the sea, or the beaches facing Cirella island or Baia d’Oro (",
+        more1Suffix: ")",
+        more2:
+          "Orsomarso: a mountain village just 10 minutes from the sea, in the Pollino Natural Park, surrounded by nature, with traditional restaurants and river routes (link the restaurant La Riviera to try inland cuisine).",
+        more3:
+          "Papasidero and rafting on the Lao river: several companies offer this fun experience through natural canyons, departing from Scalea.",
+        more4:
+          "Grisolia: access to La Mula mountain (1,400m—hike for true adventurers), with centuries-old trees and giant trunks you can literally step into (kids experience - link). Restaurant link",
+        more5:
+          "In all towns there are free beaches or paid beach clubs (“lido”), where in June the cost is around €10–20/day for umbrella, loungers and showers. Link..",
+        more6:
+          "Maratea, in nearby Basilicata: a true seaside gem.",
+        more7:
+          "Boat trips to Praia island and its caves—an ideal activity to explore the coast. Link…",
+
+        foodTitle: "Calabrian gastronomy",
+        foodP:
+          "Calabrian cuisine is bold, authentic, and deeply tied to local products; sea and mountains coexist just meters apart.\n" +
+          "You’ll find homemade pasta, ultra-fresh fish and seafood, cheeses like ricotta and pecorino, and traditional cured meats like the famous ’nduja.\n" +
+          "Naples’ proximity shows in high-level pizzerias and pastries (babà, sfogliatelle). You can also enjoy almond paste and its cedar variation (typical of the area) and Sicilian cannoli. Limoncello, liquore al Cedro and many typical liqueurs (Amaro del Capo, Jefferson, ..).",
+
+        restTitle: "Recommended restaurants",
+
+        extraTitle: "Excursions to extend the trip",
+        extraP: "If you’d like to use the trip to discover more of Southern Italy, here are some ideas:",
+        extra1:
+          "If you arrive at Naples airport: Procida, Sorrento and the Amalfi Coast, Pompeii and the temples of Paestum.",
+        extra2:
+          "If you arrive at Lamezia Terme: Tropea and a trip to Stromboli with its active volcano. From Tropea you can do day trips with a few hours on the island. You can also visit Pizzo Calabro, a picturesque coastal town famous for its “tartufo” gelato.",
+        extra3:
+          "Further south you’ll find Calabria at its most authentic: Scilla, Reggio Calabria, Gerace and Pentedattilo — you probably don’t know anyone brave enough to step away from the commercial routes and explore these gems.",
+        extra4:
+          "To the east: Matera and the Puglia region, with unique landscapes and historic cities.",
+
+        airTitle: "How to get there: airports",
+        airP1: "Main options to get there:",
+        air1: "Fly to Naples (good connections by train of different types or by car).",
+        air2: "Fly to Rome (and continue by high-speed train to Scalea).",
+        air3:
+          "Fly to Lamezia Terme, the closest airport (there are trains to Scalea, but the most comfortable is by car or private driver — ask us).",
+
+        beforeTitle: "Before and after the wedding",
+        beforeP:
+          "We’ll be in the area from June 22 to July 4, and we’d love to spend time with you beyond the ceremony day—for example at our pre-wedding meet-up:",
+        prebodaP:
+          "📍 Terrazze Fiorelli, San Nicolla Arcella\n🗓 Friday, June 26\nA casual get-together before sunset to start celebrating together",
+
+        giftTitle: "GIFT REGISTRY",
+        giftP: "Your presence is our best gift, but if you’d like to give something extra:",
+        btnCopy: "Copy IBAN",
+
+        rsvpTitle: "Confirm Attendance",
+        rsvpSubtitle: "Will you be our next ally on the big day?",
+        labelName: "Full name:",
+        placeholderName: "Write your name",
+        labelJoin: "Will you attend?",
+        optYes: "Yes, I’ll be there",
+        optNo: "No, I can’t make it",
+        labelCaptcha: "Human mission: solve the riddle",
+        btnSubmit: "Send Data",
+        rsvpDeadline: "* Deadline: May 1, 2026",
+        sendingMsg: "Sending...",
+        captchaError: "Math error! Try again.",
+        errorMsg: "There was an error sending.",
+        copied: "COPIED!",
+        successText: "Mission accomplished! Data sent.",
+
+        galleryTitle: "ADVENTURE ALBUM",
+
+        footerCont: "TO BE CONTINUED...",
+        btnGame: "LET’S PLAY!"
+      }
+    };
+
+    // ==========================
+    // ID MAPPING + SETLANG
+    // ==========================
+    const SITE_LINK = "https://cittadipraiaamare.it/en/to/";
+    const DIAMANTE_LINK = "https://maps.app.goo.gl/ozwoQguTYWCSDTc7A?g_st=ic";
+
+    function setLanguage(lang) {
+      const t = translations[lang] || translations.es;
+      localStorage.setItem("selectedLanguage", lang);
+
+      // Top nav
+      document.getElementById("nav-title").textContent = t.navTitle;
+      document.getElementById("nav-history").textContent = t.navHistory;
+      document.getElementById("nav-location").textContent = t.navLocation;
+      document.getElementById("nav-rsvp").textContent = t.navRsvp;
+      document.getElementById("nav-gallery").textContent = t.navGallery;
+
+      // Hero / countdown labels
+      document.getElementById("hero-date").textContent = t.heroDate;
+      document.getElementById("label-days").textContent = t.labelDays;
+      document.getElementById("label-hours").textContent = t.labelHours;
+      document.getElementById("label-min").textContent = t.labelMin;
+      document.getElementById("label-sec").textContent = t.labelSec;
+
+      // Historia
+      document.getElementById("badge-history").textContent = t.badgeHistory;
+      document.getElementById("history-title").textContent = t.historyTitle;
+      document.getElementById("history-p1").innerHTML = t.historyP1.replace(/\n/g, "<br>");
+      // Montamos el párrafo 2 con LINK SOLO AQUÍ (sin el link de arriba, ya quitado)
+      document.getElementById("history-p2").innerHTML =
+        `${t.historyP2a}<a href="${SITE_LINK}" target="_blank" rel="noopener noreferrer" class="comic-link-badge">${SITE_LINK}</a>${t.historyP2b}`;
+
+      // Ubicación
+      document.getElementById("location-title").textContent = t.locationTitle;
+      document.getElementById("church-title").textContent = t.churchTitle;
+      document.getElementById("church-name").textContent = t.churchName;
+      document.getElementById("church-time").textContent = t.churchTime;
+      document.getElementById("btn-map1").textContent = t.btnMap1;
+
+      document.getElementById("party-title").textContent = t.partyTitle;
+      document.getElementById("party-name").textContent = t.partyName;
+      document.getElementById("party-time").textContent = t.partyTime;
+      document.getElementById("btn-map2").textContent = t.btnMap2;
+
+      // Info
+      document.getElementById("info-title").textContent = t.infoTitle;
+      document.getElementById("info-p1").innerHTML = t.infoP1.replace(/\n/g, "<br>");
+
+      document.getElementById("stay-title").textContent = t.stayTitle;
+      document.getElementById("stay-p").textContent = t.stayP;
+      document.getElementById("stay-li1").textContent = t.stay1;
+      document.getElementById("stay-li2").textContent = t.stay2;
+      document.getElementById("stay-li3").textContent = t.stay3;
+
+      document.getElementById("car-rec").textContent = t.carRec;
+
+      document.getElementById("more-places-title").textContent = t.moreTitle;
+      document.getElementById("more-li1").innerHTML =
+        `${t.more1Prefix}<a class="comic-link" href="${DIAMANTE_LINK}" target="_blank" rel="noopener noreferrer">${DIAMANTE_LINK}</a>${t.more1Suffix}`;
+      document.getElementById("more-li2").textContent = t.more2;
+      document.getElementById("more-li3").textContent = t.more3;
+      document.getElementById("more-li4").textContent = t.more4;
+      document.getElementById("more-li5").textContent = t.more5;
+      document.getElementById("more-li6").textContent = t.more6;
+      document.getElementById("more-li7").textContent = t.more7;
+
+      document.getElementById("food-title").textContent = t.foodTitle;
+      document.getElementById("food-p").innerHTML = t.foodP.replace(/\n/g, "<br>");
+
+      document.getElementById("rest-title").textContent = t.restTitle;
+
+      document.getElementById("extra-title").textContent = t.extraTitle;
+      document.getElementById("extra-p").textContent = t.extraP;
+      document.getElementById("extra-li1").textContent = t.extra1;
+      document.getElementById("extra-li2").textContent = t.extra2;
+      document.getElementById("extra-li3").textContent = t.extra3;
+      document.getElementById("extra-li4").textContent = t.extra4;
+
+      document.getElementById("air-title").textContent = t.airTitle;
+      document.getElementById("air-p1").textContent = t.airP1;
+      document.getElementById("air-li1").textContent = t.air1;
+      document.getElementById("air-li2").textContent = t.air2;
+      document.getElementById("air-li3").textContent = t.air3;
+
+      document.getElementById("before-title").textContent = t.beforeTitle;
+      document.getElementById("before-p").textContent = t.beforeP;
+      document.getElementById("preboda-p").innerHTML = t.prebodaP.replace(/\n/g, "<br>");
+
+      // Regalos
+      document.getElementById("gift-title").textContent = t.giftTitle;
+      document.getElementById("gift-p").textContent = t.giftP;
+      document.getElementById("btn-copy").textContent = t.btnCopy;
+
+      // RSVP
+      document.getElementById("rsvp-title").textContent = t.rsvpTitle;
+      document.getElementById("rsvp-subtitle").textContent = t.rsvpSubtitle;
+      document.getElementById("label-name").textContent = t.labelName;
+      document.getElementById("nombre").placeholder = t.placeholderName;
+      document.getElementById("label-join").textContent = t.labelJoin;
+      document.getElementById("opt-yes").textContent = t.optYes;
+      document.getElementById("opt-no").textContent = t.optNo;
+      document.getElementById("label-captcha").textContent = t.labelCaptcha;
+      document.getElementById("btn-text").textContent = t.btnSubmit;
+      document.getElementById("rsvp-deadline").textContent = t.rsvpDeadline;
+      document.getElementById("success-text").textContent = t.successText;
+
+      // Galería / footer
+      document.getElementById("gallery-title").textContent = t.galleryTitle;
+      document.getElementById("footer-cont").textContent = t.footerCont;
+      document.getElementById("btn-game-link").textContent = t.btnGame;
+
+      // Botones activos
+      document.querySelectorAll(".lang-btn").forEach(b => b.classList.remove("active"));
+      const btn = document.getElementById(`btn-${lang}`);
+      const mBtn = document.getElementById(`m-btn-${lang}`);
+      if (btn) btn.classList.add("active");
+      if (mBtn) mBtn.classList.add("active");
+    }
+
+    // ==========================
+    // UI: menú, confetti, lightbox
+    // ==========================
+    function toggleMenu(){
+      const menu=document.getElementById('mobile-menu');
+      const icon=document.getElementById('menu-icon');
+      menu.classList.toggle('open');
+      icon.classList.toggle('fa-bars');
+      icon.classList.toggle('fa-times');
+    }
+
+    function createConfetti(){
+      const container=document.getElementById('confetti-container');
+      const colors=['#FFD700','#FF4500','#0080FF','#2ecc71','#ffffff'];
+      for(let i=0;i<80;i++){
+        const confetti=document.createElement('div');
+        confetti.className='confetti';
+        confetti.style.left=Math.random()*100+'vw';
+        confetti.style.top='-10px';
+        confetti.style.backgroundColor=colors[Math.floor(Math.random()*colors.length)];
+        confetti.style.transform=`rotate(${Math.random()*360}deg)`;
+        const duration=Math.random()*3+2;
+        const delay=Math.random()*1.5;
+        confetti.animate([
+          {transform:`translate3d(0,0,0) rotate(0deg)`,opacity:1},
+          {transform:`translate3d(${(Math.random()-.5)*200}px,600px,0) rotate(${Math.random()*800}deg)`,opacity:0}
+        ],{
+          duration:duration*1000,
+          delay:delay*1000,
+          easing:'cubic-bezier(0,.9,.6,1)',
+          fill:'forwards'
         });
+        container.appendChild(confetti);
+        setTimeout(()=>confetti.remove(),(duration+delay)*1000);
+      }
+    }
 
-        function toggleMenu() {
-            const menu = document.getElementById('mobile-menu');
-            const icon = document.getElementById('menu-icon');
-            menu.classList.toggle('open');
-            icon.classList.toggle('fa-bars');
-            icon.classList.toggle('fa-times');
+    function openLightbox(src){
+      document.getElementById('lightbox-img').src=src;
+      document.getElementById('lightbox').style.display='flex';
+    }
+    function closeLightbox(){document.getElementById('lightbox').style.display='none';}
+
+    function reveal(){
+      const reveals=document.querySelectorAll(".reveal");
+      for(let i=0;i<reveals.length;i++){
+        const triggerPoint=window.innerHeight-50;
+        if(reveals[i].getBoundingClientRect().top<triggerPoint){
+          reveals[i].classList.add("active");
         }
+      }
+    }
+    window.addEventListener("scroll",reveal);
+    window.addEventListener("resize",reveal);
 
-        const weddingDate = new Date("Jun 10, 2026 12:00:00").getTime();
-        setInterval(function() {
-            const now = new Date().getTime(); const distance = weddingDate - now;
-            if (distance < 0) return;
-            document.getElementById("days").innerHTML = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
-            document.getElementById("hours").innerHTML = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-            document.getElementById("minutes").innerHTML = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-            document.getElementById("seconds").innerHTML = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
-        }, 1000);
+    // ==========================
+    // FORM + CAPTCHA (traducible)
+    // ==========================
+    let captchaResult=0;
 
-        function copyToClipboard(text, el) {
-            const tempInput = document.createElement("input"); tempInput.value = text;
-            document.body.appendChild(tempInput); tempInput.select();
-            document.execCommand("copy"); document.body.removeChild(tempInput);
-            const activeLang = currentLang;
-            const old = el.innerHTML; el.innerHTML = translations[activeLang].copied;
-            el.classList.replace('bg-black', 'bg-green-500');
-            setTimeout(() => { el.innerHTML = old; el.classList.replace('bg-green-500', 'bg-black'); }, 2000);
-        }
+    function generateCaptcha(){
+      const num1=Math.floor(Math.random()*9)+1;
+      const num2=Math.floor(Math.random()*9)+1;
+      captchaResult=num1+num2;
+      document.getElementById('captcha-question').textContent=`${num1} + ${num2} = `;
+      document.getElementById('captcha-answer').value='';
+    }
 
-        function openLightbox(src) { document.getElementById('lightbox-img').src = src; document.getElementById('lightbox').style.display = 'flex'; }
-        function closeLightbox() { document.getElementById('lightbox').style.display = 'none'; }
-        
-        function reveal() {
-            const reveals = document.querySelectorAll(".reveal");
-            for (let i = 0; i < reveals.length; i++) {
-                const triggerPoint = window.innerHeight - 50;
-                if (reveals[i].getBoundingClientRect().top < triggerPoint) {
-                    reveals[i].classList.add("active");
-                }
-            }
-        }
-        window.addEventListener("scroll", reveal);
-        window.addEventListener("resize", reveal);
-    </script>
+    const form=document.getElementById('registroForm');
+    const btnEnviar=document.getElementById('btnEnviar');
+    const btnSpinner=document.getElementById('btn-spinner');
+    const btnText=document.getElementById('btn-text');
+    const estado=document.getElementById('estado');
+    const successBubble=document.getElementById('success-bubble');
+
+    form.addEventListener('submit',e=>{
+      e.preventDefault();
+
+      const lang = localStorage.getItem("selectedLanguage") || "es";
+      const t = translations[lang] || translations.es;
+
+      const userAnswer=parseInt(document.getElementById('captcha-answer').value);
+      if(userAnswer!==captchaResult){
+        estado.innerText=t.captchaError;
+        estado.style.color="#FF4500";
+        generateCaptcha();
+        return;
+      }
+
+      btnEnviar.disabled=true;
+      btnSpinner.classList.remove('hidden');
+      btnText.classList.add('hidden');
+      estado.innerText=t.sendingMsg;
+      estado.style.color="#0080FF";
+
+      const datos={
+        nombre:document.getElementById('nombre').value,
+        asistencia:document.getElementById('asistencia').value
+      };
+
+      fetch("https://script.google.com/macros/s/AKfycbwaON4cTPF10VsaNDNPFynFBGJujTm_8NhLGd5I__2KKn2P5rt7avB_WYqhJqUg4m29/exec",{
+        method:'POST',
+        mode:'no-cors',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify(datos)
+      })
+      .then(()=>{
+        createConfetti();
+        successBubble.style.display='block';
+        estado.innerText="";
+        btnEnviar.disabled=false;
+        btnSpinner.classList.add('hidden');
+        btnText.classList.remove('hidden');
+        setTimeout(()=>{successBubble.style.display='none';},5000);
+        form.reset();
+        generateCaptcha();
+      })
+      .catch(err=>{
+        console.error(err);
+        estado.innerText=t.errorMsg;
+        estado.style.color="#FF4500";
+        btnEnviar.disabled=false;
+        btnSpinner.classList.add('hidden');
+        btnText.classList.remove('hidden');
+      });
+    });
+
+    function copyToClipboard(text,el){
+      const lang = localStorage.getItem("selectedLanguage") || "es";
+      const t = translations[lang] || translations.es;
+
+      const tempInput=document.createElement("input");
+      tempInput.value=text;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand("copy");
+      document.body.removeChild(tempInput);
+
+      const old=el.innerHTML;
+      el.innerHTML=t.copied;
+      el.classList.replace('bg-black','bg-green-500');
+      setTimeout(()=>{el.innerHTML=old;el.classList.replace('bg-green-500','bg-black');},2000);
+    }
+
+    // ==========================
+    // COUNTDOWN
+    // ==========================
+    const weddingDate=new Date("Jun 27, 2026 18:00:00").getTime();
+    setInterval(function(){
+      const now=new Date().getTime();
+      const distance=weddingDate-now;
+      if(distance<0) return;
+      document.getElementById("days").innerHTML=Math.floor(distance/(1000*60*60*24)).toString().padStart(2,'0');
+      document.getElementById("hours").innerHTML=Math.floor((distance%(1000*60*60*24))/(1000*60*60)).toString().padStart(2,'0');
+      document.getElementById("minutes").innerHTML=Math.floor((distance%(1000*60*60))/(1000*60)).toString().padStart(2,'0');
+      document.getElementById("seconds").innerHTML=Math.floor((distance%(1000*60))/1000).toString().padStart(2,'0');
+    },1000);
+
+    // ==========================
+    // INIT
+    // ==========================
+    window.onload=()=>{
+      const savedLang=localStorage.getItem('selectedLanguage') || 'es';
+      setLanguage(savedLang);
+      generateCaptcha();
+      reveal();
+    };
+  </script>
 </body>
 </html>
