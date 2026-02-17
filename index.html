@@ -3,6 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Boda de Marcello & Cristina en Calabria, Italia. 27 de junio de 2026 en Castello Fiuzzi. Información, ubicación, guía de viaje y galería.">
+  <meta property="og:title" content="Marcello & Cristina - ¡EL GRAN EVENTO!">
+  <meta property="og:description" content="Acompáñanos el 27 de junio de 2026 en Calabria, Italia.">
+  <meta property="og:image" content="fotos/hero1.jpg">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <title>Marcello & Cristina - ¡EL GRAN EVENTO!</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
@@ -15,6 +24,8 @@
       --comic-blue:#0080FF;
       --comic-green:#2ecc71;
     }
+
+    html{scroll-padding-top:100px;}
 
     body{
       background-color:#f0f0f0;
@@ -75,6 +86,13 @@
       25%{transform:translate3d(100vw,0,0);}
       100%{transform:translate3d(100vw,0,0);}
     }
+
+    @keyframes pop{
+      0%{transform:scale(1);}
+      50%{transform:scale(1.15);}
+      100%{transform:scale(1);}
+    }
+    .counter-animate{animation:pop .3s ease;}
 
     .running-gif-container{
       width:100%;
@@ -157,6 +175,7 @@
       opacity:0;display:flex;flex-direction:column;width:100%;
     }
     #mobile-menu.open{max-height:800px;opacity:1;padding-bottom:1.5rem;}
+    #mobile-menu a{margin-bottom:8px;}
 
     .nav-link{
       font-family:'Bangers',cursive;font-size:1.5rem;letter-spacing:1px;
@@ -432,21 +451,21 @@
         <h1 class="text-2xl text-yellow-400" id="nav-title">M&C: EDICIÓN ESPECIAL</h1>
 
         <div class="hidden md:flex space-x-2">
-          <button onclick="setLanguage('it')" class="lang-btn" id="btn-it">IT</button>
-          <button onclick="setLanguage('es')" class="lang-btn active" id="btn-es">ES</button>
-          <button onclick="setLanguage('en')" class="lang-btn" id="btn-en">EN</button>
+          <button onclick="setLanguage('it')" aria-label="Cambiar idioma a Italiano" class="lang-btn" id="btn-it">IT</button>
+          <button onclick="setLanguage('es')" aria-label="Cambiar idioma a Español" class="lang-btn active" id="btn-es">ES</button>
+          <button onclick="setLanguage('en')" aria-label="Cambiar idioma a Inglés" class="lang-btn" id="btn-en">EN</button>
         </div>
 
-        <button onclick="toggleMenu()" class="text-3xl text-yellow-400 hover:scale-125 transition-transform focus:outline-none">
+        <button onclick="toggleMenu()" aria-label="Abrir o cerrar menú" class="text-3xl text-yellow-400 hover:scale-125 transition-transform focus:outline-none">
           <i class="fas fa-bars" id="menu-icon"></i>
         </button>
       </div>
 
       <div id="mobile-menu" class="flex flex-col items-center mt-2">
         <div class="flex space-x-4 mb-4 md:hidden">
-          <button onclick="setLanguage('it')" class="lang-btn" id="m-btn-it">IT</button>
-          <button onclick="setLanguage('es')" class="lang-btn active" id="m-btn-es">ES</button>
-          <button onclick="setLanguage('en')" class="lang-btn" id="m-btn-en">EN</button>
+          <button onclick="setLanguage('it')" aria-label="Cambiar idioma a Italiano" class="lang-btn" id="m-btn-it">IT</button>
+          <button onclick="setLanguage('es')" aria-label="Cambiar idioma a Español" class="lang-btn active" id="m-btn-es">ES</button>
+          <button onclick="setLanguage('en')" aria-label="Cambiar idioma a Inglés" class="lang-btn" id="m-btn-en">EN</button>
         </div>
 
         <a href="#historia" onclick="toggleMenu()" class="nav-link" id="nav-history">HISTORIA</a>
@@ -459,16 +478,16 @@
 
   <section class="relative h-[65vh] md:h-[90vh] flex items-center justify-center overflow-hidden border-b-8 border-black">
     <div class="absolute inset-0 z-0">
-      <img src="fotos/hero1.jpg" alt="Marcello y Cristina" class="w-full h-full object-cover object-center">
+      <img src="fotos/hero1.jpg" alt="Marcello y Cristina" class="w-full h-full object-cover object-center" loading="eager" fetchpriority="high" decoding="async">
       <div class="absolute inset-0 bg-black/10"></div>
     </div>
 
     <div class="absolute inset-0 z-10 pointer-events-none flex items-start justify-start p-2">
-      <img src="fotos/married.png" alt="Married" class="married-badge">
+      <img src="fotos/married.png" alt="Married" class="married-badge" loading="eager" decoding="async">
     </div>
 
     <div class="absolute inset-0 z-10 pointer-events-none flex items-start justify-end overflow-visible">
-      <img src="fotos/boom.png" alt="Boom" class="boom-badge">
+      <img src="fotos/boom.png" alt="Boom" class="boom-badge" loading="eager" decoding="async">
     </div>
 
     <div class="relative z-20 text-center px-4 w-full flex flex-col items-center justify-center">
@@ -516,7 +535,7 @@
   <section id="historia" class="pt-4 pb-24 container mx-auto px-4 reveal">
     <div class="grid md:grid-cols-2 gap-16 items-center">
       <div class="comic-panel group overflow-hidden">
-        <img src="fotos/historia.jpg" alt="Nuestra Historia" class="w-full h-[500px] object-cover">
+        <img src="fotos/historia.jpg" alt="Nuestra Historia" class="w-full h-[500px] object-cover" loading="lazy" decoding="async">
         <div class="absolute top-4 left-4 bg-red-600 text-white px-4 py-1 comic-title transform -rotate-1 border-2 border-black" id="badge-history">BIENVENIDOS</div>
       </div>
 
@@ -544,7 +563,7 @@
     <h2 class="text-center text-6xl mb-8 uppercase" id="location-title">COORDENADAS SECRETAS</h2>
 
     <div class="map-only">
-      <img src="fotos/mapa.gif" alt="Mapa de la zona">
+      <img src="fotos/mapa.gif" alt="Mapa de la zona" loading="lazy" decoding="async">
     </div>
 
     <div class="grid md:grid-cols-2 gap-12">
@@ -772,10 +791,10 @@
     <div class="container mx-auto px-4">
       <h2 class="text-center text-6xl text-white mb-16 uppercase drop-shadow-md" id="gallery-title"></h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div class="comic-panel overflow-hidden cursor-pointer" onclick="openLightbox('fotos/galeria1.jpg')"><img src="fotos/galeria1.jpg" class="w-full h-72 object-cover"></div>
-        <div class="comic-panel overflow-hidden transform rotate-1 cursor-pointer" onclick="openLightbox('fotos/galeria2.jpg')"><img src="fotos/galeria2.jpg" class="w-full h-72 object-cover"></div>
-        <div class="comic-panel overflow-hidden transform -rotate-1 cursor-pointer" onclick="openLightbox('fotos/galeria3.jpg')"><img src="fotos/galeria3.jpg" class="w-full h-72 object-cover"></div>
-        <div class="comic-panel overflow-hidden cursor-pointer" onclick="openLightbox('fotos/galeria4.jpg')"><img src="fotos/galeria4.jpg" class="w-full h-72 object-cover"></div>
+        <div class="comic-panel overflow-hidden cursor-pointer" onclick="openLightbox('fotos/galeria1.jpg')"><img src="fotos/galeria1.jpg" class="w-full h-72 object-cover" loading="lazy" decoding="async"></div>
+        <div class="comic-panel overflow-hidden transform rotate-1 cursor-pointer" onclick="openLightbox('fotos/galeria2.jpg')"><img src="fotos/galeria2.jpg" class="w-full h-72 object-cover" loading="lazy" decoding="async"></div>
+        <div class="comic-panel overflow-hidden transform -rotate-1 cursor-pointer" onclick="openLightbox('fotos/galeria3.jpg')"><img src="fotos/galeria3.jpg" class="w-full h-72 object-cover" loading="lazy" decoding="async"></div>
+        <div class="comic-panel overflow-hidden cursor-pointer" onclick="openLightbox('fotos/galeria4.jpg')"><img src="fotos/galeria4.jpg" class="w-full h-72 object-cover" loading="lazy" decoding="async"></div>
       </div>
     </div>
   </section>
@@ -789,11 +808,11 @@
       <p class="opacity-30 text-[9px] mt-3 mb-0 leading-none">© 2026 Marcello & Cristina Studios.</p>
     </div>
     <div class="running-gif-container bg-black">
-      <img src="fotos/corre.gif" alt="Corriendo" class="running-gif" loading="eager">
+      <img src="fotos/corre.gif" alt="Corriendo" class="running-gif" loading="eager" decoding="async">
     </div>
   </footer>
 
-  <div id="lightbox" onclick="closeLightbox()">
+  <div id="lightbox" onclick="closeLightbox()" role="dialog" aria-modal="true" aria-label="Visor de imagen">
     <img id="lightbox-img" src="" class="max-w-[90%] max-h-[80%] border-8 border-white outline outline-4 outline-black">
   </div>
 
@@ -1136,6 +1155,10 @@
     const SITE_LINK = "https://cittadipraiaamare.it/en/to/";
     const DIAMANTE_LINK = "https://maps.app.goo.gl/ozwoQguTYWCSDTc7A?g_st=ic";
 
+    function nl2br(text){
+      return String(text || "").replace(/\n/g, "<br>");
+    }
+
     function setLanguage(lang) {
       const t = translations[lang] || translations.es;
       localStorage.setItem("selectedLanguage", lang);
@@ -1154,7 +1177,7 @@
 
       document.getElementById("badge-history").textContent = t.badgeHistory;
       document.getElementById("history-title").textContent = t.historyTitle;
-      document.getElementById("history-p1").innerHTML = t.historyP1.replace(/\n/g, "<br>");
+      document.getElementById("history-p1").innerHTML = nl2br(t.historyP1);
       document.getElementById("history-p2").innerHTML =
         `${t.historyP2a}<a href="${SITE_LINK}" target="_blank" rel="noopener noreferrer" class="comic-link-badge">${SITE_LINK}</a>${t.historyP2b}`;
 
@@ -1193,7 +1216,7 @@
       const footEl = document.getElementById("info-footnote");
       if (footEl) footEl.textContent = t.infoFootnote || "";
 
-      document.getElementById("info-p1").innerHTML = t.infoP1.replace(/\n/g, "<br>");
+      document.getElementById("info-p1").innerHTML = nl2br(t.infoP1);
 
       document.getElementById("stay-title").textContent = t.stayTitle;
       document.getElementById("stay-p").textContent = t.stayP;
@@ -1216,7 +1239,7 @@
       document.getElementById("more-li7").textContent = t.more7;
 
       document.getElementById("food-title").textContent = t.foodTitle;
-      document.getElementById("food-p").innerHTML = t.foodP.replace(/\n/g, "<br>");
+      document.getElementById("food-p").innerHTML = nl2br(t.foodP);
 
       document.getElementById("rest-title").textContent = t.restTitle;
 
@@ -1235,7 +1258,7 @@
 
       document.getElementById("before-title").textContent = t.beforeTitle;
       document.getElementById("before-p").textContent = t.beforeP;
-      document.getElementById("preboda-p").innerHTML = t.prebodaP.replace(/\n/g, "<br>");
+      document.getElementById("preboda-p").innerHTML = nl2br(t.prebodaP);
 
       document.getElementById("gallery-title").textContent = t.galleryTitle;
       document.getElementById("footer-cont").textContent = t.footerCont;
@@ -1262,6 +1285,10 @@
     }
     function closeLightbox(){document.getElementById('lightbox').style.display='none';}
 
+    document.addEventListener("keydown",function(e){
+      if(e.key==="Escape"){closeLightbox();}
+    });
+
     function reveal(){
       const reveals=document.querySelectorAll(".reveal");
       for(let i=0;i<reveals.length;i++){
@@ -1275,14 +1302,18 @@
     window.addEventListener("resize",reveal);
 
     const weddingDate=new Date("Jun 27, 2026 18:00:00").getTime();
-    setInterval(function(){
+    const countdownInterval=setInterval(function(){
       const now=new Date().getTime();
       const distance=weddingDate-now;
-      if(distance<0) return;
+      if(distance<0){clearInterval(countdownInterval);return;}
       document.getElementById("days").innerHTML=Math.floor(distance/(1000*60*60*24)).toString().padStart(2,'0');
       document.getElementById("hours").innerHTML=Math.floor((distance%(1000*60*60*24))/(1000*60*60)).toString().padStart(2,'0');
       document.getElementById("minutes").innerHTML=Math.floor((distance%(1000*60*60))/(1000*60)).toString().padStart(2,'0');
       document.getElementById("seconds").innerHTML=Math.floor((distance%(1000*60))/1000).toString().padStart(2,'0');
+      const secEl=document.getElementById("seconds");
+      secEl.classList.remove("counter-animate");
+      void secEl.offsetWidth;
+      secEl.classList.add("counter-animate");
     },1000);
 
     window.onload=()=>{
