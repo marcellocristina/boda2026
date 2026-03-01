@@ -440,7 +440,39 @@
       box-shadow:3px 3px 0px black;
     }
 
-  </style>
+    /* ====== RSVP (formulario) ====== */
+    .comic-input{
+      border:3px solid black;
+      box-shadow:4px 4px 0px black;
+      font-family:'Kalam',cursive;
+      font-weight:bold;
+    }
+    .comic-label{
+      font-family:'Luckiest Guy',cursive;
+      text-transform:uppercase;
+      color:black;
+      margin-bottom:.5rem;
+      display:block;
+      letter-spacing:1px;
+      -webkit-text-stroke:0px transparent;
+      paint-order:normal;
+    }
+    .captcha-box{
+      display:flex;
+      align-items:center;
+      gap:1rem;
+      background:#fdf2f2;
+      padding:1rem;
+      border:2px dashed black;
+      border-radius:8px;
+    }
+    .captcha-question{
+      font-family:'Bangers',cursive;
+      font-size:1.5rem;
+      color:var(--comic-red);
+    }
+    /* =============================== */
+</style>
 </head>
 
 <body class="text-gray-900">
@@ -787,6 +819,78 @@
     </div>
   </section>
 
+  
+
+  <section id="confirmar" class="py-24 bg-red-600 border-t-8 border-black">
+  <div class="container mx-auto px-4">
+    <div class="max-w-3xl mx-auto text-center mb-12">
+      <h2 class="text-4xl md:text-6xl text-white uppercase drop-shadow-md" id="rsvp-title">
+        Confirmar Asistencia
+      </h2>
+      <p class="text-white text-2xl mt-2 font-bold" id="rsvp-subtitle">
+        ¿Serás nuestro próximo aliado en el gran día?
+      </p>
+    </div>
+
+    <div class="max-w-2xl mx-auto comic-panel p-8 md:p-12 bg-white transform -rotate-0.5 mb-8">
+      <form id="registroForm" class="space-y-6">
+        <div>
+          <label class="comic-label" id="label-name" for="nombre">Nombre Completo:</label>
+          <input
+            type="text"
+            id="nombre"
+            name="nombre"
+            required
+            class="w-full p-4 comic-input bg-blue-50"
+            placeholder="Escribe tu nombre"
+          />
+        </div>
+
+        <div>
+          <label class="comic-label" id="label-join" for="asistencia">¿Asistirás?</label>
+          <select id="asistencia" name="asistencia" class="w-full p-4 comic-input bg-yellow-50 cursor-pointer">
+            <option value="Sí" id="opt-yes">Sí, asistiré</option>
+            <option value="No" id="opt-no">No podré asistir</option>
+          </select>
+        </div>
+
+        <div class="space-y-4">
+          <label class="comic-label" id="label-captcha">Misión Humana: Resuelve el acertijo</label>
+          <div class="captcha-box">
+            <span id="captcha-question" class="captcha-question">...</span>
+            <input
+              type="number"
+              id="captcha-answer"
+              required
+              class="w-24 p-3 comic-input text-center text-xl"
+              placeholder="?"
+            />
+          </div>
+        </div>
+
+        <div class="pt-4">
+          <button
+            type="submit"
+            id="btnEnviar"
+            class="w-full bg-black text-yellow-400 text-3xl font-bold py-6 comic-panel hover:bg-blue-600 hover:text-white transition-all transform hover:-translate-y-2 uppercase"
+          >
+            Enviar Datos
+          </button>
+        </div>
+      </form>
+
+      <div id="estado" class="mt-4 text-center font-bold text-lg"></div>
+      <div id="confirmacionOk" class="hidden mt-6 p-6 bg-green-400 border-4 border-black text-black font-extrabold text-xl text-center comic-panel">
+        🎉 ¡CONFIRMADO!<br>
+        ¡Gracias por unirte a nuestra aventura!
+      </div>
+      <p class="text-center mt-6 text-gray-500 font-bold italic" id="rsvp-deadline">
+        * Fecha límite: 1 de Mayo, 2026
+      </p>
+    </div>
+  </div>
+</section>
+
   <section id="galeria" class="py-24 bg-blue-600 border-y-8 border-black">
     <div class="container mx-auto px-4">
       <h2 class="text-center text-6xl text-white mb-16 uppercase drop-shadow-md" id="gallery-title"></h2>
@@ -928,7 +1032,21 @@
 
         galleryTitle: "ÁLBUM DE AVENTURAS",
         footerCont: "CONTINUARÁ...",
-        btnGame: "¡JUGUEMOS!"
+        btnGame: "¡JUGUEMOS!",
+        rsvpTitle: "Confirmar Asistencia",
+        rsvpSubtitle: "¿Serás nuestro próximo aliado en el gran día?",
+        labelName: "Nombre Completo:",
+        placeholderName: "Escribe tu nombre",
+        labelJoin: "¿Asistirás?",
+        optYes: "Sí, asistiré",
+        optNo: "No podré asistir",
+        labelCaptcha: "Misión Humana: Resuelve el acertijo",
+        btnSubmit: "Enviar Datos",
+        rsvpDeadline: "* Fecha límite: 1 de Mayo, 2026",
+        sendingMsg: "Enviando...",
+        successMsg: "¡Datos guardados con éxito!",
+        errorMsg: "Hubo un error al enviar.",
+        captchaError: "¡Error de cálculo! Inténtalo de nuevo."
       },
 
       it: {
@@ -1038,7 +1156,21 @@
 
         galleryTitle: "ALBUM DELLE AVVENTURE",
         footerCont: "CONTINUA...",
-        btnGame: "GIOCHIAMO!"
+        btnGame: "GIOCHIAMO!",
+        rsvpTitle: "Conferma Presenza",
+        rsvpSubtitle: "Sarai il nostro alleato nel grande giorno?",
+        labelName: "Nome e cognome:",
+        placeholderName: "Scrivi il tuo nome",
+        labelJoin: "Parteciperai?",
+        optYes: "Sì, ci sarò",
+        optNo: "No, non potrò",
+        labelCaptcha: "Missione Umana: Risolvi l'enigma",
+        btnSubmit: "Invia Dati",
+        rsvpDeadline: "* Scadenza: 1 Maggio, 2026",
+        sendingMsg: "Inviando...",
+        successMsg: "Dati salvati con successo!",
+        errorMsg: "Errore durante l'invio.",
+        captchaError: "Errore di calcolo! Riprova."
       },
 
       en: {
@@ -1148,7 +1280,21 @@
 
         galleryTitle: "ADVENTURE ALBUM",
         footerCont: "TO BE CONTINUED...",
-        btnGame: "LET’S PLAY!"
+        btnGame: "LET’S PLAY!",
+        rsvpTitle: "Confirm Attendance",
+        rsvpSubtitle: "Will you be our ally on the big day?",
+        labelName: "Full Name:",
+        placeholderName: "Write your name",
+        labelJoin: "Will you attend?",
+        optYes: "Yes, I'll be there",
+        optNo: "No, I can't make it",
+        labelCaptcha: "Human Mission: Solve the riddle",
+        btnSubmit: "Send Data",
+        rsvpDeadline: "* RSVP Deadline: May 1st, 2026",
+        sendingMsg: "Sending...",
+        successMsg: "Data saved successfully!",
+        errorMsg: "Error sending data.",
+        captchaError: "Math error! Try again."
       }
     };
 
@@ -1270,12 +1416,109 @@
       document.getElementById("footer-cont").textContent = t.footerCont;
       document.getElementById("btn-game-link").textContent = t.btnGame;
 
+      // RSVP
+      if (document.getElementById("rsvp-title")) {
+        document.getElementById("rsvp-title").textContent = t.rsvpTitle || "Confirmar Asistencia";
+        document.getElementById("rsvp-subtitle").textContent = t.rsvpSubtitle || "";
+        document.getElementById("label-name").textContent = t.labelName || "Nombre Completo:";
+        document.getElementById("nombre").placeholder = t.placeholderName || "";
+        document.getElementById("label-join").textContent = t.labelJoin || "¿Asistirás?";
+        document.getElementById("opt-yes").textContent = t.optYes || "Sí, asistiré";
+        document.getElementById("opt-no").textContent = t.optNo || "No podré asistir";
+        document.getElementById("label-captcha").textContent = t.labelCaptcha || "";
+        document.getElementById("btnEnviar").textContent = t.btnSubmit || "Enviar Datos";
+        document.getElementById("rsvp-deadline").textContent = t.rsvpDeadline || "";
+      }
+
       document.querySelectorAll(".lang-btn").forEach(b => b.classList.remove("active"));
       const btn = document.getElementById(`btn-${lang}`);
       const mBtn = document.getElementById(`m-btn-${lang}`);
       if (btn) btn.classList.add("active");
       if (mBtn) mBtn.classList.add("active");
     }
+
+    // ====== RSVP (formulario) ======
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwaON4cTPF10VsaNDNPFynFBGJujTm_8NhLGd5I__2KKn2P5rt7avB_WYqhJqUg4m29/exec';
+    let captchaResult = 0;
+
+    function generateCaptcha(){
+      const qEl = document.getElementById('captcha-question');
+      const aEl = document.getElementById('captcha-answer');
+      if(!qEl || !aEl) return;
+      const num1 = Math.floor(Math.random() * 9) + 1;
+      const num2 = Math.floor(Math.random() * 9) + 1;
+      captchaResult = num1 + num2;
+      qEl.textContent = `${num1} + ${num2} = `;
+      aEl.value = '';
+    }
+
+    function initRsvp(){
+      const form = document.getElementById('registroForm');
+      const btnEnviar = document.getElementById('btnEnviar');
+      const estado = document.getElementById('estado');
+      if(!form || !btnEnviar || !estado) return;
+
+      generateCaptcha();
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const savedLang = localStorage.getItem('selectedLanguage') || 'es';
+        const t = (translations && translations[savedLang]) ? translations[savedLang] : (translations ? translations.es : {});
+
+        const userAnswer = parseInt(document.getElementById('captcha-answer').value, 10);
+        if (userAnswer !== captchaResult) {
+          estado.innerText = t.captchaError || "¡Error de cálculo! Inténtalo de nuevo.";
+          estado.style.color = "blue";
+          generateCaptcha();
+          return;
+        }
+
+        const confirmBox = document.getElementById('confirmacionOk');
+        if (confirmBox) confirmBox.classList.add('hidden');
+
+        btnEnviar.disabled = true;
+        estado.innerText = t.sendingMsg || "Enviando...";
+        estado.style.color = "green";
+
+        const datos = {
+          nombre: document.getElementById('nombre').value,
+          asistencia: document.getElementById('asistencia').value
+        };
+
+        fetch(scriptURL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(datos)
+        })
+        .then(() => {
+                    // Confirmación visible
+          estado.innerText = "";
+          const confirmBox2 = document.getElementById("confirmacionOk");
+          if (confirmBox2) {
+            confirmBox2.classList.remove("hidden");
+            // Opcional: ocultarlo tras 5 segundos
+            setTimeout(() => {
+              confirmBox2.classList.add("hidden");
+            }, 5000);
+          }
+
+          form.reset();
+          btnEnviar.disabled = false;
+          generateCaptcha();
+
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+          estado.innerText = t.errorMsg || "Hubo un error al enviar.";
+          estado.style.color = "white";
+          btnEnviar.disabled = false;
+        });
+      });
+    }
+    // ===============================
+
 
     function toggleMenu(){
       const menu=document.getElementById('mobile-menu');
@@ -1326,6 +1569,7 @@
       const savedLang=localStorage.getItem('selectedLanguage') || 'es';
       setLanguage(savedLang);
       reveal();
+      initRsvp();
     };
   </script>
 </body>
