@@ -479,16 +479,27 @@
 
   <nav class="bg-black text-white p-4 sticky top-0 z-50 border-b-4 border-yellow-400">
     <div class="container mx-auto">
-      <div class="flex justify-between items-center">
-        <h1 class="text-2xl text-yellow-400" id="nav-title">M&C: EDICIÓN ESPECIAL</h1>
+      <div class="flex justify-between items-center gap-4">
+        <h1 class="text-2xl text-yellow-400 whitespace-nowrap" id="nav-title">M&C: EDICIÓN ESPECIAL</h1>
 
+        <!-- Links (desktop) -->
+        <div class="hidden md:flex items-center gap-1 lg:gap-2">
+          <a href="#historia" class="nav-link" id="nav-history-d">HISTORIA</a>
+          <a href="#info" class="nav-link" id="nav-info-d">INFORMACIÓN</a>
+          <a href="#donde" class="nav-link" id="nav-location-d">UBICACIÓN</a>
+          <a href="#galeria" class="nav-link" id="nav-gallery-d">GALERÍA</a>
+          <a href="#confirmar" class="nav-link" id="nav-rsvp-d">CONFIRMAR</a>
+        </div>
+
+        <!-- Language buttons (desktop) -->
         <div class="hidden md:flex space-x-2">
           <button onclick="setLanguage('it')" aria-label="Cambiar idioma a Italiano" class="lang-btn" id="btn-it">IT</button>
           <button onclick="setLanguage('es')" aria-label="Cambiar idioma a Español" class="lang-btn active" id="btn-es">ES</button>
           <button onclick="setLanguage('en')" aria-label="Cambiar idioma a Inglés" class="lang-btn" id="btn-en">EN</button>
         </div>
 
-        <button onclick="toggleMenu()" aria-label="Abrir o cerrar menú" class="text-3xl text-yellow-400 hover:scale-125 transition-transform focus:outline-none">
+        <!-- Burger (mobile) -->
+        <button onclick="toggleMenu()" aria-label="Abrir o cerrar menú" class="md:hidden text-3xl text-yellow-400 hover:scale-125 transition-transform focus:outline-none">
           <i class="fas fa-bars" id="menu-icon"></i>
         </button>
       </div>
@@ -504,6 +515,7 @@
         <a href="#info" onclick="toggleMenu()" class="nav-link" id="nav-info">INFORMACIÓN</a>
         <a href="#donde" onclick="toggleMenu()" class="nav-link" id="nav-location">UBICACIÓN</a>
         <a href="#galeria" onclick="toggleMenu()" class="nav-link" id="nav-gallery">GALERÍA</a>
+        <a href="#confirmar" onclick="toggleMenu()" class="nav-link" id="nav-rsvp">CONFIRMAR</a>
       </div>
     </div>
   </nav>
@@ -928,6 +940,7 @@
         navInfo: "INFORMACIÓN",
         navLocation: "UBICACIÓN",
         navGallery: "GALERÍA",
+        navRsvp: "CONFIRMAR",
 
         heroDate: "27 JUNIO 2026 • 18:00 h",
         labelDays: "DÍAS",
@@ -1055,6 +1068,7 @@
         navInfo: "INFORMAZIONI",
         navLocation: "POSIZIONE",
         navGallery: "GALLERIA",
+        navRsvp: "CONFERMA",
 
         heroDate: "27 GIUGNO 2026 • 18:00",
         labelDays: "GIORNI",
@@ -1179,6 +1193,7 @@
         navInfo: "INFO",
         navLocation: "LOCATION",
         navGallery: "GALLERY",
+        navRsvp: "RSVP",
 
         heroDate: "JUNE 27, 2026 • 6:00 PM",
         labelDays: "DAYS",
@@ -1316,10 +1331,20 @@
       localStorage.setItem("selectedLanguage", lang);
 
       document.getElementById("nav-title").textContent = t.navTitle;
-      document.getElementById("nav-history").textContent = t.navHistory;
-      document.getElementById("nav-info").textContent = t.navInfo;
-      document.getElementById("nav-location").textContent = t.navLocation;
-      document.getElementById("nav-gallery").textContent = t.navGallery;
+
+      // Nav (mobile + desktop)
+      const setTxt = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+      setTxt("nav-history", t.navHistory);
+      setTxt("nav-info", t.navInfo);
+      setTxt("nav-location", t.navLocation);
+      setTxt("nav-gallery", t.navGallery);
+      setTxt("nav-rsvp", t.navRsvp || "RSVP");
+
+      setTxt("nav-history-d", t.navHistory);
+      setTxt("nav-info-d", t.navInfo);
+      setTxt("nav-location-d", t.navLocation);
+      setTxt("nav-gallery-d", t.navGallery);
+      setTxt("nav-rsvp-d", t.navRsvp || "RSVP");
 
       document.getElementById("hero-date").textContent = t.heroDate;
       document.getElementById("label-days").textContent = t.labelDays;
